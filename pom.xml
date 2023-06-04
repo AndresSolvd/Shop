@@ -44,6 +44,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- https://vladmihalcea.com/jdbc-driver-maven-dependency/ -->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -74,7 +82,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>Main</mainClass>
+                            <mainClass>TestTry</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
