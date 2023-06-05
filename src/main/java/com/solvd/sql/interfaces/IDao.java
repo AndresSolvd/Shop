@@ -8,15 +8,15 @@ public interface IDao<T> {
     // CRUD Create
     void insert(T t) throws SQLException;
 
-    // CRUD Read
-    T get(int id) throws SQLException;
-
     // CRUD Update
     void update(T t) throws SQLException;
 
     // CRUD Delete
-    void delete(T t);
+    void delete(int id) throws SQLException;
 
     // Get All
     List<T> getAll() throws SQLException;
+
+    // CRUD Read
+    T get(int id) throws SQLException;
 }

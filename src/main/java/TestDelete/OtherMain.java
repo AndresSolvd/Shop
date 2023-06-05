@@ -9,7 +9,9 @@ public class OtherMain {
     public static void main(String[] args) throws SQLException {
         Connection con = Database.getConnection();
 
-
+/*        if (con != null) {
+            System.out.println("success");
+        }*/
 
         IPerson personDao = new PersonDAOImpl();
         Person person = personDao.get(3);

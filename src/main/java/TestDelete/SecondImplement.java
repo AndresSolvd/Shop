@@ -1,6 +1,7 @@
 package TestDelete;
 
 import com.solvd.sql.model.Person;
+import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PersonDAOImpl implements IPerson {
-
-
+public class SecondImplement implements IPerson {
+    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     @Override
     public void insert(Person person) throws SQLException {
 
@@ -18,15 +18,13 @@ public class PersonDAOImpl implements IPerson {
 
     @Override
     public Person get(int id) throws SQLException {
-        Connection con = Database.getConnection();
-        Person person = null;
+        Connection con = connectionPool.getConnection();
 
+        Person person = null;
         String sql = "SELECT id, person_name FROM person WHERE id = ?";
 
         PreparedStatement ps = con.prepareStatement(sql);
-
         ps.setInt(1,id);
-
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {

@@ -1,4 +1,6 @@
 package com.solvd.sql.interfaces;
 
-public interface IDaoCustomer {
+import com.solvd.sql.model.Customer;
+
+public interface IDaoCustomer extends IDao<Customer>{
 }
