@@ -1,7 +1,5 @@
 package com.solvd;
 
-import com.solvd.sql.jdbc.PersonDAO;
-import com.solvd.sql.model.Person;
 import com.solvd.util.TestConnection;
 
 import java.sql.Connection;
@@ -13,6 +11,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+        int id = 1;
+        System.out.println(id);
+
         Connection conn = TestConnection.getConnection();
 
         String sql = "SELECT id FROM person WHERE id = ?";
@@ -23,7 +24,7 @@ public class Main {
 
         ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
+        while (rs.next()) {
             int oid = rs.getInt("id");
             System.out.println(oid);
         }
