@@ -1,3 +1,5 @@
+package TestDelete;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,15 +23,13 @@ public class TestTry {
         try {
             Connection con = DriverManager.getConnection(url, uname, password);
             Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery(query);
+            statement.execute("SELECT * id FROM person");
+            System.out.println(statement);
 
-            while (result.next()) {
-                String theData = "";
-                for (int i =1; i <= 6; i ++) {
-                    theData += result.getString(i) + ":";
-                }
-                System.out.println(theData);
-            }
+/*            while (rs.next()) {
+                int oid = rs.getInt("id");
+                System.out.println(oid);
+            }*/
 
         } catch (SQLException e){
             e.printStackTrace();
