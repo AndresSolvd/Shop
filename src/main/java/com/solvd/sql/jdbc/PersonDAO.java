@@ -4,32 +4,34 @@ import com.solvd.sql.interfaces.IPersonDAO;
 import com.solvd.sql.model.Person;
 import com.solvd.util.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class PersonDAO implements IPersonDAO {
-    private ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+
     @Override
-    public void saveEntity(Person model) {
+    public void insert(Person person) throws SQLException {
 
     }
 
     @Override
-    public Person getByID(int id) {
+    public Person get(int id) throws SQLException {
         return null;
     }
 
     @Override
-    public void updateEntity(Person person) {
+    public void update(Person person) throws SQLException {
 
     }
 
     @Override
-    public void removeEntityById(Person person) {
+    public void delete(Person person) {
 
     }
 
     @Override
-    public List<Person> getAll() {
+    public List<Person> getAll() throws SQLException {
         return null;
     }
 

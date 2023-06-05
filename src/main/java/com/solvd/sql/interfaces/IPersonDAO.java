@@ -4,6 +4,6 @@ import com.solvd.sql.model.Person;
 
 import java.util.List;
 
-public interface IPersonDAO extends IBaseDAO<Person>{
+public interface IPersonDAO extends IDao<Person>{
     List<Person> getPersonFirstName(String firstName);
 }
