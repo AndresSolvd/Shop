@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoStaff;
-import com.solvd.sql.model.Staff;
+import com.solvd.sql.interfaces.IDaoSupplier;
+import com.solvd.sql.model.Supplier;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,18 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoStaff implements IDaoStaff {
+public class SupplierDao implements IDaoSupplier {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Staff staff) throws SQLException {
+    public void insert(Supplier supplier) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO staff (position, person_id, shop_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO supplier (supplier_name, tax_number, phone) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, staff.getPosition());
-            ps.setInt(2, staff.getPersonId());
-            ps.setInt(3, staff.getShopId());
+            ps.setString(1, supplier.getSupplierName());
+            ps.setString(2, supplier.getTaxNumber());
+            ps.setString(3, supplier.getPhone());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,15 +34,15 @@ public class DaoStaff implements IDaoStaff {
     }
 
     @Override
-    public void update(Staff staff) throws SQLException {
+    public void update(Supplier supplier) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE staff SET position = ?, person_id = ?, shop_id = ? WHERE id = ?";
+        String query = "UPDATE supplier SET supplier_name = ?, tax_number = ?, phone = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, staff.getPosition());
-            ps.setInt(2, staff.getPersonId());
-            ps.setInt(3, staff.getShopId());
-            ps.setInt(5, staff.getId());
+            ps.setString(1, supplier.getSupplierName());
+            ps.setString(2, supplier.getTaxNumber());
+            ps.setString(3, supplier.getPhone());
+            ps.setInt(5, supplier.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -54,7 +54,7 @@ public class DaoStaff implements IDaoStaff {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM staff WHERE id = ?";
+        String query = "DELETE FROM supplier WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -66,20 +66,20 @@ public class DaoStaff implements IDaoStaff {
     }
 
     @Override
-    public List<Staff> getAll() throws SQLException {
+    public List<Supplier> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Staff> staffs = new ArrayList<>();
-        String query = "SELECT * FROM staff";
+        List<Supplier> suppliers = new ArrayList<>();
+        String query = "SELECT * FROM supplier";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Staff staff = new Staff();
-                    staff.setId(rs.getInt("id"));
-                    staff.setPosition(rs.getString("position"));
-                    staff.setPersonId(rs.getInt("person_id"));
-                    staff.setShopId(rs.getInt("shop_id"));
-                    staffs.add(staff);
+                    Supplier supplier = new Supplier();
+                    supplier.setId(rs.getInt("id"));
+                    supplier.setSupplierName(rs.getString("supplier_name"));
+                    supplier.setTaxNumber(rs.getString("tax_number"));
+                    supplier.setPhone(rs.getString("phone"));
+                    suppliers.add(supplier);
                 }
             }
         } catch (SQLException e) {
@@ -87,24 +87,24 @@ public class DaoStaff implements IDaoStaff {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return staffs;
+        return suppliers;
     }
 
     @Override
-    public Staff get(int id) throws SQLException {
+    public Supplier get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Staff staff = new Staff();
-        String query = "SELECT * FROM staff WHERE id = ?";
+        Supplier supplier = new Supplier();
+        String query = "SELECT * FROM supplier WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    staff.setId(rs.getInt("id"));
-                    staff.setPosition(rs.getString("position"));
-                    staff.setPersonId(rs.getInt("person_id"));
-                    staff.setShopId(rs.getInt("shop_id"));
+                    supplier.setId(rs.getInt("id"));
+                    supplier.setSupplierName(rs.getString("supplier_name"));
+                    supplier.setTaxNumber(rs.getString("tax_number"));
+                    supplier.setPhone(rs.getString("phone"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -112,6 +112,6 @@ public class DaoStaff implements IDaoStaff {
                 connectionPool.releaseConnection(con);
             }
         }
-        return staff;
+        return supplier;
     }
 }

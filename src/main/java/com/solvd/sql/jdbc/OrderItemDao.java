@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoPromotion;
-import com.solvd.sql.model.Promotion;
+import com.solvd.sql.interfaces.IDaoOrderItem;
+import com.solvd.sql.model.OrderItem;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,19 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoPromotion implements IDaoPromotion {
+public class OrderItemDao implements IDaoOrderItem {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Promotion promotion) throws SQLException {
+    public void insert(OrderItem orderItem) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO promotion (promotion_name, discount, start_date, end_date) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO order_item (quantity, product_id, order_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, promotion.getPromotionName());
-            ps.setFloat(4, promotion.getDiscount());
-            ps.setDate(3, promotion.getStartDate());
-            ps.setDate(4, promotion.getStartDate());
+            ps.setInt(1, orderItem.getQuantity());
+            ps.setInt(2, orderItem.getProductId());
+            ps.setInt(3, orderItem.getOrderId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,16 +34,14 @@ public class DaoPromotion implements IDaoPromotion {
     }
 
     @Override
-    public void update(Promotion promotion) throws SQLException {
+    public void update(OrderItem orderItem) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE promotion SET promotion_name = ?, discount = ?, start_date = ?, end_date = ? WHERE id = ?";
+        String query = "UPDATE order_item SET quantity = ?, product_id = ? WHERE order_id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, promotion.getPromotionName());
-            ps.setFloat(4, promotion.getDiscount());
-            ps.setDate(3, promotion.getStartDate());
-            ps.setDate(4, promotion.getStartDate());
-            ps.setInt(5, promotion.getId());
+            ps.setInt(1, orderItem.getQuantity());
+            ps.setInt(2, orderItem.getProductId());
+            ps.setInt(3, orderItem.getOrderId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -56,7 +53,7 @@ public class DaoPromotion implements IDaoPromotion {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM promotion WHERE id = ?";
+        String query = "DELETE FROM order_item WHERE order_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -68,21 +65,19 @@ public class DaoPromotion implements IDaoPromotion {
     }
 
     @Override
-    public List<Promotion> getAll() throws SQLException {
+    public List<OrderItem> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Promotion> promotions = new ArrayList<>();
-        String query = "SELECT * FROM promotion";
+        List<OrderItem> orderItems = new ArrayList<>();
+        String query = "SELECT * FROM order_item";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Promotion promotion = new Promotion();
-                    promotion.setId(rs.getInt("id"));
-                    promotion.setPromotionName(rs.getString("promotion_name"));
-                    promotion.setDiscount(rs.getFloat("discount"));
-                    promotion.setStartDate(rs.getDate("start_date"));
-                    promotion.setEndDate(rs.getDate("end_date"));
-                    promotions.add(promotion);
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setQuantity(rs.getInt("quantity"));
+                    orderItem.setProductId(rs.getInt("product_id"));
+                    orderItem.setOrderId(rs.getInt("order_id"));
+                    orderItems.add(orderItem);
                 }
             }
         } catch (SQLException e) {
@@ -90,25 +85,22 @@ public class DaoPromotion implements IDaoPromotion {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return promotions;
+        return orderItems;
     }
 
     @Override
-    public Promotion get(int id) throws SQLException {
+    public OrderItem get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Promotion promotion = new Promotion();
-        String query = "SELECT * FROM promotion WHERE id = ?";
+        OrderItem orderItem = new OrderItem();
+        String query = "SELECT * FROM order_item WHERE order_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    promotion.setId(rs.getInt("id"));
-                    promotion.setPromotionName(rs.getString("promotion_name"));
-                    promotion.setDiscount(rs.getFloat("discount"));
-                    promotion.setStartDate(rs.getDate("start_date"));
-                    promotion.setEndDate(rs.getDate("end_date"));
+                    orderItem.setQuantity(rs.getInt("quantity"));
+                    orderItem.setProductId(rs.getInt("product_id"));
+                    orderItem.setOrderId(rs.getInt("order_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -116,6 +108,6 @@ public class DaoPromotion implements IDaoPromotion {
                 connectionPool.releaseConnection(con);
             }
         }
-        return promotion;
+        return orderItem;
     }
 }

@@ -1,8 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCustomer;
-import com.solvd.sql.model.Category;
-import com.solvd.sql.model.Customer;
+import com.solvd.sql.interfaces.IDaoShop;
+import com.solvd.sql.model.Shop;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -12,16 +11,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoCustomer implements IDaoCustomer {
+public class ShopDao implements IDaoShop {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     @Override
-    public void insert(Customer customer) throws SQLException {
+    public void insert(Shop shop) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO customer (tax_number, person_id) VALUES (?, ?)";
+        String query = "INSERT INTO shop (shop_name, address, phone, owner_id) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, customer.getTaxNumber());
-            ps.setInt(1, customer.getPersonId());
+            ps.setString(1, shop.getShopName());
+            ps.setString(2, shop.getAddress());
+            ps.setString(3, shop.getPhone());
+            ps.setInt(4, shop.getOwnerId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -33,14 +35,16 @@ public class DaoCustomer implements IDaoCustomer {
     }
 
     @Override
-    public void update(Customer customer) throws SQLException {
+    public void update(Shop shop) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE customer SET tax_number = ?, person_id = ?, WHERE id = ?";
+        String query = "UPDATE shop SET shop_name = ?, address = ?, phone = ?, owner_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, customer.getTaxNumber());
-            ps.setInt(2, customer.getPersonId());
-            ps.setInt(3, customer.getId());
+            ps.setString(1, shop.getShopName());
+            ps.setString(2, shop.getAddress());
+            ps.setString(3, shop.getPhone());
+            ps.setInt(4, shop.getOwnerId());
+            ps.setInt(5, shop.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -52,7 +56,7 @@ public class DaoCustomer implements IDaoCustomer {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM customer WHERE id = ?";
+        String query = "DELETE FROM shop WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -64,19 +68,21 @@ public class DaoCustomer implements IDaoCustomer {
     }
 
     @Override
-    public List<Customer> getAll() throws SQLException {
+    public List<Shop> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Customer> customers = new ArrayList<>();
-        String query = "SELECT * FROM customer";
-        try(PreparedStatement ps = con.prepareStatement(query)) {
+        List<Shop> shops = new ArrayList<>();
+        String query = "SELECT * FROM shop";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while ( rs.next()) {
-                    Customer customer = new Customer();
-                    customer.setId(rs.getInt("id"));
-                    customer.setTaxNumber(rs.getString("tax_number"));
-                    customer.setPersonId(rs.getInt("person_id"));
-                    customers.add(customer);
+                while (rs.next()) {
+                    Shop shop = new Shop();
+                    shop.setId(rs.getInt("id"));
+                    shop.setShopName(rs.getString("shop_name"));
+                    shop.setAddress(rs.getString("address"));
+                    shop.setPhone(rs.getString("phone"));
+                    shop.setOwnerId(rs.getInt("owner_id"));
+                    shops.add(shop);
                 }
             }
         } catch (SQLException e) {
@@ -84,22 +90,24 @@ public class DaoCustomer implements IDaoCustomer {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return customers;
+        return shops;
     }
 
     @Override
-    public Customer get(int id) throws SQLException {
+    public Shop get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Customer customer = new Customer();
-        String query = "SELECT * FROM customer WHERE id = ?";
+        Shop shop = new Shop();
+        String query = "SELECT * FROM shop WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
+
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    customer.setId(rs.getInt("id"));
-                    customer.setTaxNumber(rs.getString("tax_number"));
-                    customer.setPersonId(rs.getInt("person_id"));
+                    shop.setShopName(rs.getString("shop_name"));
+                    shop.setAddress(rs.getString("address"));
+                    shop.setPhone(rs.getString("phone"));
+                    shop.setOwnerId(rs.getInt("owner_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -107,6 +115,6 @@ public class DaoCustomer implements IDaoCustomer {
                 connectionPool.releaseConnection(con);
             }
         }
-        return customer;
+        return shop;
     }
 }

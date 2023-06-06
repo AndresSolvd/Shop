@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoProduct;
-import com.solvd.sql.model.Product;
+import com.solvd.sql.interfaces.IDaoProductPromotion;
+import com.solvd.sql.model.ProductPromotion;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,20 +11,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoProduct implements IDaoProduct {
+public class ProductPromotionDao implements IDaoProductPromotion {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Product product) throws SQLException {
+    public void insert(ProductPromotion productPromotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO product (product_name, stock, price, category_id, supplier_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO product_promotion (promotion_id, product_id) VALUES (?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, product.getProductName());
-            ps.setInt(2, product.getStock());
-            ps.setDouble(3, product.getPrice());
-            ps.setInt(4, product.getCategoryId());
-            ps.setInt(5, product.getSupplierId());
+            ps.setInt(1, productPromotion.getPromotionId());
+            ps.setInt(1, productPromotion.getProductId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -36,17 +33,13 @@ public class DaoProduct implements IDaoProduct {
     }
 
     @Override
-    public void update(Product product) throws SQLException {
+    public void update(ProductPromotion productPromotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE product SET product_name = ?, stock = ?, price = ?, category_id = ?, supplier_id = ? WHERE id = ?";
+        String query = "UPDATE product_promotion SET promotion_id = ?, WHERE product_id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, product.getProductName());
-            ps.setInt(2, product.getStock());
-            ps.setDouble(3, product.getPrice());
-            ps.setInt(4, product.getCategoryId());
-            ps.setInt(5, product.getSupplierId());
-            ps.setInt(6, product.getId());
+            ps.setInt(1, productPromotion.getPromotionId());
+            ps.setInt(1, productPromotion.getProductId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -58,7 +51,7 @@ public class DaoProduct implements IDaoProduct {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM product WHERE id = ?";
+        String query = "DELETE FROM product_promotion WHERE promotion_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -70,22 +63,18 @@ public class DaoProduct implements IDaoProduct {
     }
 
     @Override
-    public List<Product> getAll() throws SQLException {
+    public List<ProductPromotion> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM product";
+        List<ProductPromotion> productPromotions = new ArrayList<>();
+        String query = "SELECT * FROM product_promotion";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Product product = new Product();
-                    product.setId(rs.getInt("id"));
-                    product.setProductName(rs.getString("product_name"));
-                    product.setStock(rs.getInt("stock"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setSupplierId(rs.getInt("supplier_id"));
-                    products.add(product);
+                    ProductPromotion productPromotion = new ProductPromotion();
+                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
+                    productPromotion.setProductId(rs.getInt("product_id"));
+                    productPromotions.add(productPromotion);
                 }
             }
         } catch (SQLException e) {
@@ -93,26 +82,22 @@ public class DaoProduct implements IDaoProduct {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return products;
+        return productPromotions;
     }
 
     @Override
-    public Product get(int id) throws SQLException {
+    public ProductPromotion get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Product product = new Product();
-        String query = "SELECT * FROM product WHERE id = ?";
+        ProductPromotion productPromotion = new ProductPromotion();
+        String query = "SELECT * FROM product_promotion WHERE product_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    product.setId(rs.getInt("id"));
-                    product.setProductName(rs.getString("product_name"));
-                    product.setStock(rs.getInt("stock"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setSupplierId(rs.getInt("supplier_id"));
+                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
+                    productPromotion.setProductId(rs.getInt("product_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -120,6 +105,6 @@ public class DaoProduct implements IDaoProduct {
                 connectionPool.releaseConnection(con);
             }
         }
-        return product;
+        return productPromotion;
     }
 }

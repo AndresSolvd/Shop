@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCategory;
-import com.solvd.sql.model.Category;
+import com.solvd.sql.interfaces.IDaoOrders;
+import com.solvd.sql.model.Orders;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,16 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoCategory implements IDaoCategory {
+public class OrdersDao implements IDaoOrders {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Category category) throws SQLException {
+    public void insert(Orders orders) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO category (category_name) VALUES (?)";
+        String query = "INSERT INTO orders (order_date, total, customer_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
+            ps.setDate(1, orders.getOrder_date());
+            ps.setDouble(2, orders.getTotal());
+            ps.setInt(3, orders.getCustomerId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,13 +34,15 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(Orders orders) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE category SET category_name = ? WHERE id = ?";
+        String query = "UPDATE orders SET order_date = ?, total = ?, customer_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
-            ps.setInt(2, category.getId());
+            ps.setDate(1, orders.getOrder_date());
+            ps.setDouble(2, orders.getTotal());
+            ps.setInt(3, orders.getCustomerId());
+            ps.setInt(4, orders.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -50,7 +54,7 @@ public class DaoCategory implements IDaoCategory {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM category WHERE id = ?";
+        String query = "DELETE FROM orders WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -62,18 +66,20 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<Orders> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Category> categories = new ArrayList<>();
-        String query = "SELECT * FROM category";
+        List<Orders> orderss = new ArrayList<>();
+        String query = "SELECT * FROM orders";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Category category = new Category();
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                    categories.add(category);
+                    Orders orders = new Orders();
+                    orders.setId(rs.getInt("id"));
+                    orders.setOrder_date(rs.getDate("order_date"));
+                    orders.setTotal(rs.getDouble("total"));
+                    orders.setCustomerId(rs.getInt("customer_id"));
+                    orderss.add(orders);
                 }
             }
         } catch (SQLException e) {
@@ -81,43 +87,24 @@ public class DaoCategory implements IDaoCategory {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return categories;
+        return orderss;
     }
 
     @Override
-    public Category get(int id) throws SQLException {
+    public Orders get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE id = ?";
+        Orders orders = new Orders();
+        String query = "SELECT * FROM orders WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                connectionPool.releaseConnection(con);
-            }
-        }
-        return category;
-    }
 
-    @Override
-    public Category get(String categoryName) throws SQLException {
-        Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE category_name = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, categoryName);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
+                    orders.setId(rs.getInt("id"));
+                    orders.setOrder_date(rs.getDate("order_date"));
+                    orders.setTotal(rs.getDouble("total"));
+                    orders.setCustomerId(rs.getInt("customer_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -125,6 +112,6 @@ public class DaoCategory implements IDaoCategory {
                 connectionPool.releaseConnection(con);
             }
         }
-        return category;
+        return orders;
     }
 }

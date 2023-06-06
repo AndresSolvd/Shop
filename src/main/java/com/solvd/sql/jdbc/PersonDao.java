@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoOrderItem;
-import com.solvd.sql.model.OrderItem;
+import com.solvd.sql.interfaces.IDaoPerson;
+import com.solvd.sql.model.Person;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,18 +11,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoOrderItem implements IDaoOrderItem {
+public class PersonDao implements IDaoPerson {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(OrderItem orderItem) throws SQLException {
+    public void insert(Person person) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO order_item (quantity, product_id, order_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO person (person_name, last_name, phone, address) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, orderItem.getQuantity());
-            ps.setInt(2, orderItem.getProductId());
-            ps.setInt(3, orderItem.getOrderId());
+            ps.setString(1, person.getPersonName());
+            ps.setString(2, person.getLastName());
+            ps.setString(3, person.getPhone());
+            ps.setString(4, person.getAddress());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,14 +35,16 @@ public class DaoOrderItem implements IDaoOrderItem {
     }
 
     @Override
-    public void update(OrderItem orderItem) throws SQLException {
+    public void update(Person person) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE order_item SET quantity = ?, product_id = ? WHERE order_id = ?";
+        String query = "UPDATE person SET person_name = ?, last_name = ?, phone = ?, address = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, orderItem.getQuantity());
-            ps.setInt(2, orderItem.getProductId());
-            ps.setInt(3, orderItem.getOrderId());
+            ps.setString(1, person.getPersonName());
+            ps.setString(2, person.getLastName());
+            ps.setString(3, person.getPhone());
+            ps.setString(4, person.getAddress());
+            ps.setInt(5, person.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -53,7 +56,7 @@ public class DaoOrderItem implements IDaoOrderItem {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM order_item WHERE order_id = ?";
+        String query = "DELETE FROM person WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -65,19 +68,21 @@ public class DaoOrderItem implements IDaoOrderItem {
     }
 
     @Override
-    public List<OrderItem> getAll() throws SQLException {
+    public List<Person> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<OrderItem> orderItems = new ArrayList<>();
-        String query = "SELECT * FROM order_item";
+        List<Person> persons = new ArrayList<>();
+        String query = "SELECT * FROM person";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    OrderItem orderItem = new OrderItem();
-                    orderItem.setQuantity(rs.getInt("quantity"));
-                    orderItem.setProductId(rs.getInt("product_id"));
-                    orderItem.setOrderId(rs.getInt("order_id"));
-                    orderItems.add(orderItem);
+                    Person person = new Person();
+                    person.setId(rs.getInt("id"));
+                    person.setPersonName(rs.getString("person_name"));
+                    person.setLastName(rs.getString("last_name"));
+                    person.setPhone(rs.getString("phone"));
+                    person.setAddress(rs.getString("address"));
+                    persons.add(person);
                 }
             }
         } catch (SQLException e) {
@@ -85,22 +90,25 @@ public class DaoOrderItem implements IDaoOrderItem {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return orderItems;
+        return persons;
     }
 
     @Override
-    public OrderItem get(int id) throws SQLException {
+    public Person get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        OrderItem orderItem = new OrderItem();
-        String query = "SELECT * FROM order_item WHERE order_id = ?";
+        Person person = new Person();
+        String query = "SELECT * FROM person WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
+
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    orderItem.setQuantity(rs.getInt("quantity"));
-                    orderItem.setProductId(rs.getInt("product_id"));
-                    orderItem.setOrderId(rs.getInt("order_id"));
+                    person.setId(rs.getInt("id"));
+                    person.setPersonName(rs.getString("person_name"));
+                    person.setLastName(rs.getString("last_name"));
+                    person.setPhone(rs.getString("phone"));
+                    person.setAddress(rs.getString("address"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -108,6 +116,6 @@ public class DaoOrderItem implements IDaoOrderItem {
                 connectionPool.releaseConnection(con);
             }
         }
-        return orderItem;
+        return person;
     }
 }

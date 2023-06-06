@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoOwner;
-import com.solvd.sql.model.Owner;
+import com.solvd.sql.interfaces.IDaoStaff;
+import com.solvd.sql.model.Staff;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,16 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoOwner implements IDaoOwner {
+public class StaffDao implements IDaoStaff {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Owner owner) throws SQLException {
+    public void insert(Staff staff) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO owner (person_id) VALUES (?)";
+        String query = "INSERT INTO staff (position, person_id, shop_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, owner.getPersonId());
+            ps.setString(1, staff.getPosition());
+            ps.setInt(2, staff.getPersonId());
+            ps.setInt(3, staff.getShopId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,13 +34,15 @@ public class DaoOwner implements IDaoOwner {
     }
 
     @Override
-    public void update(Owner owner) throws SQLException {
+    public void update(Staff staff) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE owner SET person_id = ? WHERE id = ?";
+        String query = "UPDATE staff SET position = ?, person_id = ?, shop_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, owner.getPersonId());
-            ps.setInt(2, owner.getId());
+            ps.setString(1, staff.getPosition());
+            ps.setInt(2, staff.getPersonId());
+            ps.setInt(3, staff.getShopId());
+            ps.setInt(5, staff.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -50,7 +54,7 @@ public class DaoOwner implements IDaoOwner {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM owner WHERE id = ?";
+        String query = "DELETE FROM staff WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -62,18 +66,20 @@ public class DaoOwner implements IDaoOwner {
     }
 
     @Override
-    public List<Owner> getAll() throws SQLException {
+    public List<Staff> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Owner> owners = new ArrayList<>();
-        String query = "SELECT * FROM owner";
+        List<Staff> staffs = new ArrayList<>();
+        String query = "SELECT * FROM staff";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Owner owner = new Owner();
-                    owner.setId(rs.getInt("id"));
-                    owner.setPersonId(rs.getInt("person_id"));
-                    owners.add(owner);
+                    Staff staff = new Staff();
+                    staff.setId(rs.getInt("id"));
+                    staff.setPosition(rs.getString("position"));
+                    staff.setPersonId(rs.getInt("person_id"));
+                    staff.setShopId(rs.getInt("shop_id"));
+                    staffs.add(staff);
                 }
             }
         } catch (SQLException e) {
@@ -81,22 +87,24 @@ public class DaoOwner implements IDaoOwner {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return owners;
+        return staffs;
     }
 
     @Override
-    public Owner get(int id) throws SQLException {
+    public Staff get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Owner owner = new Owner();
-        String query = "SELECT * FROM owner WHERE id = ?";
+        Staff staff = new Staff();
+        String query = "SELECT * FROM staff WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    owner.setId(rs.getInt("id"));
-                    owner.setPersonId(rs.getInt("person_id"));
+                    staff.setId(rs.getInt("id"));
+                    staff.setPosition(rs.getString("position"));
+                    staff.setPersonId(rs.getInt("person_id"));
+                    staff.setShopId(rs.getInt("shop_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -104,6 +112,6 @@ public class DaoOwner implements IDaoOwner {
                 connectionPool.releaseConnection(con);
             }
         }
-        return owner;
+        return staff;
     }
 }

@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoOrders;
-import com.solvd.sql.model.Orders;
+import com.solvd.sql.interfaces.IDaoOwner;
+import com.solvd.sql.model.Owner;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,18 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoOrders implements IDaoOrders {
+public class OwnerDao implements IDaoOwner {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Orders orders) throws SQLException {
+    public void insert(Owner owner) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO orders (order_date, total, customer_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO owner (person_id) VALUES (?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrder_date());
-            ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
+            ps.setInt(1, owner.getPersonId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,15 +32,13 @@ public class DaoOrders implements IDaoOrders {
     }
 
     @Override
-    public void update(Orders orders) throws SQLException {
+    public void update(Owner owner) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE orders SET order_date = ?, total = ?, customer_id = ? WHERE id = ?";
+        String query = "UPDATE owner SET person_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrder_date());
-            ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
-            ps.setInt(4, orders.getId());
+            ps.setInt(1, owner.getPersonId());
+            ps.setInt(2, owner.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -54,7 +50,7 @@ public class DaoOrders implements IDaoOrders {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM orders WHERE id = ?";
+        String query = "DELETE FROM owner WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -66,20 +62,18 @@ public class DaoOrders implements IDaoOrders {
     }
 
     @Override
-    public List<Orders> getAll() throws SQLException {
+    public List<Owner> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Orders> orderss = new ArrayList<>();
-        String query = "SELECT * FROM orders";
+        List<Owner> owners = new ArrayList<>();
+        String query = "SELECT * FROM owner";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Orders orders = new Orders();
-                    orders.setId(rs.getInt("id"));
-                    orders.setOrder_date(rs.getDate("order_date"));
-                    orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
-                    orderss.add(orders);
+                    Owner owner = new Owner();
+                    owner.setId(rs.getInt("id"));
+                    owner.setPersonId(rs.getInt("person_id"));
+                    owners.add(owner);
                 }
             }
         } catch (SQLException e) {
@@ -87,24 +81,22 @@ public class DaoOrders implements IDaoOrders {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return orderss;
+        return owners;
     }
 
     @Override
-    public Orders get(int id) throws SQLException {
+    public Owner get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Orders orders = new Orders();
-        String query = "SELECT * FROM orders WHERE id = ?";
+        Owner owner = new Owner();
+        String query = "SELECT * FROM owner WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    orders.setId(rs.getInt("id"));
-                    orders.setOrder_date(rs.getDate("order_date"));
-                    orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
+                    owner.setId(rs.getInt("id"));
+                    owner.setPersonId(rs.getInt("person_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -112,6 +104,6 @@ public class DaoOrders implements IDaoOrders {
                 connectionPool.releaseConnection(con);
             }
         }
-        return orders;
+        return owner;
     }
 }
