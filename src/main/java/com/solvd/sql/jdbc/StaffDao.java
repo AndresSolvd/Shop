@@ -43,7 +43,7 @@ public class StaffDao implements IBaseDAO<Staff> {
             ps.setString(1, staff.getPosition());
             ps.setInt(2, staff.getPersonId());
             ps.setInt(3, staff.getShopId());
-            ps.setInt(5, staff.getId());
+            ps.setInt(4, staff.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();

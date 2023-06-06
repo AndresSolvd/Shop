@@ -22,7 +22,7 @@ public class PromotionDao implements IBaseDAO<Promotion> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, promotion.getPromotionName());
-            ps.setFloat(4, promotion.getDiscount());
+            ps.setFloat(2, promotion.getDiscount());
             ps.setDate(3, promotion.getStartDate());
             ps.setDate(4, promotion.getStartDate());
             ps.execute();
@@ -42,7 +42,7 @@ public class PromotionDao implements IBaseDAO<Promotion> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, promotion.getPromotionName());
-            ps.setFloat(4, promotion.getDiscount());
+            ps.setFloat(2, promotion.getDiscount());
             ps.setDate(3, promotion.getStartDate());
             ps.setDate(4, promotion.getStartDate());
             ps.setInt(5, promotion.getId());

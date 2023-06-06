@@ -22,7 +22,7 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, productPromotion.getPromotionId());
-            ps.setInt(1, productPromotion.getProductId());
+            ps.setInt(2, productPromotion.getProductId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -36,11 +36,11 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
     @Override
     public void update(ProductPromotion productPromotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE product_promotion SET promotion_id = ?, WHERE product_id = ?";
+        String query = "UPDATE product_promotion SET promotion_id = ? WHERE product_id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, productPromotion.getPromotionId());
-            ps.setInt(1, productPromotion.getProductId());
+            ps.setInt(2, productPromotion.getProductId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();

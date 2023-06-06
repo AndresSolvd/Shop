@@ -22,7 +22,7 @@ public class CustomerDao implements IDaoCustomer {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, customer.getTaxNumber());
-            ps.setInt(1, customer.getPersonId());
+            ps.setInt(2, customer.getPersonId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -36,7 +36,7 @@ public class CustomerDao implements IDaoCustomer {
     @Override
     public void update(Customer customer) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE customer SET tax_number = ?, person_id = ?, WHERE id = ?";
+        String query = "UPDATE customer SET tax_number = ?, person_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, customer.getTaxNumber());

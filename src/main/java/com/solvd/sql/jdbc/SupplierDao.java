@@ -43,7 +43,7 @@ public class SupplierDao implements IBaseDAO<Supplier> {
             ps.setString(1, supplier.getSupplierName());
             ps.setString(2, supplier.getTaxNumber());
             ps.setString(3, supplier.getPhone());
-            ps.setInt(5, supplier.getId());
+            ps.setInt(4, supplier.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
