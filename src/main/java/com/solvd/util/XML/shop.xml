@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shop xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <persons>
+        <person>
+            <id>1</id>
+            <person_name>Bart</person_name>
+            <last_name>Simpson</last_name>
+            <phone>0981238423</phone>
+            <address>140 brown RD Somewhere, CA 90210</address>
+        </person>
+        <person>
+            <id>2</id>
+            <person_name>Kevin</person_name>
+            <last_name>Mitnick</last_name>
+            <phone>5279964531</phone>
+            <address>555 Hide St Nowhere, CA 90210</address>
+        </person>
+        <person>
+            <id>3</id>
+            <person_name>Darth</person_name>
+            <last_name>Vader</last_name>
+            <phone>6571235498</phone>
+            <address>3 next RD Space, CA 90210</address>
+        </person>
+        <person>
+            <id>4</id>
+            <person_name>Peter</person_name>
+            <last_name>Pan</last_name>
+            <phone>5893145279</phone>
+            <address>8756 Tree Pass NuncaJamas, NL 09238</address>
+        </person>
+    </persons>
+    <owner>
+        <id>1</id>
+        <person_id>1</person_id>
+    </owner>
+    <shop>
+        <id>1</id>
+        <shop_name>NoDoubt</shop_name>
+        <address>behind the horizon</address>
+        <phone>5550981230</phone>
+        <owner_id>1</owner_id>
+    </shop>
+    <staff>
+        <id>2</id>
+        <position>Manager</position>
+        <person_id>2</person_id>
+        <shop_id>1</shop_id>
+    </staff>
+    <customer>
+        <id>1</id>
+        <tax_number>45983214</tax_number>
+        <person_id>3</person_id>
+    </customer>
+</shop>
