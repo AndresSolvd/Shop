@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoPerson;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Person;
 import com.solvd.util.ConnectionPool;
 
@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDao implements IDaoPerson {
+public class PersonDao implements IBaseDAO<Person> {
+
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override

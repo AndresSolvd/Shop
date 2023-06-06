@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoOwner;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Owner;
 import com.solvd.util.ConnectionPool;
 
@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerDao implements IDaoOwner {
+public class OwnerDao implements IBaseDAO<Owner> {
+
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override

@@ -3,7 +3,7 @@ package com.solvd.sql.interfaces;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IDao<T> {
+public interface IBaseDAO<T> {
 
     // CRUD Create
     void insert(T t) throws SQLException;
