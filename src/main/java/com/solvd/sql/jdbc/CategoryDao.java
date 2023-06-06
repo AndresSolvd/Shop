@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao implements IDaoCategory {
+
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override

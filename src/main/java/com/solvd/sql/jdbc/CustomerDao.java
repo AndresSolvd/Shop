@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDao implements IDaoCustomer {
+
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     @Override
     public void insert(Customer customer) throws SQLException {
         Connection con = connectionPool.getConnection();
@@ -67,10 +69,10 @@ public class CustomerDao implements IDaoCustomer {
         Connection con = connectionPool.getConnection();
         List<Customer> customers = new ArrayList<>();
         String query = "SELECT * FROM customer";
-        try(PreparedStatement ps = con.prepareStatement(query)) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while ( rs.next()) {
+                while (rs.next()) {
                     Customer customer = new Customer();
                     customer.setId(rs.getInt("id"));
                     customer.setTaxNumber(rs.getString("tax_number"));
