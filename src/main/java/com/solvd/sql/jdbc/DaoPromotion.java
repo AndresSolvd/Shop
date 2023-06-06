@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCategory;
-import com.solvd.sql.model.Category;
+import com.solvd.sql.interfaces.IDaoPromotion;
+import com.solvd.sql.model.Promotion;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,16 +11,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoCategory implements IDaoCategory {
+public class DaoPromotion implements IDaoPromotion {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Category category) throws SQLException {
+    public void insert(Promotion promotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO category (category_name) VALUES (?)";
+        String query = "INSERT INTO promotion (promotion_name, discount, start_date, end_date) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
+            ps.setString(1, promotion.getPromotionName());
+            ps.setFloat(4, promotion.getDiscount());
+            ps.setDate(3, promotion.getStartDate());
+            ps.setDate(4, promotion.getStartDate());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,13 +35,16 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(Promotion promotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE category SET category_name = ? WHERE id = ?";
+        String query = "UPDATE promotion SET promotion_name = ?, discount = ?, start_date = ?, end_date = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
-            ps.setInt(2, category.getId());
+            ps.setString(1, promotion.getPromotionName());
+            ps.setFloat(4, promotion.getDiscount());
+            ps.setDate(3, promotion.getStartDate());
+            ps.setDate(4, promotion.getStartDate());
+            ps.setInt(5, promotion.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -50,7 +56,7 @@ public class DaoCategory implements IDaoCategory {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM category WHERE id = ?";
+        String query = "DELETE FROM promotion WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -62,18 +68,21 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<Promotion> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Category> categories = new ArrayList<>();
-        String query = "SELECT * FROM category";
+        List<Promotion> promotions = new ArrayList<>();
+        String query = "SELECT * FROM promotion";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Category category = new Category();
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                    categories.add(category);
+                    Promotion promotion = new Promotion();
+                    promotion.setId(rs.getInt("id"));
+                    promotion.setPromotionName(rs.getString("promotion_name"));
+                    promotion.setDiscount(rs.getFloat("discount"));
+                    promotion.setStartDate(rs.getDate("start_date"));
+                    promotion.setEndDate(rs.getDate("end_date"));
+                    promotions.add(promotion);
                 }
             }
         } catch (SQLException e) {
@@ -81,43 +90,25 @@ public class DaoCategory implements IDaoCategory {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return categories;
+        return promotions;
     }
 
     @Override
-    public Category get(int id) throws SQLException {
+    public Promotion get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE id = ?";
+        Promotion promotion = new Promotion();
+        String query = "SELECT * FROM promotion WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                connectionPool.releaseConnection(con);
-            }
-        }
-        return category;
-    }
 
-    @Override
-    public Category get(String categoryName) throws SQLException {
-        Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE category_name = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, categoryName);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
+                    promotion.setId(rs.getInt("id"));
+                    promotion.setPromotionName(rs.getString("promotion_name"));
+                    promotion.setDiscount(rs.getFloat("discount"));
+                    promotion.setStartDate(rs.getDate("start_date"));
+                    promotion.setEndDate(rs.getDate("end_date"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -125,6 +116,6 @@ public class DaoCategory implements IDaoCategory {
                 connectionPool.releaseConnection(con);
             }
         }
-        return category;
+        return promotion;
     }
 }

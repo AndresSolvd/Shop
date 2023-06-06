@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCategory;
-import com.solvd.sql.model.Category;
+import com.solvd.sql.interfaces.IDaoOwner;
+import com.solvd.sql.model.Owner;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,16 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoCategory implements IDaoCategory {
+public class DaoOwner implements IDaoOwner {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Category category) throws SQLException {
+    public void insert(Owner owner) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO category (category_name) VALUES (?)";
+        String query = "INSERT INTO owner (person_id) VALUES (?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
+            ps.setInt(1, owner.getPersonId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,13 +32,13 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(Owner owner) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE category SET category_name = ? WHERE id = ?";
+        String query = "UPDATE owner SET person_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
-            ps.setInt(2, category.getId());
+            ps.setInt(1, owner.getPersonId());
+            ps.setInt(2, owner.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -50,7 +50,7 @@ public class DaoCategory implements IDaoCategory {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM category WHERE id = ?";
+        String query = "DELETE FROM owner WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -62,18 +62,18 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<Owner> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Category> categories = new ArrayList<>();
-        String query = "SELECT * FROM category";
+        List<Owner> owners = new ArrayList<>();
+        String query = "SELECT * FROM owner";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Category category = new Category();
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                    categories.add(category);
+                    Owner owner = new Owner();
+                    owner.setId(rs.getInt("id"));
+                    owner.setPersonId(rs.getInt("person_id"));
+                    owners.add(owner);
                 }
             }
         } catch (SQLException e) {
@@ -81,43 +81,22 @@ public class DaoCategory implements IDaoCategory {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return categories;
+        return owners;
     }
 
     @Override
-    public Category get(int id) throws SQLException {
+    public Owner get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE id = ?";
+        Owner owner = new Owner();
+        String query = "SELECT * FROM owner WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                connectionPool.releaseConnection(con);
-            }
-        }
-        return category;
-    }
 
-    @Override
-    public Category get(String categoryName) throws SQLException {
-        Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE category_name = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, categoryName);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
+                    owner.setId(rs.getInt("id"));
+                    owner.setPersonId(rs.getInt("person_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -125,6 +104,6 @@ public class DaoCategory implements IDaoCategory {
                 connectionPool.releaseConnection(con);
             }
         }
-        return category;
+        return owner;
     }
 }

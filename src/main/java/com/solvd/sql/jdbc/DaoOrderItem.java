@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCategory;
-import com.solvd.sql.model.Category;
+import com.solvd.sql.interfaces.IDaoOrderItem;
+import com.solvd.sql.model.OrderItem;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,16 +11,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoCategory implements IDaoCategory {
+public class DaoOrderItem implements IDaoOrderItem {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Category category) throws SQLException {
+    public void insert(OrderItem orderItem) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO category (category_name) VALUES (?)";
+        String query = "INSERT INTO order_item (quantity, product_id, order_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
+            ps.setInt(1, orderItem.getQuantity());
+            ps.setInt(2, orderItem.getProductId());
+            ps.setInt(3, orderItem.getOrderId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,13 +34,14 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(OrderItem orderItem) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE category SET category_name = ? WHERE id = ?";
+        String query = "UPDATE order_item SET quantity = ?, product_id = ? WHERE order_id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
-            ps.setInt(2, category.getId());
+            ps.setInt(1, orderItem.getQuantity());
+            ps.setInt(2, orderItem.getProductId());
+            ps.setInt(3, orderItem.getOrderId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -50,7 +53,7 @@ public class DaoCategory implements IDaoCategory {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM category WHERE id = ?";
+        String query = "DELETE FROM order_item WHERE order_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -62,18 +65,19 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<OrderItem> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Category> categories = new ArrayList<>();
-        String query = "SELECT * FROM category";
+        List<OrderItem> orderItems = new ArrayList<>();
+        String query = "SELECT * FROM order_item";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Category category = new Category();
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                    categories.add(category);
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setQuantity(rs.getInt("quantity"));
+                    orderItem.setProductId(rs.getInt("product_id"));
+                    orderItem.setOrderId(rs.getInt("order_id"));
+                    orderItems.add(orderItem);
                 }
             }
         } catch (SQLException e) {
@@ -81,21 +85,22 @@ public class DaoCategory implements IDaoCategory {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return categories;
+        return orderItems;
     }
 
     @Override
-    public Category get(int id) throws SQLException {
+    public OrderItem get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE id = ?";
+        OrderItem orderItem = new OrderItem();
+        String query = "SELECT * FROM order_item WHERE order_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
+                    orderItem.setQuantity(rs.getInt("quantity"));
+                    orderItem.setProductId(rs.getInt("product_id"));
+                    orderItem.setOrderId(rs.getInt("order_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -103,28 +108,6 @@ public class DaoCategory implements IDaoCategory {
                 connectionPool.releaseConnection(con);
             }
         }
-        return category;
-    }
-
-    @Override
-    public Category get(String categoryName) throws SQLException {
-        Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE category_name = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, categoryName);
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                connectionPool.releaseConnection(con);
-            }
-        }
-        return category;
+        return orderItem;
     }
 }

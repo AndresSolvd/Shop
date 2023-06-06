@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCategory;
-import com.solvd.sql.model.Category;
+import com.solvd.sql.interfaces.IDaoProductPromotion;
+import com.solvd.sql.model.ProductPromotion;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,16 +11,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoCategory implements IDaoCategory {
+public class DAOProductPromotion implements IDaoProductPromotion {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Category category) throws SQLException {
+    public void insert(ProductPromotion productPromotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO category (category_name) VALUES (?)";
+        String query = "INSERT INTO product_promotion (promotion_id, product_id) VALUES (?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
+            ps.setInt(1, productPromotion.getPromotionId());
+            ps.setInt(1, productPromotion.getProductId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,13 +33,13 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(ProductPromotion productPromotion) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE category SET category_name = ? WHERE id = ?";
+        String query = "UPDATE product_promotion SET promotion_id = ?, WHERE product_id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, category.getCategoryName());
-            ps.setInt(2, category.getId());
+            ps.setInt(1, productPromotion.getPromotionId());
+            ps.setInt(1, productPromotion.getProductId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -50,7 +51,7 @@ public class DaoCategory implements IDaoCategory {
     @Override
     public void delete(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM category WHERE id = ?";
+        String query = "DELETE FROM product_promotion WHERE promotion_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
@@ -62,18 +63,18 @@ public class DaoCategory implements IDaoCategory {
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<ProductPromotion> getAll() throws SQLException {
         Connection con = connectionPool.getConnection();
-        List<Category> categories = new ArrayList<>();
-        String query = "SELECT * FROM category";
+        List<ProductPromotion> productPromotions = new ArrayList<>();
+        String query = "SELECT * FROM product_promotion";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Category category = new Category();
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                    categories.add(category);
+                    ProductPromotion productPromotion = new ProductPromotion();
+                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
+                    productPromotion.setProductId(rs.getInt("product_id"));
+                    productPromotions.add(productPromotion);
                 }
             }
         } catch (SQLException e) {
@@ -81,43 +82,22 @@ public class DaoCategory implements IDaoCategory {
         } finally {
             connectionPool.releaseConnection(con);
         }
-        return categories;
+        return productPromotions;
     }
 
     @Override
-    public Category get(int id) throws SQLException {
+    public ProductPromotion get(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE id = ?";
+        ProductPromotion productPromotion = new ProductPromotion();
+        String query = "SELECT * FROM product_promotion WHERE product_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                connectionPool.releaseConnection(con);
-            }
-        }
-        return category;
-    }
 
-    @Override
-    public Category get(String categoryName) throws SQLException {
-        Connection con = connectionPool.getConnection();
-        Category category = new Category();
-        String query = "SELECT * FROM category WHERE category_name = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setString(1, categoryName);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
+                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
+                    productPromotion.setProductId(rs.getInt("product_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -125,6 +105,6 @@ public class DaoCategory implements IDaoCategory {
                 connectionPool.releaseConnection(con);
             }
         }
-        return category;
+        return productPromotion;
     }
 }
