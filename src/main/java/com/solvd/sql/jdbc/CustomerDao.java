@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCustomer;
+import com.solvd.sql.interfaces.ICustomerDao;
 import com.solvd.sql.model.Customer;
 import com.solvd.util.ConnectionPool;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDao implements IDaoCustomer {
+public class CustomerDao implements ICustomerDao {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 

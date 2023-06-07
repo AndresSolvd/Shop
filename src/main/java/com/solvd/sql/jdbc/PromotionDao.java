@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IBaseDAO;
+import com.solvd.sql.interfaces.IPromotionDao;
 import com.solvd.sql.model.Promotion;
 import com.solvd.util.ConnectionPool;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PromotionDao implements IBaseDAO<Promotion> {
+public class PromotionDao implements IPromotionDao {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 

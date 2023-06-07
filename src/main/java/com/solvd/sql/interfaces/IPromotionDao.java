@@ -2,5 +2,5 @@ package com.solvd.sql.interfaces;
 
 import com.solvd.sql.model.Promotion;
 
-public interface IDaoPromotion extends IBaseDAO<Promotion> {
+public interface IPromotionDao extends IBaseDAO<Promotion> {
 }

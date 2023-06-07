@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IBaseDAO;
+import com.solvd.sql.interfaces.IOrdersDao;
 import com.solvd.sql.model.Orders;
 import com.solvd.util.ConnectionPool;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersDao implements IBaseDAO<Orders> {
+public class OrdersDao implements IOrdersDao {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
