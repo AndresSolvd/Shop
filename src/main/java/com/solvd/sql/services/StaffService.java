@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.StaffDao;
 import com.solvd.sql.model.Staff;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class StaffService implements IBaseDAO<Staff> {

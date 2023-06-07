@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.ICategoryDao;
 import com.solvd.sql.jdbc.CategoryDao;
 import com.solvd.sql.model.Category;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class CategoryService implements ICategoryDao {

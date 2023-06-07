@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.OwnerDao;
 import com.solvd.sql.model.Owner;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class OwnerService implements IBaseDAO<Owner> {

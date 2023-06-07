@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.PersonDao;
 import com.solvd.sql.model.Person;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class PersonService implements IBaseDAO<Person> {

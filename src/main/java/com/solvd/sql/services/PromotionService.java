@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.PromotionDao;
 import com.solvd.sql.model.Promotion;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class PromotionService implements IBaseDAO<Promotion> {

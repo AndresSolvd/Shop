@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.ProductDao;
 import com.solvd.sql.model.Product;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class ProductService implements IBaseDAO<Product> {

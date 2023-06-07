@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.OrdersDao;
 import com.solvd.sql.model.Orders;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class OrdersService implements IBaseDAO<Orders> {

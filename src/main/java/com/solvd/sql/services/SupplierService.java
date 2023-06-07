@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.SupplierDao;
 import com.solvd.sql.model.Supplier;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class SupplierService implements IBaseDAO<Supplier> {
