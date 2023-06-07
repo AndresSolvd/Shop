@@ -2,6 +2,7 @@ package com.solvd;
 
 import com.solvd.sql.jdbc.*;
 import com.solvd.sql.model.*;
+import com.solvd.sql.services.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -13,334 +14,334 @@ public class Main {
             // CATEGORY
             System.out.println("\n--- CATEGORY ---\n");
             // Create
-            CategoryDao categoryDao = new CategoryDao();
+            CategoryService categoryService = new CategoryService();
             Category category = new Category();
             category.setCategoryName("Pants");
-            categoryDao.insert(category);
+            categoryService.insert(category);
             category.setCategoryName("Electronics");
-            categoryDao.insert(category);
+            categoryService.insert(category);
             category.setCategoryName("Food");
-            categoryDao.insert(category);
+            categoryService.insert(category);
             // Update
             category.setCategoryName("Clothes"); // Needs to specify the ID
             category.setId(1);
-            categoryDao.update(category);
+            categoryService.update(category);
             // Delete
-            categoryDao.delete(3); // Delete Food
+            categoryService.delete(3); // Delete Food
             // Read
-            System.out.println(categoryDao.get(1));
-            System.out.println(categoryDao.get("Electronics")); // If repeated name select the last.
+            System.out.println(categoryService.get(1));
+            System.out.println(categoryService.get("Electronics")); // If repeated name select the last.
             // All
-            System.out.println(categoryDao.getAll());
+            System.out.println(categoryService.getAll());
 
             // PERSON
             System.out.println("\n--- PERSON ---\n");
             // Create
-            PersonDao personDao = new PersonDao();
+            PersonService personService = new PersonService();
             Person person = new Person();
             person.setPersonName("Bart");
             person.setLastName("Simpson");
             person.setPhone("1234561235");
             person.setAddress("342 noway Springfield");
-            personDao.insert(person);
+            personService.insert(person);
             person.setPersonName("Tom");
             person.setLastName("Sawyer");
             person.setPhone("1234561236");
             person.setAddress("756 nowhere St. Petersburg Missouri");
-            personDao.insert(person);
+            personService.insert(person);
             person.setPersonName("Emma");
             person.setLastName("Watson");
             person.setPhone("1234561237");
             person.setAddress("342 somewhere Liverpool, England");
-            personDao.insert(person);
+            personService.insert(person);
             person.setPersonName("Charlie");
             person.setLastName("Garcia");
             person.setPhone("1234561234");
             person.setAddress("234 brown street Los Angeles,CA");
-            personDao.insert(person);
+            personService.insert(person);
             person.setPersonName("Genghis");
             person.setLastName("Khan");
             person.setPhone("8569751246");
             person.setAddress("9832 cest' la vie Monrroe, 239843");
-            personDao.insert(person);
+            personService.insert(person);
             // Update
             person.setLastName("Brown"); // Needs to specify the ID
             person.setId(4);
-            personDao.update(person);
+            personService.update(person);
             // Delete
-            personDao.delete(5);
+            personService.delete(5);
             // Read
-            System.out.println(personDao.get(4));
+            System.out.println(personService.get(4));
             // All
-            System.out.println(personDao.getAll());
+            System.out.println(personService.getAll());
 
             // CUSTOMER
             System.out.println("\n--- CUSTOMER ---\n");
             // Create
-            CustomerDao customerDao = new CustomerDao();
+            CustomerService customerService = new CustomerService();
             Customer customer = new Customer();
             customer.setTaxNumber("00000000");
             customer.setPersonId(4);
-            customerDao.insert(customer);
+            customerService.insert(customer);
             customer.setTaxNumber("274527252");
             customer.setPersonId(3);
-            customerDao.insert(customer);
+            customerService.insert(customer);
             // Update
             customer.setTaxNumber("1254986532"); // Needs to specify the ID
             customer.setPersonId(4);
             customer.setId(1);
-            customerDao.update(customer);
+            customerService.update(customer);
             // Delete
-            customerDao.delete(2);
+            customerService.delete(2);
             // Read
-            System.out.println(customerDao.get(1));
+            System.out.println(customerService.get(1));
             // All
-            System.out.println(customerDao.getAll());
+            System.out.println(customerService.getAll());
 
             // OWNER
             System.out.println("\n--- OWNER ---\n");
             // Create
-            OwnerDao ownerDao = new OwnerDao();
+            OwnerService ownerService = new OwnerService();
             Owner owner = new Owner();
             owner.setPersonId(1);
-            ownerDao.insert(owner);
+            ownerService.insert(owner);
             owner.setPersonId(2);
-            ownerDao.insert(owner);
+            ownerService.insert(owner);
             // Update
             owner.setPersonId(3); // Needs to specify the ID
             owner.setId(1);
-            ownerDao.update(owner);
+            ownerService.update(owner);
             // Delete
-            ownerDao.delete(2);
+            ownerService.delete(2);
             // Read
-            System.out.println(ownerDao.get(1));
+            System.out.println(ownerService.get(1));
             // All
-            System.out.println(ownerDao.getAll());
+            System.out.println(ownerService.getAll());
 
             // SHOP
             System.out.println("\n--- SHOP ---\n");
             // Create
-            ShopDao shopDao = new ShopDao();
+            ShopService shopService = new ShopService();
             Shop shop = new Shop();
             shop.setShopName("Le Sportif Foe");
             shop.setAddress("In a land far far away");
             shop.setPhone("1120984567");
             shop.setOwnerId(1);
-            shopDao.insert(shop);
+            shopService.insert(shop);
             shop.setShopName("Federico Barba Roja");
             shop.setAddress("In between dreams");
             shop.setPhone("4593217865");
             shop.setOwnerId(1);
-            shopDao.insert(shop);
+            shopService.insert(shop);
             // Update
             shop.setShopName("La Tasca");
             shop.setAddress("In a land far far away");
             shop.setPhone("1120984567");
             shop.setId(1);
-            shopDao.update(shop);
+            shopService.update(shop);
             // Delete
-            shopDao.delete(2);
+            shopService.delete(2);
             // Read
-            System.out.println(shopDao.get(1));
+            System.out.println(shopService.get(1));
             // All
-            System.out.println(shopDao.getAll());
+            System.out.println(shopService.getAll());
 
             // STAFF
             System.out.println("\n--- STAFF ---\n");
             // Create
-            StaffDao staffDao = new StaffDao();
+            StaffService staffService = new StaffService();
             Staff staff = new Staff();
             staff.setPosition("AllinOne");
             staff.setPersonId(2);
             staff.setShopId(1);
-            staffDao.insert(staff);
+            staffService.insert(staff);
             staff.setPosition("Worker");
             staff.setPersonId(1);
             staff.setShopId(1);
-            staffDao.insert(staff);
+            staffService.insert(staff);
             // Update
             staff.setPosition("Manager");
             staff.setPersonId(2);
             staff.setShopId(1);
             staff.setId(1);
-            staffDao.update(staff);
+            staffService.update(staff);
             // Delete
-            staffDao.delete(2);
+            staffService.delete(2);
             // Read
-            System.out.println(staffDao.get(1));
+            System.out.println(staffService.get(1));
             // All
-            System.out.println(staffDao.getAll());
+            System.out.println(staffService.getAll());
 
             // SUPPLIER
             System.out.println("\n--- SUPPLIER ---\n");
             // Create
-            SupplierDao supplierDao = new SupplierDao();
+            SupplierService supplierService = new SupplierService();
             Supplier supplier = new Supplier();
             supplier.setSupplierName("Gucci");
             supplier.setTaxNumber("123455678");
             supplier.setPhone("2340981245");
-            supplierDao.insert(supplier);
+            supplierService.insert(supplier);
             supplier.setSupplierName("Tommy");
             supplier.setTaxNumber("123455678");
             supplier.setPhone("2340981245");
-            supplierDao.insert(supplier);
+            supplierService.insert(supplier);
             // Update
             supplier.setSupplierName("LaCoste");
             supplier.setTaxNumber("123455678");
             supplier.setPhone("2340981245");
             supplier.setId(1);
-            supplierDao.update(supplier);
+            supplierService.update(supplier);
             // Delete
-            supplierDao.delete(2);
+            supplierService.delete(2);
             // Read
-            System.out.println(supplierDao.get(1));
+            System.out.println(supplierService.get(1));
             // All
-            System.out.println(supplierDao.getAll());
+            System.out.println(supplierService.getAll());
 
             // PRODUCT
             System.out.println("\n--- PRODUCT ---\n");
             // Create
-            ProductDao productDao = new ProductDao();
+            ProductService productService = new ProductService();
             Product product = new Product();
             product.setProductName("Shirt");
             product.setStock(23);
             product.setPrice(60);
             product.setCategoryId(1);
             product.setSupplierId(1);
-            productDao.insert(product);
+            productService.insert(product);
             product.setProductName("Pants");
             product.setStock(13);
             product.setPrice(20);
             product.setCategoryId(1);
             product.setSupplierId(1);
-            productDao.insert(product);
+            productService.insert(product);
             product.setProductName("iPad");
             product.setStock(5);
             product.setPrice(2000);
             product.setCategoryId(2);
             product.setSupplierId(1);
-            productDao.insert(product);
+            productService.insert(product);
             // Update
             product.setProductName("Pants");
             product.setStock(13);
             product.setPrice(80);
             product.setCategoryId(1);
             product.setSupplierId(1);
-            productDao.insert(product);
+            productService.insert(product);
             product.setId(2);
-            productDao.update(product);
+            productService.update(product);
             // Delete
-            productDao.delete(3);
+            productService.delete(3);
             // Read
-            System.out.println(productDao.get(1));
+            System.out.println(productService.get(1));
             // All
-            System.out.println(productDao.getAll());
+            System.out.println(productService.getAll());
 
             // ORDERS
             System.out.println("\n--- ORDERS ---\n");
             // Create
-            OrdersDao ordersDao = new OrdersDao();
+            OrdersService ordersService = new OrdersService();
             Orders orders = new Orders();
             orders.setOrder_date(Date.valueOf(("2022-5-5")));
             orders.setTotal(80);
             orders.setCustomerId(1);
-            ordersDao.insert(orders);
+            ordersService.insert(orders);
             orders.setOrder_date(Date.valueOf(("2022-4-5")));
             orders.setTotal(60);
             orders.setCustomerId(1);
-            ordersDao.insert(orders);
+            ordersService.insert(orders);
             // Update
             orders.setOrder_date(Date.valueOf(("2022-5-5")));
             orders.setTotal(120);
             orders.setCustomerId(1);
             orders.setId(1);
-            ordersDao.update(orders);
+            ordersService.update(orders);
             // Delete
-            ordersDao.delete(2);
+            ordersService.delete(2);
             // Read
-            System.out.println(ordersDao.get(1));
+            System.out.println(ordersService.get(1));
             // All
-            System.out.println(ordersDao.getAll());
+            System.out.println(ordersService.getAll());
 
-            // ORDERITEM
-            System.out.println("\n--- ORDERITEM ---\n");
+            // ORDER ITEM
+            System.out.println("\n--- ORDER ITEM ---\n");
             // Create
-            OrderItemDao orderItemDao = new OrderItemDao();
+            OrderItemService orderItemService = new OrderItemService();
             OrderItem orderItem = new OrderItem();
             orderItem.setQuantity(1);
             orderItem.setOrderId(1);
             orderItem.setProductId(1);
-            orderItemDao.insert(orderItem);
+            orderItemService.insert(orderItem);
             orderItem.setQuantity(1);
             orderItem.setOrderId(1);
             orderItem.setProductId(2);
-            orderItemDao.insert(orderItem);
+            orderItemService.insert(orderItem);
             // Update
             orderItem.setQuantity(2);
             orderItem.setOrderId(1);
             orderItem.setProductId(1);
-            orderItemDao.update(orderItem);
+            orderItemService.update(orderItem);
             // Delete
-            orderItemDao.delete(2);
+            orderItemService.delete(2);
             // Read
-            System.out.println(orderItemDao.get(1));
+            System.out.println(orderItemService.get(1));
             // All
-            System.out.println(orderItemDao.getAll());
+            System.out.println(orderItemService.getAll());
 
             // PROMOTION
             System.out.println("\n--- PROMOTION ---\n");
             // Create
-            PromotionDao promotionDao = new PromotionDao();
+            PromotionService promotionService = new PromotionService();
             Promotion promotion = new Promotion();
             promotion.setPromotionName("Summer Discount");
             promotion.setDiscount(0.6F);
             promotion.setStartDate(Date.valueOf("2022-06-01"));
             promotion.setEndDate(Date.valueOf("2022-09-01"));
-            promotionDao.insert(promotion);
+            promotionService.insert(promotion);
             promotion.setPromotionName("Winter Discount");
             promotion.setDiscount(0.3F);
             promotion.setStartDate(Date.valueOf("2023-04-01"));
             promotion.setEndDate(Date.valueOf("2022-12-01"));
-            promotionDao.insert(promotion);
+            promotionService.insert(promotion);
             promotion.setPromotionName("Special Discount");
             promotion.setDiscount(0.9F);
             promotion.setStartDate(Date.valueOf("2022-01-01"));
             promotion.setEndDate(Date.valueOf("2022-12-31"));
-            promotionDao.insert(promotion);
+            promotionService.insert(promotion);
             // Update
             promotion.setDiscount(0.2F);
             promotion.setStartDate(Date.valueOf("2022-06-01"));
             promotion.setEndDate(Date.valueOf("2022-09-01"));
             promotion.setId(1);
-            promotionDao.update(promotion);
+            promotionService.update(promotion);
             // Delete
-            promotionDao.delete(3);
+            promotionService.delete(3);
             // Read
-            System.out.println(promotionDao.get(1));
+            System.out.println(promotionService.get(1));
             // All
-            System.out.println(promotionDao.getAll());
+            System.out.println(promotionService.getAll());
 
             // PRODUCT PROMOTION
-            System.out.println("\n--- PRODUCTPROMOTION ---\n");
+            System.out.println("\n--- PRODUCT PROMOTION ---\n");
             // Create
-            ProductPromotionDao productPromotionDao = new ProductPromotionDao();
+            ProductPromotionService productPromotionService = new ProductPromotionService();
             ProductPromotion productPromotion = new ProductPromotion();
             productPromotion.setPromotionId(2);
             productPromotion.setProductId(1);
-            productPromotionDao.insert(productPromotion);
+            productPromotionService.insert(productPromotion);
             productPromotion.setPromotionId(1);
             productPromotion.setProductId(2);
-            productPromotionDao.insert(productPromotion);
+            productPromotionService.insert(productPromotion);
             // Update
             productPromotion.setPromotionId(1);
             productPromotion.setProductId(1); // update by product id
-            productPromotionDao.update(productPromotion);
+            productPromotionService.update(productPromotion);
             // Delete
-            productPromotionDao.delete(2);
+            productPromotionService.delete(2);
             // Read
-            System.out.println(productPromotionDao.get(1));
+            System.out.println(productPromotionService.get(1));
             // All
-            System.out.println(productPromotionDao.getAll());
+            System.out.println(productPromotionService.getAll());
         } catch(SQLException e) {
             e.printStackTrace();
         }
