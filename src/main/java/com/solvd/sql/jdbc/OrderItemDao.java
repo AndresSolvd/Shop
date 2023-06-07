@@ -90,7 +90,7 @@ public class OrderItemDao implements IOrderItemDao {
     }
 
     @Override
-    public OrderItem get(int id) throws SQLException {
+    public OrderItem getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         OrderItem orderItem = new OrderItem();
         String query = "SELECT * FROM order_item WHERE order_id = ?";

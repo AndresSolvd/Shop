@@ -86,7 +86,7 @@ public class OwnerDao implements IOwnerDao {
     }
 
     @Override
-    public Owner get(int id) throws SQLException {
+    public Owner getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Owner owner = new Owner();
         String query = "SELECT * FROM owner WHERE id = ?";

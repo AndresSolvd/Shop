@@ -98,7 +98,7 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public Product get(int id) throws SQLException {
+    public Product getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Product product = new Product();
         String query = "SELECT * FROM product WHERE id = ?";

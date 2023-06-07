@@ -92,7 +92,7 @@ public class StaffDao implements IStaffDao {
     }
 
     @Override
-    public Staff get(int id) throws SQLException {
+    public Staff getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Staff staff = new Staff();
         String query = "SELECT * FROM staff WHERE id = ?";

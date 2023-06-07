@@ -32,7 +32,7 @@ public class ProductService implements IProductDao {
     }
 
     @Override
-    public Product get(int id) throws SQLException {
-        return productDao.get(id);
+    public Product getById(int id) throws SQLException {
+        return productDao.getById(id);
     }
 }

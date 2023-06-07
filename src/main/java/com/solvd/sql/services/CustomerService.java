@@ -32,7 +32,7 @@ public class CustomerService implements ICustomerDao {
     }
 
     @Override
-    public Customer get(int id) throws SQLException {
-        return customerDao.get(id);
+    public Customer getById(int id) throws SQLException {
+        return customerDao.getById(id);
     }
 }

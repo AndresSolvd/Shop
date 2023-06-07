@@ -32,7 +32,7 @@ public class ShopService implements IShopDao {
     }
 
     @Override
-    public Shop get(int id) throws SQLException {
-        return shopDao.get(id);
+    public Shop getById(int id) throws SQLException {
+        return shopDao.getById(id);
     }
 }

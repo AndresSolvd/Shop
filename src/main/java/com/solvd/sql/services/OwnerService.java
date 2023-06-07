@@ -32,7 +32,7 @@ public class OwnerService implements IOwnerDao {
     }
 
     @Override
-    public Owner get(int id) throws SQLException {
-        return ownerDao.get(id);
+    public Owner getById(int id) throws SQLException {
+        return ownerDao.getById(id);
     }
 }

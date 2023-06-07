@@ -92,7 +92,7 @@ public class OrdersDao implements IOrdersDao {
     }
 
     @Override
-    public Orders get(int id) throws SQLException {
+    public Orders getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Orders orders = new Orders();
         String query = "SELECT * FROM orders WHERE id = ?";

@@ -32,7 +32,7 @@ public class SupplierService implements ISupplierDao {
     }
 
     @Override
-    public Supplier get(int id) throws SQLException {
-        return supplierDao.get(id);
+    public Supplier getById(int id) throws SQLException {
+        return supplierDao.getById(id);
     }
 }

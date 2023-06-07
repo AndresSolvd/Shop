@@ -18,5 +18,5 @@ public interface IBaseDAO<T> {
     List<T> getAll() throws SQLException;
 
     // CRUD Read
-    T get(int id) throws SQLException;
+    T getById(int id) throws SQLException;
 }

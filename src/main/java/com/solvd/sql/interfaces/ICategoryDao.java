@@ -5,5 +5,5 @@ import com.solvd.sql.model.Category;
 import java.sql.SQLException;
 
 public interface ICategoryDao extends IBaseDAO<Category> {
-    Category get(String categoryName) throws SQLException;
+    Category getByName(String categoryName) throws SQLException;
 }

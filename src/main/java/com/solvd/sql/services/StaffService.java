@@ -32,7 +32,7 @@ public class StaffService implements IStaffDao {
     }
 
     @Override
-    public Staff get(int id) throws SQLException {
-        return staffDao.get(id);
+    public Staff getById(int id) throws SQLException {
+        return staffDao.getById(id);
     }
 }

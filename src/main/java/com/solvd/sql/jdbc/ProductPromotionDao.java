@@ -87,7 +87,7 @@ public class ProductPromotionDao implements IProductPromotionDao {
     }
 
     @Override
-    public ProductPromotion get(int id) throws SQLException {
+    public ProductPromotion getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         ProductPromotion productPromotion = new ProductPromotion();
         String query = "SELECT * FROM product_promotion WHERE product_id = ?";

@@ -32,7 +32,7 @@ public class OrdersService implements IOrdersDao {
     }
 
     @Override
-    public Orders get(int id) throws SQLException {
-        return ordersDao.get(id);
+    public Orders getById(int id) throws SQLException {
+        return ordersDao.getById(id);
     }
 }

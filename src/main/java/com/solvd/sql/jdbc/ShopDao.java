@@ -95,7 +95,7 @@ public class ShopDao implements IShopDao {
     }
 
     @Override
-    public Shop get(int id) throws SQLException {
+    public Shop getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Shop shop = new Shop();
         String query = "SELECT * FROM shop WHERE id = ?";

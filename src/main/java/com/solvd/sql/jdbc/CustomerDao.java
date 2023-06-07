@@ -89,7 +89,7 @@ public class CustomerDao implements ICustomerDao {
     }
 
     @Override
-    public Customer get(int id) throws SQLException {
+    public Customer getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Customer customer = new Customer();
         String query = "SELECT * FROM customer WHERE id = ?";

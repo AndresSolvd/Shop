@@ -92,7 +92,7 @@ public class SupplierDao implements ISupplierDao {
     }
 
     @Override
-    public Supplier get(int id) throws SQLException {
+    public Supplier getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Supplier supplier = new Supplier();
         String query = "SELECT * FROM supplier WHERE id = ?";

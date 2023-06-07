@@ -86,7 +86,7 @@ public class CategoryDao implements ICategoryDao {
     }
 
     @Override
-    public Category get(int id) throws SQLException {
+    public Category getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Category category = new Category();
         String query = "SELECT * FROM category WHERE id = ?";
@@ -108,7 +108,7 @@ public class CategoryDao implements ICategoryDao {
     }
 
     @Override
-    public Category get(String categoryName) throws SQLException {
+    public Category getByName(String categoryName) throws SQLException {
         Connection con = connectionPool.getConnection();
         Category category = new Category();
         String query = "SELECT * FROM category WHERE category_name = ?";

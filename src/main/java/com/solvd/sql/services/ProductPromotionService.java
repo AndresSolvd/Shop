@@ -32,7 +32,7 @@ public class ProductPromotionService implements IProductPromotionDao {
     }
 
     @Override
-    public ProductPromotion get(int id) throws SQLException {
-        return promotionDao.get(id);
+    public ProductPromotion getById(int id) throws SQLException {
+        return promotionDao.getById(id);
     }
 }

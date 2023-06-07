@@ -95,7 +95,7 @@ public class PromotionDao implements IPromotionDao {
     }
 
     @Override
-    public Promotion get(int id) throws SQLException {
+    public Promotion getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Promotion promotion = new Promotion();
         String query = "SELECT * FROM promotion WHERE id = ?";

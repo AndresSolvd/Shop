@@ -32,7 +32,7 @@ public class PersonService implements IPersonDao {
     }
 
     @Override
-    public Person get(int id) throws SQLException {
-        return personDao.get(id);
+    public Person getById(int id) throws SQLException {
+        return personDao.getById(id);
     }
 }

@@ -95,7 +95,7 @@ public class PersonDao implements IPersonDao {
     }
 
     @Override
-    public Person get(int id) throws SQLException {
+    public Person getById(int id) throws SQLException {
         Connection con = connectionPool.getConnection();
         Person person = new Person();
         String query = "SELECT * FROM person WHERE id = ?";

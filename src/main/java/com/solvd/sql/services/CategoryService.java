@@ -32,12 +32,12 @@ public class CategoryService implements ICategoryDao {
     }
 
     @Override
-    public Category get(int id) throws SQLException {
-        return categoryDao.get(id);
+    public Category getById(int id) throws SQLException {
+        return categoryDao.getById(id);
     }
 
     @Override
-    public Category get(String categoryName) throws SQLException {
-        return categoryDao.get(categoryName);
+    public Category getByName(String categoryName) throws SQLException {
+        return categoryDao.getByName(categoryName);
     }
 }
