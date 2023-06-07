@@ -1,6 +1,5 @@
 package com.solvd;
 
-import com.solvd.sql.jdbc.*;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
 
@@ -342,7 +341,7 @@ public class Main {
             System.out.println(productPromotionService.get(1));
             // All
             System.out.println(productPromotionService.getAll());
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
