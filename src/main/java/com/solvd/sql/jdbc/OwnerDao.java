@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IOwnerDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Owner;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerDao implements IOwnerDao {
+public class OwnerDao implements IBaseDAO<Owner>{
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Owner owner) throws SQLException {
+    public void insert(Owner owner) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO owner (person_id) VALUES (?)";
 
@@ -27,13 +27,17 @@ public class OwnerDao implements IOwnerDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Owner owner) throws SQLException {
+    public void update(Owner owner) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE owner SET person_id = ? WHERE id = ?";
 
@@ -44,12 +48,16 @@ public class OwnerDao implements IOwnerDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM owner WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -58,12 +66,16 @@ public class OwnerDao implements IOwnerDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Owner> getAll() throws SQLException {
+    public List<Owner> getAll() {
         Connection con = connectionPool.getConnection();
         List<Owner> owners = new ArrayList<>();
         String query = "SELECT * FROM owner";
@@ -80,13 +92,17 @@ public class OwnerDao implements IOwnerDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return owners;
     }
 
     @Override
-    public Owner getById(int id) throws SQLException {
+    public Owner getById(int id) {
         Connection con = connectionPool.getConnection();
         Owner owner = new Owner();
         String query = "SELECT * FROM owner WHERE id = ?";
@@ -102,8 +118,14 @@ public class OwnerDao implements IOwnerDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return owner;
     }

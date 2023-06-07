@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IOrderItemDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.OrderItem;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderItemDao implements IOrderItemDao {
+public class OrderItemDao implements IBaseDAO<OrderItem> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(OrderItem orderItem) throws SQLException {
+    public void insert(OrderItem orderItem) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO order_item (quantity, product_id, order_id) VALUES (?, ?, ?)";
 
@@ -29,13 +29,17 @@ public class OrderItemDao implements IOrderItemDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(OrderItem orderItem) throws SQLException {
+    public void update(OrderItem orderItem) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE order_item SET quantity = ?, product_id = ? WHERE order_id = ?";
 
@@ -47,12 +51,16 @@ public class OrderItemDao implements IOrderItemDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM order_item WHERE order_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -61,12 +69,16 @@ public class OrderItemDao implements IOrderItemDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<OrderItem> getAll() throws SQLException {
+    public List<OrderItem> getAll() {
         Connection con = connectionPool.getConnection();
         List<OrderItem> orderItems = new ArrayList<>();
         String query = "SELECT * FROM order_item";
@@ -84,13 +96,17 @@ public class OrderItemDao implements IOrderItemDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return orderItems;
     }
 
     @Override
-    public OrderItem getById(int id) throws SQLException {
+    public OrderItem getById(int id) {
         Connection con = connectionPool.getConnection();
         OrderItem orderItem = new OrderItem();
         String query = "SELECT * FROM order_item WHERE order_id = ?";
@@ -108,6 +124,8 @@ public class OrderItemDao implements IOrderItemDao {
             } finally {
                 connectionPool.releaseConnection(con);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
         return orderItem;
     }

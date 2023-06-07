@@ -1,38 +1,37 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.ICustomerDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.CustomerDao;
 import com.solvd.sql.model.Customer;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public class CustomerService implements ICustomerDao {
+public class CustomerService implements IBaseDAO<Customer> {
 
     CustomerDao customerDao = new CustomerDao();
 
     @Override
-    public void insert(Customer customer) throws SQLException {
+    public void insert(Customer customer) {
         customerDao.insert(customer);
     }
 
     @Override
-    public void update(Customer customer) throws SQLException {
+    public void update(Customer customer) {
         customerDao.update(customer);
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         customerDao.delete(id);
     }
 
     @Override
-    public List<Customer> getAll() throws SQLException {
+    public List<Customer> getAll() {
         return customerDao.getAll();
     }
 
     @Override
-    public Customer getById(int id) throws SQLException {
+    public Customer getById(int id) {
         return customerDao.getById(id);
     }
 }

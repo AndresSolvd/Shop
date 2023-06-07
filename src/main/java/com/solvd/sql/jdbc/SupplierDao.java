@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.ISupplierDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Supplier;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDao implements ISupplierDao {
+public class SupplierDao implements IBaseDAO<Supplier> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Supplier supplier) throws SQLException {
+    public void insert(Supplier supplier) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO supplier (supplier_name, tax_number, phone) VALUES (?, ?, ?)";
 
@@ -29,13 +29,17 @@ public class SupplierDao implements ISupplierDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Supplier supplier) throws SQLException {
+    public void update(Supplier supplier) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE supplier SET supplier_name = ?, tax_number = ?, phone = ? WHERE id = ?";
 
@@ -48,12 +52,16 @@ public class SupplierDao implements ISupplierDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM supplier WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -62,12 +70,16 @@ public class SupplierDao implements ISupplierDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Supplier> getAll() throws SQLException {
+    public List<Supplier> getAll() {
         Connection con = connectionPool.getConnection();
         List<Supplier> suppliers = new ArrayList<>();
         String query = "SELECT * FROM supplier";
@@ -86,13 +98,17 @@ public class SupplierDao implements ISupplierDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return suppliers;
     }
 
     @Override
-    public Supplier getById(int id) throws SQLException {
+    public Supplier getById(int id) {
         Connection con = connectionPool.getConnection();
         Supplier supplier = new Supplier();
         String query = "SELECT * FROM supplier WHERE id = ?";
@@ -110,8 +126,14 @@ public class SupplierDao implements ISupplierDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return supplier;
     }

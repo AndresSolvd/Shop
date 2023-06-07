@@ -1,38 +1,38 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.ISupplierDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.SupplierDao;
 import com.solvd.sql.model.Supplier;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class SupplierService implements ISupplierDao {
+public class SupplierService implements IBaseDAO<Supplier> {
 
     SupplierDao supplierDao = new SupplierDao();
 
     @Override
-    public void insert(Supplier supplier) throws SQLException {
+    public void insert(Supplier supplier) {
         supplierDao.insert(supplier);
     }
 
     @Override
-    public void update(Supplier supplier) throws SQLException {
+    public void update(Supplier supplier) {
         supplierDao.update(supplier);
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         supplierDao.delete(id);
     }
 
     @Override
-    public List<Supplier> getAll() throws SQLException {
+    public List<Supplier> getAll() {
         return supplierDao.getAll();
     }
 
     @Override
-    public Supplier getById(int id) throws SQLException {
+    public Supplier getById(int id) {
         return supplierDao.getById(id);
     }
 }

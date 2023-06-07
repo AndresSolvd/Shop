@@ -16,7 +16,7 @@ public class CategoryDao implements ICategoryDao {
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Category category) throws SQLException {
+    public void insert(Category category) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO category (category_name) VALUES (?)";
 
@@ -27,13 +27,17 @@ public class CategoryDao implements ICategoryDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Category category) throws SQLException {
+    public void update(Category category) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE category SET category_name = ? WHERE id = ?";
 
@@ -44,12 +48,16 @@ public class CategoryDao implements ICategoryDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM category WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -58,12 +66,16 @@ public class CategoryDao implements ICategoryDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<Category> getAll() {
         Connection con = connectionPool.getConnection();
         List<Category> categories = new ArrayList<>();
         String query = "SELECT * FROM category";
@@ -80,13 +92,17 @@ public class CategoryDao implements ICategoryDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return categories;
     }
 
     @Override
-    public Category getById(int id) throws SQLException {
+    public Category getById(int id) {
         Connection con = connectionPool.getConnection();
         Category category = new Category();
         String query = "SELECT * FROM category WHERE id = ?";
@@ -101,14 +117,20 @@ public class CategoryDao implements ICategoryDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return category;
     }
 
     @Override
-    public Category getByName(String categoryName) throws SQLException {
+    public Category getByName(String categoryName) {
         Connection con = connectionPool.getConnection();
         Category category = new Category();
         String query = "SELECT * FROM category WHERE category_name = ?";
@@ -123,8 +145,14 @@ public class CategoryDao implements ICategoryDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return category;
     }

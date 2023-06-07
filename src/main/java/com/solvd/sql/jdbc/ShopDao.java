@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IShopDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Shop;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopDao implements IShopDao {
+public class ShopDao implements IBaseDAO<Shop> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Shop shop) throws SQLException {
+    public void insert(Shop shop) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO shop (shop_name, address, phone, owner_id) VALUES (?, ?, ?, ?)";
 
@@ -30,13 +30,17 @@ public class ShopDao implements IShopDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Shop shop) throws SQLException {
+    public void update(Shop shop) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE shop SET shop_name = ?, address = ?, phone = ?, owner_id = ? WHERE id = ?";
 
@@ -50,12 +54,16 @@ public class ShopDao implements IShopDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM shop WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -64,12 +72,16 @@ public class ShopDao implements IShopDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Shop> getAll() throws SQLException {
+    public List<Shop> getAll() {
         Connection con = connectionPool.getConnection();
         List<Shop> shops = new ArrayList<>();
         String query = "SELECT * FROM shop";
@@ -89,13 +101,17 @@ public class ShopDao implements IShopDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return shops;
     }
 
     @Override
-    public Shop getById(int id) throws SQLException {
+    public Shop getById(int id) {
         Connection con = connectionPool.getConnection();
         Shop shop = new Shop();
         String query = "SELECT * FROM shop WHERE id = ?";
@@ -113,8 +129,14 @@ public class ShopDao implements IShopDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return shop;
     }

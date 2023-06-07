@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IStaffDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Staff;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffDao implements IStaffDao {
+public class StaffDao implements IBaseDAO<Staff> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Staff staff) throws SQLException {
+    public void insert(Staff staff) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO staff (position, person_id, shop_id) VALUES (?, ?, ?)";
 
@@ -29,13 +29,17 @@ public class StaffDao implements IStaffDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Staff staff) throws SQLException {
+    public void update(Staff staff) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE staff SET position = ?, person_id = ?, shop_id = ? WHERE id = ?";
 
@@ -48,12 +52,16 @@ public class StaffDao implements IStaffDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM staff WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -62,12 +70,16 @@ public class StaffDao implements IStaffDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Staff> getAll() throws SQLException {
+    public List<Staff> getAll() {
         Connection con = connectionPool.getConnection();
         List<Staff> staffs = new ArrayList<>();
         String query = "SELECT * FROM staff";
@@ -86,13 +98,17 @@ public class StaffDao implements IStaffDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return staffs;
     }
 
     @Override
-    public Staff getById(int id) throws SQLException {
+    public Staff getById(int id) {
         Connection con = connectionPool.getConnection();
         Staff staff = new Staff();
         String query = "SELECT * FROM staff WHERE id = ?";
@@ -110,8 +126,14 @@ public class StaffDao implements IStaffDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return staff;
     }

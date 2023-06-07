@@ -1,38 +1,38 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IStaffDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.StaffDao;
 import com.solvd.sql.model.Staff;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class StaffService implements IStaffDao {
+public class StaffService implements IBaseDAO<Staff> {
 
     StaffDao staffDao = new StaffDao();
 
     @Override
-    public void insert(Staff staff) throws SQLException {
+    public void insert(Staff staff) {
         staffDao.insert(staff);
     }
 
     @Override
-    public void update(Staff staff) throws SQLException {
+    public void update(Staff staff) {
         staffDao.update(staff);
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         staffDao.delete(id);
     }
 
     @Override
-    public List<Staff> getAll() throws SQLException {
+    public List<Staff> getAll() {
         return staffDao.getAll();
     }
 
     @Override
-    public Staff getById(int id) throws SQLException {
+    public Staff getById(int id) {
         return staffDao.getById(id);
     }
 }

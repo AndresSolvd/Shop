@@ -6,17 +6,17 @@ import java.util.List;
 public interface IBaseDAO<T> {
 
     // CRUD Create
-    void insert(T t) throws SQLException;
+    void insert(T t);
 
     // CRUD Update
-    void update(T t) throws SQLException;
+    void update(T t);
 
     // CRUD Delete
-    void delete(int id) throws SQLException;
+    void delete(int id);
 
     // Get All
-    List<T> getAll() throws SQLException;
+    List<T> getAll();
 
     // CRUD Read
-    T getById(int id) throws SQLException;
+    T getById(int id);
 }

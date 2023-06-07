@@ -1,38 +1,38 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IProductDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.ProductDao;
 import com.solvd.sql.model.Product;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ProductService implements IProductDao {
+public class ProductService implements IBaseDAO<Product> {
 
     ProductDao productDao = new ProductDao();
 
     @Override
-    public void insert(Product product) throws SQLException {
+    public void insert(Product product) {
         productDao.insert(product);
     }
 
     @Override
-    public void update(Product product) throws SQLException {
+    public void update(Product product) {
         productDao.update(product);
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         productDao.delete(id);
     }
 
     @Override
-    public List<Product> getAll() throws SQLException {
+    public List<Product> getAll() {
         return productDao.getAll();
     }
 
     @Override
-    public Product getById(int id) throws SQLException {
+    public Product getById(int id) {
         return productDao.getById(id);
     }
 }

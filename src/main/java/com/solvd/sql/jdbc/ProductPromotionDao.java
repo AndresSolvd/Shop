@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IProductPromotionDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.ProductPromotion;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductPromotionDao implements IProductPromotionDao {
+public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(ProductPromotion productPromotion) throws SQLException {
+    public void insert(ProductPromotion productPromotion) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO product_promotion (promotion_id, product_id) VALUES (?, ?)";
 
@@ -28,13 +28,17 @@ public class ProductPromotionDao implements IProductPromotionDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(ProductPromotion productPromotion) throws SQLException {
+    public void update(ProductPromotion productPromotion) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE product_promotion SET promotion_id = ? WHERE product_id = ?";
 
@@ -45,12 +49,16 @@ public class ProductPromotionDao implements IProductPromotionDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM product_promotion WHERE promotion_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -59,12 +67,16 @@ public class ProductPromotionDao implements IProductPromotionDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<ProductPromotion> getAll() throws SQLException {
+    public List<ProductPromotion> getAll() {
         Connection con = connectionPool.getConnection();
         List<ProductPromotion> productPromotions = new ArrayList<>();
         String query = "SELECT * FROM product_promotion";
@@ -81,13 +93,17 @@ public class ProductPromotionDao implements IProductPromotionDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return productPromotions;
     }
 
     @Override
-    public ProductPromotion getById(int id) throws SQLException {
+    public ProductPromotion getById(int id) {
         Connection con = connectionPool.getConnection();
         ProductPromotion productPromotion = new ProductPromotion();
         String query = "SELECT * FROM product_promotion WHERE product_id = ?";
@@ -103,8 +119,14 @@ public class ProductPromotionDao implements IProductPromotionDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return productPromotion;
     }

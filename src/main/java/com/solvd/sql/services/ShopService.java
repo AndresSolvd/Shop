@@ -1,38 +1,38 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IShopDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.ShopDao;
 import com.solvd.sql.model.Shop;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ShopService implements IShopDao {
+public class ShopService implements IBaseDAO<Shop> {
 
     ShopDao shopDao = new ShopDao();
 
     @Override
-    public void insert(Shop shop) throws SQLException {
+    public void insert(Shop shop) {
         shopDao.insert(shop);
     }
 
     @Override
-    public void update(Shop shop) throws SQLException {
+    public void update(Shop shop) {
         shopDao.update(shop);
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         shopDao.delete(id);
     }
 
     @Override
-    public List<Shop> getAll() throws SQLException {
+    public List<Shop> getAll() {
         return shopDao.getAll();
     }
 
     @Override
-    public Shop getById(int id) throws SQLException {
+    public Shop getById(int id) {
         return shopDao.getById(id);
     }
 }

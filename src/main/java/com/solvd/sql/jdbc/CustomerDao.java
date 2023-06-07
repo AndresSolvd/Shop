@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.ICustomerDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Customer;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDao implements ICustomerDao {
+public class CustomerDao implements IBaseDAO<Customer> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Customer customer) throws SQLException {
+    public void insert(Customer customer) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO customer (tax_number, person_id) VALUES (?, ?)";
 
@@ -28,13 +28,17 @@ public class CustomerDao implements ICustomerDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Customer customer) throws SQLException {
+    public void update(Customer customer) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE customer SET tax_number = ?, person_id = ? WHERE id = ?";
 
@@ -46,12 +50,16 @@ public class CustomerDao implements ICustomerDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM customer WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -60,12 +68,16 @@ public class CustomerDao implements ICustomerDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Customer> getAll() throws SQLException {
+    public List<Customer> getAll() {
         Connection con = connectionPool.getConnection();
         List<Customer> customers = new ArrayList<>();
         String query = "SELECT * FROM customer";
@@ -83,13 +95,17 @@ public class CustomerDao implements ICustomerDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return customers;
     }
 
     @Override
-    public Customer getById(int id) throws SQLException {
+    public Customer getById(int id) {
         Connection con = connectionPool.getConnection();
         Customer customer = new Customer();
         String query = "SELECT * FROM customer WHERE id = ?";
@@ -105,8 +121,14 @@ public class CustomerDao implements ICustomerDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return customer;
     }

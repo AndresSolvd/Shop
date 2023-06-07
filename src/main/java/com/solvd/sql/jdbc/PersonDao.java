@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IPersonDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Person;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDao implements IPersonDao {
+public class PersonDao implements IBaseDAO<Person> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Person person) throws SQLException {
+    public void insert(Person person) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO person (person_name, last_name, phone, address) VALUES (?, ?, ?, ?)";
 
@@ -30,13 +30,17 @@ public class PersonDao implements IPersonDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Person person) throws SQLException {
+    public void update(Person person) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE person SET person_name = ?, last_name = ?, phone = ?, address = ? WHERE id = ?";
 
@@ -50,12 +54,16 @@ public class PersonDao implements IPersonDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM person WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -64,12 +72,16 @@ public class PersonDao implements IPersonDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Person> getAll() throws SQLException {
+    public List<Person> getAll() {
         Connection con = connectionPool.getConnection();
         List<Person> persons = new ArrayList<>();
         String query = "SELECT * FROM person";
@@ -89,13 +101,17 @@ public class PersonDao implements IPersonDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return persons;
     }
 
     @Override
-    public Person getById(int id) throws SQLException {
+    public Person getById(int id) {
         Connection con = connectionPool.getConnection();
         Person person = new Person();
         String query = "SELECT * FROM person WHERE id = ?";
@@ -114,8 +130,14 @@ public class PersonDao implements IPersonDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return person;
     }

@@ -1,38 +1,38 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IPersonDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.jdbc.PersonDao;
 import com.solvd.sql.model.Person;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class PersonService implements IPersonDao {
+public class PersonService implements IBaseDAO<Person> {
 
     PersonDao personDao = new PersonDao();
 
     @Override
-    public void insert(Person person) throws SQLException {
+    public void insert(Person person) {
         personDao.insert(person);
     }
 
     @Override
-    public void update(Person person) throws SQLException {
+    public void update(Person person) {
         personDao.update(person);
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         personDao.delete(id);
     }
 
     @Override
-    public List<Person> getAll() throws SQLException {
+    public List<Person> getAll() {
         return personDao.getAll();
     }
 
     @Override
-    public Person getById(int id) throws SQLException {
+    public Person getById(int id) {
         return personDao.getById(id);
     }
 }

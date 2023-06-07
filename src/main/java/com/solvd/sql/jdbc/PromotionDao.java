@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IPromotionDao;
+import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Promotion;
 import com.solvd.util.ConnectionPool;
 
@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PromotionDao implements IPromotionDao {
+public class PromotionDao implements IBaseDAO<Promotion> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Promotion promotion) throws SQLException {
+    public void insert(Promotion promotion) {
         Connection con = connectionPool.getConnection();
         String query = "INSERT INTO promotion (promotion_name, discount, start_date, end_date) VALUES (?, ?, ?, ?)";
 
@@ -30,13 +30,17 @@ public class PromotionDao implements IPromotionDao {
             throw new RuntimeException(e);
         } finally {
             if (con != null) {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     @Override
-    public void update(Promotion promotion) throws SQLException {
+    public void update(Promotion promotion) {
         Connection con = connectionPool.getConnection();
         String query = "UPDATE promotion SET promotion_name = ?, discount = ?, start_date = ?, end_date = ? WHERE id = ?";
 
@@ -50,12 +54,16 @@ public class PromotionDao implements IPromotionDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) {
         Connection con = connectionPool.getConnection();
         String query = "DELETE FROM promotion WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -64,12 +72,16 @@ public class PromotionDao implements IPromotionDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     @Override
-    public List<Promotion> getAll() throws SQLException {
+    public List<Promotion> getAll() {
         Connection con = connectionPool.getConnection();
         List<Promotion> promotions = new ArrayList<>();
         String query = "SELECT * FROM promotion";
@@ -89,13 +101,17 @@ public class PromotionDao implements IPromotionDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            connectionPool.releaseConnection(con);
+            try {
+                connectionPool.releaseConnection(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return promotions;
     }
 
     @Override
-    public Promotion getById(int id) throws SQLException {
+    public Promotion getById(int id) {
         Connection con = connectionPool.getConnection();
         Promotion promotion = new Promotion();
         String query = "SELECT * FROM promotion WHERE id = ?";
@@ -114,8 +130,14 @@ public class PromotionDao implements IPromotionDao {
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
-                connectionPool.releaseConnection(con);
+                try {
+                    connectionPool.releaseConnection(con);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return promotion;
     }
