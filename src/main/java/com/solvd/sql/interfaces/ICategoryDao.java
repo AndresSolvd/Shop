@@ -4,6 +4,6 @@ import com.solvd.sql.model.Category;
 
 import java.sql.SQLException;
 
-public interface IDaoCategory extends IBaseDAO<Category> {
+public interface ICategoryDao extends IBaseDAO<Category> {
     Category get(String categoryName) throws SQLException;
 }

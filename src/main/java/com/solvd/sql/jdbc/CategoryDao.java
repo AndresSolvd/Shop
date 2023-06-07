@@ -1,6 +1,6 @@
 package com.solvd.sql.jdbc;
 
-import com.solvd.sql.interfaces.IDaoCategory;
+import com.solvd.sql.interfaces.ICategoryDao;
 import com.solvd.sql.model.Category;
 import com.solvd.util.ConnectionPool;
 
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDao implements IDaoCategory {
+public class CategoryDao implements ICategoryDao {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
