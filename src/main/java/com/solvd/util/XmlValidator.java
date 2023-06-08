@@ -7,6 +7,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 public class XmlValidator {
+
     public static void validateXMLAgainstXSD(String xmlFilePath, String xsdFilePath) {
         try {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
