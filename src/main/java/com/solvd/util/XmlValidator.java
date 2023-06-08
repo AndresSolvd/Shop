@@ -7,10 +7,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 public class XmlValidator {
-    public static String Validator() {
-        String xmlFilePath = "src/main/resources/shop.xml";
-        String xsdFilePath = "src/main/resources/shop.xsd";
-
+    public static String validator(String xmlFilePath, String xsdFilePath) {
         try {
             boolean isValid = validateXMLAgainstXSD(xmlFilePath, xsdFilePath);
             if (isValid) {

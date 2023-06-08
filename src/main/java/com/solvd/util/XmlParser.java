@@ -8,7 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
 public class XmlParser {
-    public static void Parser(String xmlFilePath) {
+    public static void parser(String xmlFilePath) {
         try {
             // Load XML file
             File xmlFile = new File(xmlFilePath);

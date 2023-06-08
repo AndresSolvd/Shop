@@ -343,6 +343,7 @@ public class Main {
         System.out.println(productPromotionService.getAll());
 
         // XML Validate and Parse
-        XmlParser.Parser(XmlValidator.Validator());
+        XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
+        XmlParser.parser("src/main/resources/shop.xml");
     }
 }
