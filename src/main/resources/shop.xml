@@ -1,4 +1,6 @@
-<shop>
+<?xml version="1.0" encoding="utf-8" ?>
+<shop xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="shop.xsd">
     <persons>
         <person>
             <id>1</id>
