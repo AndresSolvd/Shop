@@ -10,7 +10,7 @@ import java.sql.Date;
 public class Main {
     public static void main(String[] args) {
 
-        // CATEGORY
+/*        // CATEGORY
         System.out.println("\n--- CATEGORY ---\n");
         // Create
         CategoryService categoryService = new CategoryService();
@@ -340,7 +340,7 @@ public class Main {
         // Read
         System.out.println(productPromotionService.getById(1));
         // All
-        System.out.println(productPromotionService.getAll());
+        System.out.println(productPromotionService.getAll());*/
 
         // XML Validate and Parse
         XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
