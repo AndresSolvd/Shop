@@ -2,13 +2,13 @@ package com.solvd;
 
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
+import com.solvd.util.XmlParser;
+import com.solvd.util.XmlValidator;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-
 
         // CATEGORY
         System.out.println("\n--- CATEGORY ---\n");
@@ -342,5 +342,7 @@ public class Main {
         // All
         System.out.println(productPromotionService.getAll());
 
+        // XML Validate and Parse
+        XmlParser.Parser(XmlValidator.Validator());
     }
 }
