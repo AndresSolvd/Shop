@@ -82,7 +82,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>TestTry</mainClass>
+                            <mainClass>com/solvd/Main.java</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
