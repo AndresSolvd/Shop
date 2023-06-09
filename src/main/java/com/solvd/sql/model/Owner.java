@@ -5,13 +5,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "owner")
 public class Owner {
-    private int id;
-    private int personId;
 
     @XmlElement(name = "id")
+    private int id;
+
+    @XmlElement(name = "personId")
+    private int personId;
+
     public int getId() {
         return id;
     }
@@ -20,7 +23,6 @@ public class Owner {
         this.id = id;
     }
 
-    @XmlElement(name = "personId")
     public int getPersonId() {
         return personId;
     }

@@ -5,16 +5,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "person")
 public class Person {
-    private int id;
-    private String personName;
-    private String lastName;
-    private String phone;
-    private String address;
 
     @XmlElement(name = "id")
+    private int id;
+
+    @XmlElement(name = "personName")
+    private String personName;
+
+    @XmlElement(name = "lastName")
+    private String lastName;
+
+    @XmlElement(name = "phone")
+    private String phone;
+
+    @XmlElement(name = "address")
+    private String address;
+
     public int getId() {
         return id;
     }
@@ -23,7 +32,6 @@ public class Person {
         this.id = id;
     }
 
-    @XmlElement(name = "personName")
     public String getPersonName() {
         return personName;
     }
@@ -32,7 +40,6 @@ public class Person {
         this.personName = personName;
     }
 
-    @XmlElement(name = "lastName")
     public String getLastName() {
         return lastName;
     }
@@ -41,7 +48,6 @@ public class Person {
         this.lastName = lastName;
     }
 
-    @XmlElement(name = "phone")
     public String getPhone() {
         return phone;
     }
@@ -50,7 +56,6 @@ public class Person {
         this.phone = phone;
     }
 
-    @XmlElement(name = "address")
     public String getAddress() {
         return address;
     }

@@ -5,14 +5,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "orderItem")
 public class OrderItem {
-    private int quantity;
-    private int productId;
-    private int orderId;
 
     @XmlElement(name = "quantity")
+    private int quantity;
+
+    @XmlElement(name = "productId")
+    private int productId;
+
+    @XmlElement(name = "orderId")
+    private int orderId;
+
     public int getQuantity() {
         return quantity;
     }
@@ -21,7 +26,6 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    @XmlElement(name = "productId")
     public int getProductId() {
         return productId;
     }
@@ -30,7 +34,6 @@ public class OrderItem {
         this.productId = productId;
     }
 
-    @XmlElement(name = "orderId")
     public int getOrderId() {
         return orderId;
     }

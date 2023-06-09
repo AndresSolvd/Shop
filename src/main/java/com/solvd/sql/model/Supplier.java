@@ -5,15 +5,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "supplier")
 public class Supplier {
-    private int id;
-    private String supplierName;
-    private String taxNumber;
-    private String phone;
 
     @XmlElement(name = "Id")
+    private int id;
+
+    @XmlElement(name = "SupplierName")
+    private String supplierName;
+
+    @XmlElement(name = "TaxNumber")
+    private String taxNumber;
+
+    @XmlElement(name = "Phone")
+    private String phone;
+
     public int getId() {
         return id;
     }
@@ -22,7 +29,6 @@ public class Supplier {
         this.id = id;
     }
 
-    @XmlElement(name = "SupplierName")
     public String getSupplierName() {
         return supplierName;
     }
@@ -31,7 +37,6 @@ public class Supplier {
         this.supplierName = supplierName;
     }
 
-    @XmlElement(name = "TaxNumber")
     public String getTaxNumber() {
         return taxNumber;
     }
@@ -40,7 +45,6 @@ public class Supplier {
         this.taxNumber = taxNumber;
     }
 
-    @XmlElement(name = "Phone")
     public String getPhone() {
         return phone;
     }

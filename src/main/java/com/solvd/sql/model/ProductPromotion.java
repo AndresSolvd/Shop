@@ -5,13 +5,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "productPromotion")
 public class ProductPromotion {
-    private int promotionId;
-    private int productId;
 
     @XmlElement(name = "promotionId")
+    private int promotionId;
+
+    @XmlElement(name = "productId")
+    private int productId;
+
     public int getPromotionId() {
         return promotionId;
     }
@@ -20,7 +23,6 @@ public class ProductPromotion {
         this.promotionId = promotionId;
     }
 
-    @XmlElement(name = "productId")
     public int getProductId() {
         return productId;
     }

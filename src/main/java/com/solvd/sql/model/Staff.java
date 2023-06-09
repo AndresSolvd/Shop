@@ -5,15 +5,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "staff")
 public class Staff {
-    private int id;
-    private String position;
-    private int personId;
-    private int shopId;
 
     @XmlElement(name = "id")
+    private int id;
+
+    @XmlElement(name = "position")
+    private String position;
+
+    @XmlElement(name = "personId")
+    private int personId;
+
+    @XmlElement(name = "shopId")
+    private int shopId;
+
     public int getId() {
         return id;
     }
@@ -22,7 +29,6 @@ public class Staff {
         this.id = id;
     }
 
-    @XmlElement(name = "position")
     public String getPosition() {
         return position;
     }
@@ -31,7 +37,6 @@ public class Staff {
         this.position = position;
     }
 
-    @XmlElement(name = "personId")
     public int getPersonId() {
         return personId;
     }
@@ -40,7 +45,6 @@ public class Staff {
         this.personId = personId;
     }
 
-    @XmlElement(name = "shopId")
     public int getShopId() {
         return shopId;
     }

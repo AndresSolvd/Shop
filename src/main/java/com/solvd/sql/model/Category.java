@@ -5,13 +5,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "category")
 public class Category {
-    private int id;
-    private String categoryName;
 
     @XmlElement(name = "id")
+    private int id;
+
+    @XmlElement(name = "categoryName")
+    private String categoryName;
+
     public int getId() {
         return id;
     }
@@ -20,7 +23,6 @@ public class Category {
         this.id = id;
     }
 
-    @XmlElement(name = "categoryName")
     public String getCategoryName() {
         return categoryName;
     }
@@ -31,9 +33,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", categoryName='" + categoryName + '\'' +
-                '}';
+        return "Category{" + "id=" + id + ", categoryName='" + categoryName + '\'' + '}';
     }
 }

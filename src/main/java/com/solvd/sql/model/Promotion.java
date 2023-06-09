@@ -6,16 +6,25 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "promotion")
 public class Promotion {
-    private int id;
-    private String promotionName;
-    private float discount;
-    private Date startDate;
-    private Date endDate;
 
     @XmlElement(name = "id")
+    private int id;
+
+    @XmlElement(name = "promotionName")
+    private String promotionName;
+
+    @XmlElement(name = "discount")
+    private float discount;
+
+    @XmlElement(name = "startDate")
+    private Date startDate;
+
+    @XmlElement(name = "endDate")
+    private Date endDate;
+
     public int getId() {
         return id;
     }
@@ -24,7 +33,6 @@ public class Promotion {
         this.id = id;
     }
 
-    @XmlElement(name = "promotionName")
     public String getPromotionName() {
         return promotionName;
     }
@@ -33,7 +41,6 @@ public class Promotion {
         this.promotionName = promotionName;
     }
 
-    @XmlElement(name = "discount")
     public float getDiscount() {
         return discount;
     }
@@ -42,7 +49,6 @@ public class Promotion {
         this.discount = discount;
     }
 
-    @XmlElement(name = "startDate")
     public Date getStartDate() {
         return startDate;
     }
@@ -51,7 +57,6 @@ public class Promotion {
         this.startDate = startDate;
     }
 
-    @XmlElement(name = "endDate")
     public Date getEndDate() {
         return endDate;
     }
