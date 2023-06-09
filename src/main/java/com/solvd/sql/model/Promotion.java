@@ -1,7 +1,13 @@
 package com.solvd.sql.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
 
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "promotion")
 public class Promotion {
     private int id;
     private String promotionName;
@@ -9,6 +15,7 @@ public class Promotion {
     private Date startDate;
     private Date endDate;
 
+    @XmlElement(name = "id")
     public int getId() {
         return id;
     }
@@ -17,6 +24,7 @@ public class Promotion {
         this.id = id;
     }
 
+    @XmlElement(name = "promotionName")
     public String getPromotionName() {
         return promotionName;
     }
@@ -25,6 +33,7 @@ public class Promotion {
         this.promotionName = promotionName;
     }
 
+    @XmlElement(name = "discount")
     public float getDiscount() {
         return discount;
     }
@@ -33,6 +42,7 @@ public class Promotion {
         this.discount = discount;
     }
 
+    @XmlElement(name = "startDate")
     public Date getStartDate() {
         return startDate;
     }
@@ -41,6 +51,7 @@ public class Promotion {
         this.startDate = startDate;
     }
 
+    @XmlElement(name = "endDate")
     public Date getEndDate() {
         return endDate;
     }

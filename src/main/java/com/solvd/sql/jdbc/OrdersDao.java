@@ -4,6 +4,7 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Orders;
 import com.solvd.util.ConnectionPool;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement(name = "OrdersDao")
 public class OrdersDao implements IBaseDAO<Orders> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();

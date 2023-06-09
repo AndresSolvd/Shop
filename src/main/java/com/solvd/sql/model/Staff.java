@@ -1,11 +1,19 @@
 package com.solvd.sql.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "staff")
 public class Staff {
     private int id;
     private String position;
     private int personId;
     private int shopId;
 
+    @XmlElement(name = "id")
     public int getId() {
         return id;
     }
@@ -14,6 +22,7 @@ public class Staff {
         this.id = id;
     }
 
+    @XmlElement(name = "position")
     public String getPosition() {
         return position;
     }
@@ -22,6 +31,7 @@ public class Staff {
         this.position = position;
     }
 
+    @XmlElement(name = "personId")
     public int getPersonId() {
         return personId;
     }
@@ -30,6 +40,7 @@ public class Staff {
         this.personId = personId;
     }
 
+    @XmlElement(name = "shopId")
     public int getShopId() {
         return shopId;
     }

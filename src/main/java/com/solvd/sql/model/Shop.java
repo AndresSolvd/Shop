@@ -1,5 +1,12 @@
 package com.solvd.sql.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "shop")
 public class Shop {
     private int id;
     private String shopName;
@@ -7,6 +14,7 @@ public class Shop {
     private String phone;
     private int ownerId;
 
+    @XmlElement(name = "id")
     public int getId() {
         return id;
     }
@@ -15,6 +23,7 @@ public class Shop {
         this.id = id;
     }
 
+    @XmlElement(name = "shopName")
     public String getShopName() {
         return shopName;
     }
@@ -23,6 +32,7 @@ public class Shop {
         this.shopName = shopName;
     }
 
+    @XmlElement(name = "address")
     public String getAddress() {
         return address;
     }
@@ -31,6 +41,7 @@ public class Shop {
         this.address = address;
     }
 
+    @XmlElement(name = "phone")
     public String getPhone() {
         return phone;
     }
@@ -39,6 +50,7 @@ public class Shop {
         this.phone = phone;
     }
 
+    @XmlElement(name = "ownerId")
     public int getOwnerId() {
         return ownerId;
     }

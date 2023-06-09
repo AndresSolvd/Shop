@@ -4,6 +4,7 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Staff;
 import com.solvd.util.ConnectionPool;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement(name = "StaffDao")
 public class StaffDao implements IBaseDAO<Staff> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
