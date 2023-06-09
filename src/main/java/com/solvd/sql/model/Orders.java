@@ -1,19 +1,20 @@
 package com.solvd.sql.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.solvd.sql.jaxb.DateAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "order")
 public class Orders {
 
-    @XmlElement(name = "id")
+    @XmlAttribute(name = "id")
     private int id;
 
     @XmlElement(name = "order_date")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date order_date;
 
     @XmlElement(name = "total")

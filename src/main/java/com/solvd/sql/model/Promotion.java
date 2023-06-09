@@ -1,16 +1,16 @@
 package com.solvd.sql.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.solvd.sql.jaxb.DateAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "promotion")
 public class Promotion {
 
-    @XmlElement(name = "id")
+    @XmlAttribute(name = "id")
     private int id;
 
     @XmlElement(name = "promotionName")
@@ -20,9 +20,11 @@ public class Promotion {
     private float discount;
 
     @XmlElement(name = "startDate")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date startDate;
 
     @XmlElement(name = "endDate")
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date endDate;
 
     public int getId() {
