@@ -1,15 +1,12 @@
 package com.solvd.sql.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "product")
 public class Product {
 
-    @XmlElement(name = "id")
+    @XmlAttribute(name = "id")
     private int id;
 
     @XmlElement(name = "productName")
