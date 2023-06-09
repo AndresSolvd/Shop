@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.Owner;
 import com.solvd.util.ConnectionPool;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement(name = "OwnerDao")
-public class OwnerDao implements IBaseDAO<Owner>{
+public class OwnerDao implements IBaseDAO<Owner> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
