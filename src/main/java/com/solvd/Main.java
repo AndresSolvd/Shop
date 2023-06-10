@@ -2,7 +2,7 @@ package com.solvd;
 
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
-import com.solvd.util.MarshOrUnMarsh;
+import com.solvd.sql.jaxb.MarshOrUnMarsh;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
 
