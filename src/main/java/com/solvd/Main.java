@@ -1,6 +1,5 @@
 package com.solvd;
 
-import com.solvd.sql.jaxb.Marsh;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
 import com.solvd.util.MarshOrUnMarsh;

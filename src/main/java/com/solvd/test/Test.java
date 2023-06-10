@@ -24,7 +24,7 @@ public class Test {
     }
 
     public static void marshall(BigBang bigBang) {
-        try{
+        try {
             JAXBContext context = JAXBContext.newInstance(BigBang.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
