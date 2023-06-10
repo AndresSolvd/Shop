@@ -1,7 +1,9 @@
 package com.solvd;
 
+import com.solvd.sql.jaxb.Marsh;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
+import com.solvd.util.MarshOrUnMarsh;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
 
@@ -345,5 +347,11 @@ public class Main {
         // XML Validate and Parse
         XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
         XmlParser.parser("src/main/resources/shop.xml");
+
+        // Marsh and UnMarsh
+        System.out.println("\nMarshall files are stored in resources/XMLFiles");
+        MarshOrUnMarsh.marshItAll();
+        System.out.println("\nObjects create from Unmarshall Files");
+        MarshOrUnMarsh.unmarshItAll();
     }
 }
