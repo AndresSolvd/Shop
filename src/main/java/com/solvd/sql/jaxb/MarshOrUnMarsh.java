@@ -71,7 +71,7 @@ public class MarshOrUnMarsh {
     public static List<Class<?>> getClasses(String packageName) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String path = packageName.replace('.', '/');
-        Enumeration<URL> resources = null;
+        Enumeration<URL> resources;
         try {
             resources = classLoader.getResources(path);
         } catch (IOException e) {
@@ -89,7 +89,7 @@ public class MarshOrUnMarsh {
                         String fileName = f.getName();
                         if (fileName.endsWith(".class")) {
                             String className = packageName + "." + fileName.substring(0, fileName.length() - 6);
-                            Class<?> clazz = null;
+                            Class<?> clazz;
                             try {
                                 clazz = Class.forName(className);
                             } catch (ClassNotFoundException e) {
