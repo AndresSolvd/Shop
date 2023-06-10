@@ -16,16 +16,8 @@ public class BigBang {
         this.name = name;
     }
 
-    public String getLast_name() {
-        return last_name;
-    }
-
     public void setLast_name(String last_name) {
         this.last_name = last_name;
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     public void setNumber(int number) {

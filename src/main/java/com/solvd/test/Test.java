@@ -34,14 +34,14 @@ public class Test {
         }
     }
 
-    public static BigBang unmarshall() {
+    public static void unmarshall() {
         BigBang bigBang;
         try {
             JAXBContext context = JAXBContext.newInstance(BigBang.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             bigBang = (BigBang) unmarshaller.unmarshal(new File("src/main/resources/test1.xml"));
             System.out.println(bigBang);
-            return bigBang;
+
 
         } catch (JAXBException e) {
             throw new RuntimeException(e);
