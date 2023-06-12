@@ -6,6 +6,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -18,7 +19,14 @@ public class MarshOrUnMarsh {
         List<Class<?>> classes = getClasses(packageName);
 
         for (Class<?> clazz : classes) {
-            marshall(clazz);
+            try {
+                // Create an instance of the Class
+                Object instance = clazz.getDeclaredConstructor().newInstance();
+                marshall(instance);
+            } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
+                     NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -31,21 +39,13 @@ public class MarshOrUnMarsh {
         }
     }
 
-    public static void marshall(Class<?> clazz) {
+    public static void marshall(Object object) {
         try {
-            JAXBContext context = JAXBContext.newInstance(clazz);
+            JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-            // Generate the XML file name using the class name
-            String fileName = "src/main/resources/XMLFiles/" + clazz.getSimpleName() + ".xml";
-
-            // Create an instance
-            Object instance = clazz.getDeclaredConstructor().newInstance();
-
-            // Marshal the instance to XML and save it to the file
-            marshaller.marshal(instance, new File(fileName));
-        } catch (Exception e) {
+            marshaller.marshal(object, new File("src/main/resources/XMLFiles/" + object.getClass().getSimpleName() + ".xml"));
+        } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
     }
