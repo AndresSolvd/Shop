@@ -35,7 +35,7 @@ public class MarshOrUnMarsh {
         List<Class<?>> classes = getClasses(packageName);
 
         for (Class<?> clazz : classes) {
-            unmarshall(clazz);
+            unMarshall(clazz);
         }
     }
 
@@ -50,7 +50,7 @@ public class MarshOrUnMarsh {
         }
     }
 
-    public static void unmarshall(Class<?> clazz) {
+    public static void unMarshall(Class<?> clazz) {
         try {
             JAXBContext context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();

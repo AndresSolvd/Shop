@@ -353,7 +353,5 @@ public class Main {
         MarshOrUnMarsh.marshItAll();
         System.out.println("\nObjects create from Unmarshall Files");
         MarshOrUnMarsh.unMarshItAll();
-
-
     }
 }
