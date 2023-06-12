@@ -22,7 +22,7 @@ public class MarshOrUnMarsh {
         }
     }
 
-    public static void unmarshItAll() {
+    public static void unMarshItAll() {
         String packageName = "com.solvd.sql.model";
         List<Class<?>> classes = getClasses(packageName);
 

@@ -351,6 +351,6 @@ public class Main {
         System.out.println("\nMarshall files are stored in resources/XMLFiles");
         MarshOrUnMarsh.marshItAll();
         System.out.println("\nObjects create from Unmarshall Files");
-        MarshOrUnMarsh.unmarshItAll();
+        MarshOrUnMarsh.unMarshItAll();
     }
 }
