@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "order")
+@XmlRootElement(name = "orders")
 public class Orders {
 
     @XmlAttribute(name = "id")

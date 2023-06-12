@@ -1,5 +1,7 @@
 package com.solvd.sql.jaxb;
 
+import com.solvd.util.XMLTagExtractor;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -35,7 +37,8 @@ public class MarshOrUnMarsh {
         List<Class<?>> classes = getClasses(packageName);
 
         for (Class<?> clazz : classes) {
-            unMarshall(clazz);
+            String fileName = "src/main/resources/XMLFiles/" + clazz.getSimpleName() + ".xml";
+            System.out.println(unMarshall(fileName));
         }
     }
 
@@ -50,19 +53,15 @@ public class MarshOrUnMarsh {
         }
     }
 
-    public static void unMarshall(Class<?> clazz) {
+    public static Object unMarshall(String filePath) {
         try {
-            JAXBContext context = JAXBContext.newInstance(clazz);
+            String clazz = XMLTagExtractor.fileExtractor(filePath);
+            clazz = Character.toUpperCase(clazz.charAt(0)) + clazz.substring(1);
+            Class<?> objectClass = Class.forName("com.solvd.sql.model." + clazz);
+            JAXBContext context = JAXBContext.newInstance(objectClass);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-
-            // Generate the XML file name using the class name
-            String fileName = "src/main/resources/XMLFiles/" + clazz.getSimpleName() + ".xml";
-
-            // Unmarshal on an object
-            Object instance = unmarshaller.unmarshal(new File(fileName));
-
-            System.out.println(instance);
-        } catch (JAXBException e) {
+            return objectClass.cast(unmarshaller.unmarshal(new File(filePath)));
+        } catch (JAXBException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
