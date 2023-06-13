@@ -3,7 +3,6 @@ package com.solvd.sql.JJ;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.solvd.Paths;
-import com.solvd.sql.model.Shop;
 import com.solvd.util.JSONExtractor;
 
 import java.io.File;
@@ -13,7 +12,7 @@ public class JSONUtils {
 
     public static void writeJSON(Object object) {
         ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-        try{
+        try {
             objectMapper.writeValue(new File(Paths.JSONFOLDER.getPath() + object.getClass().getSimpleName() + ".json"), object);
         } catch (IOException e) {
             throw new RuntimeException();
