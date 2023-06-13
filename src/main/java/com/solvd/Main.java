@@ -348,9 +348,7 @@ public class Main {
         XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
         XmlParser.parser("src/main/resources/shop.xml");
 
-        // Marsh and UnMarsh all
-        System.out.println("\n--- Marshall files are stored in resources/XMLFolder --- ");
-        JAXBUtils.printAllXMLFiles();
+        // UnMarsh all
         System.out.println("\n --- Objects create from Unmarshall Files ---");
         JAXBUtils.printAllXMLFiles();
 
