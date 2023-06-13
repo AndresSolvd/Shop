@@ -6,16 +6,16 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "supplier")
 public class Supplier {
 
-    @XmlAttribute(name = "Id")
+    @XmlAttribute(name = "id")
     private int id;
 
-    @XmlElement(name = "SupplierName")
+    @XmlElement(name = "supplierName")
     private String supplierName;
 
-    @XmlElement(name = "TaxNumber")
+    @XmlElement(name = "taxNumber")
     private String taxNumber;
 
-    @XmlElement(name = "Phone")
+    @XmlElement(name = "phone")
     private String phone;
 
     public int getId() {

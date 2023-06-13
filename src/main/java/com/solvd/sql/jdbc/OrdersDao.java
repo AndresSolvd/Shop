@@ -21,7 +21,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
         String query = "INSERT INTO orders (order_date, total, customer_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrder_date());
+            ps.setDate(1, orders.getOrderDate());
             ps.setDouble(2, orders.getTotal());
             ps.setInt(3, orders.getCustomerId());
             ps.execute();
@@ -44,7 +44,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
         String query = "UPDATE orders SET order_date = ?, total = ?, customer_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrder_date());
+            ps.setDate(1, orders.getOrderDate());
             ps.setDouble(2, orders.getTotal());
             ps.setInt(3, orders.getCustomerId());
             ps.setInt(4, orders.getId());
@@ -89,7 +89,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
                 while (rs.next()) {
                     Orders orders = new Orders();
                     orders.setId(rs.getInt("id"));
-                    orders.setOrder_date(rs.getDate("order_date"));
+                    orders.setOrderDate(rs.getDate("order_date"));
                     orders.setTotal(rs.getDouble("total"));
                     orders.setCustomerId(rs.getInt("customer_id"));
                     orderss.add(orders);
@@ -119,7 +119,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
                     orders.setId(rs.getInt("id"));
-                    orders.setOrder_date(rs.getDate("order_date"));
+                    orders.setOrderDate(rs.getDate("order_date"));
                     orders.setTotal(rs.getDouble("total"));
                     orders.setCustomerId(rs.getInt("customer_id"));
                 }

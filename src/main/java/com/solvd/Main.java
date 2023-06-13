@@ -1,15 +1,16 @@
 package com.solvd;
 
-import com.solvd.sql.jaxb.MarshOrUnMarsh;
+import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
 
+import javax.xml.bind.JAXBException;
 import java.sql.Date;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JAXBException {
 
         // CATEGORY
         System.out.println("\n--- CATEGORY ---\n");
@@ -242,16 +243,16 @@ public class Main {
         // Create
         OrdersService ordersService = new OrdersService();
         Orders orders = new Orders();
-        orders.setOrder_date(Date.valueOf(("2022-5-5")));
+        orders.setOrderDate(Date.valueOf(("2022-5-5")));
         orders.setTotal(80);
         orders.setCustomerId(1);
         ordersService.insert(orders);
-        orders.setOrder_date(Date.valueOf(("2022-4-5")));
+        orders.setOrderDate(Date.valueOf(("2022-4-5")));
         orders.setTotal(60);
         orders.setCustomerId(1);
         ordersService.insert(orders);
         // Update
-        orders.setOrder_date(Date.valueOf(("2022-5-5")));
+        orders.setOrderDate(Date.valueOf(("2022-5-5")));
         orders.setTotal(120);
         orders.setCustomerId(1);
         orders.setId(1);
@@ -348,15 +349,15 @@ public class Main {
         XmlParser.parser("src/main/resources/shop.xml");
 
         // Marsh and UnMarsh all
-        System.out.println("\n--- Marshall files are stored in resources/XMLFiles --- ");
-        MarshOrUnMarsh.marshItAll();
+        System.out.println("\n--- Marshall files are stored in resources/XMLFolder --- ");
+        JAXBUtils.printAllXMLFiles();
         System.out.println("\n --- Objects create from Unmarshall Files ---");
-        MarshOrUnMarsh.unMarshItAll();
+        JAXBUtils.printAllXMLFiles();
 
         // Marsh and UnMarsh Person
         System.out.println("\n--- File create from Person Object is stored in resources/XMLFiles --- ");
-        MarshOrUnMarsh.marshall(person);
+        JAXBUtils.marshall(person);
         System.out.println("\n--- Unmarshall Person.xml file --- ");
-        System.out.println(MarshOrUnMarsh.unMarshall("src/main/resources/XMLFiles/Person.xml"));
+        System.out.println(JAXBUtils.unMarshall("src/main/resources/XMLFolder/Person.xml"));
     }
 }

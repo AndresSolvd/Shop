@@ -1,6 +1,7 @@
 package com.solvd.sql.jaxb;
 
-import com.solvd.util.XMLTagExtractor;
+import com.solvd.Paths;
+import com.solvd.util.XMLExtractor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -8,56 +9,39 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class MarshOrUnMarsh {
+public class JAXBUtils {
 
-    public static void marshItAll() {
-        String packageName = "com.solvd.sql.model";
+    public static void printAllXMLFiles() {
+        String packageName = Paths.MODELFOLDER.getPath();
         List<Class<?>> classes = getClasses(packageName);
 
         for (Class<?> clazz : classes) {
-            try {
-                // Create an instance of the Class
-                Object instance = clazz.getDeclaredConstructor().newInstance();
-                marshall(instance);
-            } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
-                     NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public static void unMarshItAll() {
-        String packageName = "com.solvd.sql.model";
-        List<Class<?>> classes = getClasses(packageName);
-
-        for (Class<?> clazz : classes) {
-            String fileName = "src/main/resources/XMLFiles/" + clazz.getSimpleName() + ".xml";
+            String fileName = Paths.XMLFOLDER.getPath() + clazz.getSimpleName() + ".xml";
             System.out.println(unMarshall(fileName));
         }
     }
 
-    public static void marshall(Object object) {
+    public static void marshall(Object object) throws JAXBException {
         try {
             JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(object, new File("src/main/resources/XMLFiles/" + object.getClass().getSimpleName() + ".xml"));
+            marshaller.marshal(object, new File(Paths.XMLFOLDER.getPath() + object.getClass().getSimpleName() + ".xml"));
         } catch (JAXBException e) {
-            throw new RuntimeException(e);
+            throw new JAXBException(e);
         }
     }
 
     public static Object unMarshall(String filePath) {
         try {
-            String clazz = XMLTagExtractor.fileExtractor(filePath);
+            String clazz = XMLExtractor.getMainNodeName(filePath);
             clazz = Character.toUpperCase(clazz.charAt(0)) + clazz.substring(1);
-            Class<?> objectClass = Class.forName("com.solvd.sql.model." + clazz);
+            Class<?> objectClass = Class.forName(Paths.MODELFOLDER.getPath() + "." + clazz);
             JAXBContext context = JAXBContext.newInstance(objectClass);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return objectClass.cast(unmarshaller.unmarshal(new File(filePath)));

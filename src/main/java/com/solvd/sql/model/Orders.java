@@ -15,7 +15,7 @@ public class Orders {
 
     @XmlElement(name = "order_date")
     @XmlJavaTypeAdapter(DateAdapter.class)
-    private Date order_date;
+    private Date orderDate;
 
     @XmlElement(name = "total")
     private double total;
@@ -31,12 +31,12 @@ public class Orders {
         this.id = id;
     }
 
-    public Date getOrder_date() {
-        return order_date;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrder_date(Date order_date) {
-        this.order_date = order_date;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public double getTotal() {
@@ -59,7 +59,7 @@ public class Orders {
     public String toString() {
         return "Orders{" +
                 "id=" + id +
-                ", order_date=" + order_date +
+                ", order_date=" + orderDate +
                 ", total=" + total +
                 ", customerId=" + customerId +
                 '}';

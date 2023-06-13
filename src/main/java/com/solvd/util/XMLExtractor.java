@@ -7,8 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XMLTagExtractor {
-    public static String fileExtractor(String filePath) {
+public class XMLExtractor {
+
+    public static String getMainNodeName(String filePath) {
 
         String extractedString = "";
         try {
