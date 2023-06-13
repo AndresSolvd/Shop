@@ -24,7 +24,7 @@ public class PromotionDao implements IBaseDAO<Promotion> {
             ps.setString(1, promotion.getPromotionName());
             ps.setFloat(2, promotion.getDiscount());
             ps.setDate(3, promotion.getStartDate());
-            ps.setDate(4, promotion.getStartDate());
+            ps.setDate(4, promotion.getEndDate());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -48,7 +48,7 @@ public class PromotionDao implements IBaseDAO<Promotion> {
             ps.setString(1, promotion.getPromotionName());
             ps.setFloat(2, promotion.getDiscount());
             ps.setDate(3, promotion.getStartDate());
-            ps.setDate(4, promotion.getStartDate());
+            ps.setDate(4, promotion.getEndDate());
             ps.setInt(5, promotion.getId());
             ps.execute();
         } catch (SQLException e) {
