@@ -2,7 +2,7 @@ package com.solvd.sql.JJ;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.solvd.Paths;
+import com.solvd.enums.Paths;
 import com.solvd.util.JSONExtractor;
 
 import java.io.File;
