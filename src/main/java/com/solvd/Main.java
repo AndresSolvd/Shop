@@ -366,10 +366,12 @@ public class Main {
         JSONUtils.writeJSON(customer);
         JSONUtils.writeJSON(product);
         JSONUtils.writeJSON(promotion);
+        JSONUtils.writeJSON(orders);
         System.out.println(JSONUtils.readJSON("shop"));
         System.out.println(JSONUtils.readJSON("person"));
         System.out.println(JSONUtils.readJSON("customer"));
         System.out.println(JSONUtils.readJSON("product"));
         System.out.println(JSONUtils.readJSON("promotion"));
+        System.out.println(JSONUtils.readJSON("orders"));
     }
 }
