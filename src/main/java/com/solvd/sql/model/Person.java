@@ -1,10 +1,24 @@
 package com.solvd.sql.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "person")
 public class Person {
+
+    @XmlAttribute(name = "id")
     private int id;
+
+    @XmlElement(name = "personName")
     private String personName;
+
+    @XmlElement(name = "lastName")
     private String lastName;
+
+    @XmlElement(name = "phone")
     private String phone;
+
+    @XmlElement(name = "address")
     private String address;
 
     public int getId() {
@@ -58,4 +72,3 @@ public class Person {
                 '}';
     }
 }
-

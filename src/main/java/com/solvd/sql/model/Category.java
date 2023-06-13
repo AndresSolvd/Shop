@@ -1,7 +1,15 @@
 package com.solvd.sql.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "category")
 public class Category {
+
+    @XmlAttribute(name = "id")
     private int id;
+
+    @XmlElement(name = "categoryName")
     private String categoryName;
 
     public int getId() {
@@ -22,9 +30,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", categoryName='" + categoryName + '\'' +
-                '}';
+        return "Category{" + "id=" + id + ", categoryName='" + categoryName + '\'' + '}';
     }
 }

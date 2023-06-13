@@ -1,11 +1,27 @@
 package com.solvd.sql.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "product")
 public class Product {
+
+    @XmlAttribute(name = "id")
     private int id;
+
+    @XmlElement(name = "productName")
     private String productName;
+
+    @XmlElement(name = "stock")
     private int stock;
+
+    @XmlElement(name = "price")
     private double price;
+
+    @XmlElement(name = "categoryId")
     private int categoryId;
+
+    @XmlElement(name = "supplierId")
     private int supplierId;
 
     public int getId() {

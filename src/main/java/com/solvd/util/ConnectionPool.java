@@ -9,8 +9,8 @@ public class ConnectionPool {
 
     private static ConnectionPool instance = null;
     private static final int INITIAL_POOL_SIZE = 5;
-    private static Vector<Connection> freeConnections = new Vector<>();
-    private static Vector<Connection> usedConeections = new Vector<>();
+    private static final Vector<Connection> freeConnections = new Vector<>();
+    private static final Vector<Connection> usedConeections = new Vector<>();
 
     private ConnectionPool(){
 
@@ -26,7 +26,7 @@ public class ConnectionPool {
 
     public static void create() {
         for (int i = 0; i < INITIAL_POOL_SIZE; i ++) {
-            freeConnections.add(createConnection(DBConfig.URL, DBConfig.USERNAME, DBConfig.PASSWORD));
+            freeConnections.add(createConnection());
         }
     }
 
@@ -44,9 +44,10 @@ public class ConnectionPool {
         }
     }
 
-    private static Connection createConnection(String url, String username, String password) {
+    // parameters extracted from the DBConfig files
+    private static Connection createConnection() {
         try{
-            return DriverManager.getConnection(url, username, password);
+            return DriverManager.getConnection(DBConfig.URL, DBConfig.USERNAME, DBConfig.PASSWORD);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

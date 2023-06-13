@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerDao implements IBaseDAO<Owner>{
+public class OwnerDao implements IBaseDAO<Owner> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 

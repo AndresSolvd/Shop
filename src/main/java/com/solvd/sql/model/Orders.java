@@ -1,11 +1,26 @@
 package com.solvd.sql.model;
 
+import com.solvd.sql.jaxb.DateAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Date;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "orders")
 public class Orders {
+
+    @XmlAttribute(name = "id")
     private int id;
-    private Date order_date;
+
+    @XmlElement(name = "order_date")
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date orderDate;
+
+    @XmlElement(name = "total")
     private double total;
+
+    @XmlElement(name = "customerId")
     private int customerId;
 
     public int getId() {
@@ -16,12 +31,12 @@ public class Orders {
         this.id = id;
     }
 
-    public Date getOrder_date() {
-        return order_date;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrder_date(Date order_date) {
-        this.order_date = order_date;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public double getTotal() {
@@ -44,7 +59,7 @@ public class Orders {
     public String toString() {
         return "Orders{" +
                 "id=" + id +
-                ", order_date=" + order_date +
+                ", order_date=" + orderDate +
                 ", total=" + total +
                 ", customerId=" + customerId +
                 '}';
