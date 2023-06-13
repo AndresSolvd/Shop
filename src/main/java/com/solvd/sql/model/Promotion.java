@@ -1,5 +1,8 @@
 package com.solvd.sql.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.solvd.sql.jaxb.DateAdapter;
 
 import javax.xml.bind.annotation.*;
@@ -8,23 +11,31 @@ import java.sql.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "promotion")
+@JsonRootName("promotion")
 public class Promotion {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("id")
     private int id;
 
     @XmlElement(name = "promotionName")
+    @JsonProperty("promotionName")
     private String promotionName;
 
     @XmlElement(name = "discount")
+    @JsonProperty("discount")
     private float discount;
 
     @XmlElement(name = "startDate")
     @XmlJavaTypeAdapter(DateAdapter.class)
+    @JsonProperty("startDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @XmlElement(name = "endDate")
     @XmlJavaTypeAdapter(DateAdapter.class)
+    @JsonProperty("endDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 
     public int getId() {
