@@ -1,5 +1,6 @@
 package com.solvd;
 
+import com.solvd.sql.JJ.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
@@ -357,5 +358,18 @@ public class Main {
         JAXBUtils.marshall(person);
         System.out.println("\n--- Unmarshall Person.xml file --- ");
         System.out.println(JAXBUtils.unMarshall("src/main/resources/XMLFolder/Person.xml"));
+
+        // JSON
+        System.out.println("\n ---JSON--- ");
+        JSONUtils.writeJSON(shop);
+        JSONUtils.writeJSON(person);
+        JSONUtils.writeJSON(customer);
+        JSONUtils.writeJSON(product);
+        JSONUtils.writeJSON(promotion);
+        System.out.println(JSONUtils.readJSON("shop"));
+        System.out.println(JSONUtils.readJSON("person"));
+        System.out.println(JSONUtils.readJSON("customer"));
+        System.out.println(JSONUtils.readJSON("product"));
+        System.out.println(JSONUtils.readJSON("promotion"));
     }
 }
