@@ -1,21 +1,23 @@
 package com.solvd.sql.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import com.fasterxml.jackson.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "orderItem")
+@JsonRootName(value = "orderItem")
 public class OrderItem {
 
     @XmlElement(name = "quantity")
+    @JsonProperty("quantity")
     private int quantity;
 
     @XmlElement(name = "productId")
+    @JsonProperty("productId")
     private int productId;
 
     @XmlElement(name = "orderId")
+    @JsonProperty("orderId")
     private int orderId;
 
     public int getQuantity() {

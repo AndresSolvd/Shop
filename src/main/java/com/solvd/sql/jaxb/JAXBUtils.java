@@ -1,6 +1,6 @@
 package com.solvd.sql.jaxb;
 
-import com.solvd.Paths;
+import com.solvd.enums.Paths;
 import com.solvd.util.XMLExtractor;
 
 import javax.xml.bind.JAXBContext;
