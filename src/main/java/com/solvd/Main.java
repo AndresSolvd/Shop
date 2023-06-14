@@ -1,6 +1,6 @@
 package com.solvd;
 
-import com.solvd.sql.JJ.JSONUtils;
+import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
