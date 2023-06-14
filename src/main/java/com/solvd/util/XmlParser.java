@@ -1,5 +1,6 @@
 package com.solvd.util;
 
+import com.solvd.sql.model.Shop;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -9,7 +10,7 @@ import java.io.File;
 
 public class XmlParser {
 
-    public static void parser(String xmlFilePath) {
+    public static Shop parseShopDataFromFile(String xmlFilePath) {
         try {
             // Load XML file
             File xmlFile = new File(xmlFilePath);
@@ -18,22 +19,28 @@ public class XmlParser {
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
+            // Create  object
+            Shop shop = new Shop();
+
             // Access elements using DOM methods
             Element shopElement = (Element) doc.getElementsByTagName("shop").item(0);
-            String shopId = shopElement.getElementsByTagName("id").item(0).getTextContent();
-            String shopName = shopElement.getElementsByTagName("shop_name").item(0).getTextContent();
-            String address = shopElement.getElementsByTagName("address").item(0).getTextContent();
-            String phone = shopElement.getElementsByTagName("phone").item(0).getTextContent();
-            String ownerId = shopElement.getElementsByTagName("owner_id").item(0).getTextContent();
+            shop.setId(Integer.parseInt(shopElement.getElementsByTagName("id").item(0).getTextContent()));
+            shop.setShopName(shopElement.getElementsByTagName("shop_name").item(0).getTextContent());
+            shop.setAddress(shopElement.getElementsByTagName("address").item(0).getTextContent());
+            shop.setPhone(shopElement.getElementsByTagName("phone").item(0).getTextContent());
+            shop.setOwnerId(Integer.parseInt(shopElement.getElementsByTagName("owner_id").item(0).getTextContent()));
 
             // Print the parsed values
-            System.out.println("Shop ID: " + shopId);
-            System.out.println("Shop Name: " + shopName);
-            System.out.println("Address: " + address);
-            System.out.println("Phone: " + phone);
-            System.out.println("Owner ID: " + ownerId);
+            System.out.println("Shop ID: " + shop.getId());
+            System.out.println("Shop Name: " + shop.getShopName());
+            System.out.println("Address: " + shop.getAddress());
+            System.out.println("Phone: " + shop.getPhone());
+            System.out.println("Owner ID: " + shop.getOwnerId());
+
+            return shop;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
