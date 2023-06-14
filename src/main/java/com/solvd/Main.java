@@ -5,7 +5,6 @@ import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
-import com.solvd.util.XmlParserTwo;
 import com.solvd.util.XmlValidator;
 
 import javax.xml.bind.JAXBException;
@@ -347,8 +346,9 @@ public class Main {
         System.out.println(productPromotionService.getAll());
 
         // XML Validate and Parse
+        System.out.println("\n--- XML Validation and Parse ---\n");
         XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
-        XmlParser.parser("src/main/resources/shop.xml");
+        System.out.println(XmlParser.parseShopDataFromFile("src/main/resources/shop.xml"));
 
         // UnMarsh all
         System.out.println("\n --- Objects create from Unmarshall Files ---");
@@ -374,11 +374,5 @@ public class Main {
         System.out.println(JSONUtils.readJSON("product"));
         System.out.println(JSONUtils.readJSON("promotion"));
         System.out.println(JSONUtils.readJSON("orders"));
-
-        System.out.println("test");
-        // XML Validate and Parse
-        XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
-        System.out.println("\n --- Parser --- ");
-        XmlParserTwo.parser("src/main/resources/shop.xml");
     }
 }
