@@ -3,7 +3,7 @@ package com.solvd.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ExtractFromString {
+public class StringExtractor {
 
     public static String extractClassName(String fileName) {
         Pattern pattern = Pattern.compile("^([a-z]|[A-Z])+");
