@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.pass"/>
+    <typeAliases>
+        <typeAlias alias="Category" type="com/solvd/sql/model/Category"/>
+        <typeAlias alias="Customer" type="com/solvd/sql/model/Customer"/>
+        <typeAlias alias="OrderItem" type="com/solvd/sql/model/OrderItem"/>
+        <typeAlias alias="Orders" type="com/solvd/sql/model/Orders"/>
+        <typeAlias alias="Owner" type="com/solvd/sql/model/Owner"/>
+        <typeAlias alias="Person" type="com/solvd/sql/model/Person"/>
+        <typeAlias alias="Product" type="com/solvd/sql/model/Product"/>
+        <typeAlias alias="ProductPromotion" type="com/solvd/sql/model/ProductPromotion"/>
+        <typeAlias alias="Promotion" type="com/solvd/sql/model/Promotion"/>
+        <typeAlias alias="Shop" type="com/solvd/sql/model/Shop"/>
+        <typeAlias alias="Staff" type="com/solvd/sql/model/Staff"/>
+        <typeAlias alias="Supplier" type="com/solvd/sql/model/Supplier"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${user}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/category-mapper.xml"/>
+        <mapper resource="mapper/customer-mapper.xml"/>
+        <mapper resource="mapper/orderItem-mapper.xml"/>
+        <mapper resource="mapper/orders-mapper.xml"/>
+        <mapper resource="mapper/owner-mapper.xml"/>
+        <mapper resource="mapper/person-mapper.xml"/>
+        <mapper resource="mapper/product-mapper.xml"/>
+        <mapper resource="mapper/productPromotion-mapper.xml"/>
+        <mapper resource="mapper/promotion-mapper.xml"/>
+        <mapper resource="mapper/shop-mapper.xml"/>
+        <mapper resource="mapper/staff-mapper.xml"/>
+        <mapper resource="mapper/supplier-mapper.xml"/>
+    </mappers>
+</configuration>

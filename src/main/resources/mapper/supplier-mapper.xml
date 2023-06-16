@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.sql.interfaces.IMembershipCardDAO">
+    <resultMap id="MembershipCardResultMap" type="MembershipCard" autoMapping="false">
+        <result property="cardID" column="card_id"/>
+        <result property="discount" column="discount"/>
+    </resultMap>
+    <insert id="saveEntity" keyProperty="card_id">
+        INSERT INTO membership_cards (card_id, discount) VALUES (#{cardID}, #{discount});
+    </insert>
+    <update id="updateEntity" parameterType="MembershipCard">
+        UPDATE membership_cards SET
+        discount = #{discount}
+        WHERE card_id = #{cardID};
+    </update>
+    <delete id="removeEntityByID" parameterType="int">
+        DELETE FROM membership_cards WHERE card_id = #{id};
+    </delete>
+    <select id="getByID" parameterType="int" resultMap="MembershipCardResultMap">
+        SELECT * FROM membership_cards WHERE card_id = #{id};
+    </select>
+    <select id="getAll" resultMap="MembershipCardResultMap">
+        SELECT * FROM membership_cards;
+    </select>
+</mapper>

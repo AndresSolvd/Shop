@@ -1,0 +1,34 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.sql.interfaces.ICategoryDao">
+    <resultMap id="CategoryResultMap" type="Category" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
+    <!--    Do I need to define in INSERT XML the id if the id is automatically provided by SQL?-->
+    <!--    2. The "keyProperty " stills "id" (as my SQL DB and Java Class) even that is not in the SQL query?-->
+    <insert id="insert" keyProperty="id">
+        INSERT INTO category (category_name) VALUES (#{categoryName});
+    </insert>
+    <update id="update" parameterType="Category">
+        UPDATE category SET
+        category_name = #{categoryName}
+        WHERE id = #{id}
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM category WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="CategoryResultMap">
+        SELECT * FROM category;
+    </select>
+    <select id="getByID" parameterType="int" resultMap="CategoryResultMap">
+        SELECT * FROM membership_cards WHERE id = #{id};
+    </select>
+    <select id="getByName" parameterType="String" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE category_name = #{categoryName};
+    </select>
+</mapper>
