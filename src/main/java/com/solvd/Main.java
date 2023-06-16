@@ -349,7 +349,7 @@ public class Main {
         // XML Validate and Parse
         System.out.println("\n--- XML Validation and Parse ---\n");
         XmlValidator.validateXMLAgainstXSD(Paths.SHOPXML.getPath(), Paths.SHOPXSD.getPath());
-        System.out.println(XmlParser.parseShopDataFromFile("src/main/resources/shop.xml"));
+        System.out.println(XmlParser.parseShopDataFromFile(Paths.SHOPXML.getPath()));
 
         // Marsh and UnMarsh Person
         System.out.println("\n--- File create from Person Object is stored in resources/xml --- ");
