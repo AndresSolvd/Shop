@@ -1,5 +1,6 @@
 package com.solvd;
 
+import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
@@ -351,10 +352,10 @@ public class Main {
         System.out.println(XmlParser.parseShopDataFromFile("src/main/resources/shop.xml"));
 
         // Marsh and UnMarsh Person
-        System.out.println("\n--- File create from Person Object is stored in resources/XMLFolder --- ");
+        System.out.println("\n--- File create from Person Object is stored in resources/xml --- ");
         JAXBUtils.marshall(person);
         System.out.println("\n--- Unmarshall Person.xml file --- ");
-        System.out.println(JAXBUtils.unMarshall("src/main/resources/XMLFolder/Person.xml"));
+        System.out.println(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
 
         // JSON
         System.out.println("\n ---JSON--- ");
