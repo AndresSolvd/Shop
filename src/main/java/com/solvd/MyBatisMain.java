@@ -1,6 +1,5 @@
 package com.solvd;
 
-import com.solvd.sql.interfaces.ICategoryDao;
 import com.solvd.sql.model.Category;
 import com.solvd.sql.mybatis.CategoryDao;
 
