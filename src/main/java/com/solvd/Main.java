@@ -348,7 +348,7 @@ public class Main {
 
         // XML Validate and Parse
         System.out.println("\n--- XML Validation and Parse ---\n");
-        XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
+        XmlValidator.validateXMLAgainstXSD(Paths.SHOPXML.getPath(), Paths.SHOPXSD.getPath());
         System.out.println(XmlParser.parseShopDataFromFile("src/main/resources/shop.xml"));
 
         // Marsh and UnMarsh Person

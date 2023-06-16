@@ -4,7 +4,9 @@ public enum Paths {
 
     XMLFOLDER("src/main/resources/xml/"),
     MODELFOLDER("com.solvd.sql.model"),
-    JSONFOLDER("src/main/resources/json/");
+    JSONFOLDER("src/main/resources/json/"),
+    SHOPXML("src/main/resources/xmlXsd/shop.xml"),
+    SHOPXSD("src/main/resources/xmlXsd/shop.xsd");
 
     private final String path;
 
