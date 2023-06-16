@@ -350,12 +350,8 @@ public class Main {
         XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
         System.out.println(XmlParser.parseShopDataFromFile("src/main/resources/shop.xml"));
 
-        // UnMarsh all
-        System.out.println("\n --- Objects create from Unmarshall Files ---");
-        JAXBUtils.printAllXMLFiles();
-
         // Marsh and UnMarsh Person
-        System.out.println("\n--- File create from Person Object is stored in resources/XMLFiles --- ");
+        System.out.println("\n--- File create from Person Object is stored in resources/XMLFolder --- ");
         JAXBUtils.marshall(person);
         System.out.println("\n--- Unmarshall Person.xml file --- ");
         System.out.println(JAXBUtils.unMarshall("src/main/resources/XMLFolder/Person.xml"));
