@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.example.sql.interfaces.ICategoryDao">
+<mapper namespace="com.solvd.sql.interfaces.ICategoryDao">
     <resultMap id="CategoryResultMap" type="Category" autoMapping="false">
         <result property="id" column="id"/>
         <result property="categoryName" column="category_name"/>
@@ -25,8 +25,8 @@
     <select id="getAll" resultMap="CategoryResultMap">
         SELECT * FROM category;
     </select>
-    <select id="getByID" parameterType="int" resultMap="CategoryResultMap">
-        SELECT * FROM membership_cards WHERE id = #{id};
+    <select id="getById" parameterType="int" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE id = #{id};
     </select>
     <select id="getByName" parameterType="String" resultMap="CategoryResultMap">
         SELECT * FROM category WHERE category_name = #{categoryName};

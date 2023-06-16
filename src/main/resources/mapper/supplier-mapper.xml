@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.example.sql.interfaces.IMembershipCardDAO">
+<mapper namespace="com.solvd.sql.interfaces.IBaseDAO">
     <resultMap id="MembershipCardResultMap" type="MembershipCard" autoMapping="false">
         <result property="cardID" column="card_id"/>
         <result property="discount" column="discount"/>
