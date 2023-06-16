@@ -1,5 +1,6 @@
 package com.solvd;
 
+import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
@@ -350,15 +351,11 @@ public class Main {
         XmlValidator.validateXMLAgainstXSD("src/main/resources/shop.xml", "src/main/resources/shop.xsd");
         System.out.println(XmlParser.parseShopDataFromFile("src/main/resources/shop.xml"));
 
-        // UnMarsh all
-        System.out.println("\n --- Objects create from Unmarshall Files ---");
-        JAXBUtils.printAllXMLFiles();
-
         // Marsh and UnMarsh Person
-        System.out.println("\n--- File create from Person Object is stored in resources/XMLFiles --- ");
+        System.out.println("\n--- File create from Person Object is stored in resources/xml --- ");
         JAXBUtils.marshall(person);
         System.out.println("\n--- Unmarshall Person.xml file --- ");
-        System.out.println(JAXBUtils.unMarshall("src/main/resources/XMLFolder/Person.xml"));
+        System.out.println(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
 
         // JSON
         System.out.println("\n ---JSON--- ");

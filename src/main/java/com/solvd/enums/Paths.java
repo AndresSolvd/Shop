@@ -2,9 +2,9 @@ package com.solvd.enums;
 
 public enum Paths {
 
-    XMLFOLDER("src/main/resources/XMLFolder/"),
+    XMLFOLDER("src/main/resources/xml/"),
     MODELFOLDER("com.solvd.sql.model"),
-    JSONFOLDER("src/main/resources/JSONFolder/");
+    JSONFOLDER("src/main/resources/json/");
 
     private final String path;
 
