@@ -8,10 +8,7 @@
         <result property="id" column="id"/>
         <result property="categoryName" column="category_name"/>
     </resultMap>
-
-    <!--    Do I need to define in INSERT XML the id if the id is automatically provided by SQL?-->
-    <!--    2. The "keyProperty " stills "id" (as my SQL DB and Java Class) even that is not in the SQL query?-->
-    <insert id="insert" keyProperty="id">
+    <insert id="insert" keyProperty="Category">
         INSERT INTO category (category_name) VALUES (#{categoryName});
     </insert>
     <update id="update" parameterType="Category">
