@@ -230,7 +230,6 @@ public class Main {
         product.setPrice(80);
         product.setCategoryId(1);
         product.setSupplierId(1);
-        productService.insert(product);
         product.setId(2);
         productService.update(product);
         // Delete
@@ -276,7 +275,7 @@ public class Main {
         orderItem.setProductId(1);
         orderItemService.insert(orderItem);
         orderItem.setQuantity(1);
-        orderItem.setOrderId(1);
+        orderItem.setOrderId(2);
         orderItem.setProductId(2);
         orderItemService.insert(orderItem);
         // Update

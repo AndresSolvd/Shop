@@ -9,20 +9,20 @@
         <result property="personId" column="person_id"/>
     </resultMap>
     <insert id="insert" parameterType="Owner" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO owners (person_id) VALUES (#{personId});
+        INSERT INTO owner (person_id) VALUES (#{personId});
     </insert>
     <update id="update" parameterType="Owner">
-        UPDATE owners SET
+        UPDATE owner SET
         id = #{id}, person_id = #{personId}
         WHERE id = #{id};
     </update>
     <delete id="delete" parameterType="int">
-        DELETE FROM owners WHERE id = #{id};
+        DELETE FROM owner WHERE id = #{id};
     </delete>
     <select id="getAll" resultMap="OwnerResultMap">
-        SELECT * FROM owners;
+        SELECT * FROM owner;
     </select>
     <select id="getById" parameterType="int" resultMap="OwnerResultMap">
-        SELECT * FROM owners WHERE id = #{id};
+        SELECT * FROM owner WHERE id = #{id};
     </select>
 </mapper>

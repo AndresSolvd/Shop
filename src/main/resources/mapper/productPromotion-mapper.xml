@@ -9,20 +9,20 @@
         <result property="productId" column="product_id"/>
     </resultMap>
     <insert id="insert" parameterType="ProductPromotion">
-        INSERT INTO productPromotion (promotion_id, product_id) VALUES (#{promotionId}, #{productId});
+        INSERT INTO product_promotion (promotion_id, product_id) VALUES (#{promotionId}, #{productId});
     </insert>
     <update id="update" parameterType="ProductPromotion">
-        UPDATE productPromotion SET
+        UPDATE product_promotion SET
         promotion_id = #{promotionId}, product_id = #{productId}
         WHERE product_id = #{productId}
     </update>
     <delete id="delete" parameterType="int">
-        DELETE FROM productPromotion WHERE product_id = #{productId};
+        DELETE FROM product_promotion WHERE product_id = #{productId};
     </delete>
     <select id="getAll" resultMap="ProductPromotionResultMap">
-        SELECT * FROM productPromotion;
+        SELECT * FROM product_promotion;
     </select>
     <select id="getById" parameterType="int" resultMap="ProductPromotionResultMap">
-        SELECT * FROM productPromotion WHERE product_id = #{productId};
+        SELECT * FROM product_promotion WHERE product_id = #{productId};
     </select>
 </mapper>
