@@ -14,8 +14,8 @@
     </insert>
     <update id="update" parameterType="Customer">
         UPDATE customer SET
-        tax_number = #{taxNumber}, person_id = #{personId}
-        WHERE id = #{id}
+        id = #{id}, tax_number = #{taxNumber}, person_id = #{personId}
+        WHERE id = #{id};
     </update>
     <delete id="delete" parameterType="int">
         DELETE FROM customer WHERE id = #{id};

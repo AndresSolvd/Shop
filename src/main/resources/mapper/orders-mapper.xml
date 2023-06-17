@@ -1,0 +1,30 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IOrdersDao">
+    <resultMap id="OrdersResultMap" type="Orders" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="total" column="total"/>
+        <result property="customerId" column="customer_id"/>
+    </resultMap>
+    <insert id="insert" parameterType="Orders" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO orders (order_date, total, customer_id) VALUES (#{orderDate}, #{total}, #{customerId});
+    </insert>
+    <update id="update" parameterType="Orders">
+        UPDATE orders SET
+        id = #{id}, order_date = #{orderDate}, total = #{total}, customer_id = #{customerId}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM orders WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="OrdersResultMap">
+        SELECT * FROM orders;
+    </select>
+    <select id="getById" parameterType="int" resultMap="OrdersResultMap">
+        SELECT * FROM orders WHERE id = #{id};
+    </select>
+</mapper>

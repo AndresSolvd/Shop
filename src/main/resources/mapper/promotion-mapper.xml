@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IPromotionDao">
+    <resultMap id="PromotionResultMap" type="Promotion" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="promotionName" column="promotion_name"/>
+        <result property="discount" column="discount"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+    </resultMap>
+    <insert id="insert" parameterType="Promotion" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO promotion (promotion_name, discount, start_date, end_date) VALUES (#{promotionName}, #{discount},
+        #{startDate}, #{endDate});
+    </insert>
+    <update id="update" parameterType="Promotion">
+        UPDATE promotion SET
+        id = #{id}, promotion_name = #{promotionName}, discount = #{discount}, start_date = #{startDate}, end_date =
+        #{endDate}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM promotion WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="PromotionResultMap">
+        SELECT * FROM promotion;
+    </select>
+    <select id="getById" parameterType="int" resultMap="PromotionResultMap">
+        SELECT * FROM promotion WHERE id = #{id};
+    </select>
+</mapper>

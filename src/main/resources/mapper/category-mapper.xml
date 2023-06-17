@@ -8,13 +8,13 @@
         <result property="id" column="id"/>
         <result property="categoryName" column="category_name"/>
     </resultMap>
-    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO category (category_name) VALUES (#{categoryName});
     </insert>
     <update id="update" parameterType="Category">
         UPDATE category SET
-        category_name = #{categoryName}
-        WHERE id = #{id}
+        id = #{id}, category_name = #{categoryName}
+        WHERE id = #{id};
     </update>
     <delete id="delete" parameterType="int">
         DELETE FROM category WHERE id = #{id};

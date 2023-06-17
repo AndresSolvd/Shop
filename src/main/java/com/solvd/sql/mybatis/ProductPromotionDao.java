@@ -1,132 +1,62 @@
 package com.solvd.sql.mybatis;
 
 import com.solvd.sql.interfaces.IBaseDAO;
+import com.solvd.sql.interfaces.IProductPromotionDao;
 import com.solvd.sql.model.ProductPromotion;
-import com.solvd.util.ConnectionPool;
+import com.solvd.util.MyBatisSqlFactory;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
 
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+    private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
     @Override
     public void insert(ProductPromotion productPromotion) {
-        Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO product_promotion (promotion_id, product_id) VALUES (?, ?)";
-
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, productPromotion.getPromotionId());
-            ps.setInt(2, productPromotion.getProductId());
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (con != null) {
-                try {
-                    connectionPool.releaseConnection(con);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IProductPromotionDao productPromotionDao = sqlSession.getMapper(IProductPromotionDao.class);
+            productPromotionDao.insert(productPromotion);
+            sqlSession.commit();
         }
     }
 
     @Override
     public void update(ProductPromotion productPromotion) {
-        Connection con = connectionPool.getConnection();
-        String query = "UPDATE product_promotion SET promotion_id = ? WHERE product_id = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, productPromotion.getPromotionId());
-            ps.setInt(2, productPromotion.getProductId());
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        } finally {
-            try {
-                connectionPool.releaseConnection(con);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IProductPromotionDao productPromotionDao = sqlSession.getMapper(IProductPromotionDao.class);
+            productPromotionDao.update(productPromotion);
+            sqlSession.commit();
         }
     }
 
     @Override
     public void delete(int id) {
-        Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM product_promotion WHERE promotion_id = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                connectionPool.releaseConnection(con);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IProductPromotionDao productPromotionDao = sqlSession.getMapper(IProductPromotionDao.class);
+            productPromotionDao.delete(id);
+            sqlSession.commit();
         }
     }
 
     @Override
     public List<ProductPromotion> getAll() {
-        Connection con = connectionPool.getConnection();
-        List<ProductPromotion> productPromotions = new ArrayList<>();
-        String query = "SELECT * FROM product_promotion";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    ProductPromotion productPromotion = new ProductPromotion();
-                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
-                    productPromotion.setProductId(rs.getInt("product_id"));
-                    productPromotions.add(productPromotion);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                connectionPool.releaseConnection(con);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        List<ProductPromotion> productPromotions;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IProductPromotionDao productPromotionDao = sqlSession.getMapper(IProductPromotionDao.class);
+            productPromotions = productPromotionDao.getAll();
         }
         return productPromotions;
     }
 
     @Override
     public ProductPromotion getById(int id) {
-        Connection con = connectionPool.getConnection();
-        ProductPromotion productPromotion = new ProductPromotion();
-        String query = "SELECT * FROM product_promotion WHERE product_id = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
-
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
-                    productPromotion.setProductId(rs.getInt("product_id"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                try {
-                    connectionPool.releaseConnection(con);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        ProductPromotion productPromotion;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IProductPromotionDao productPromotionDao = sqlSession.getMapper(IProductPromotionDao.class);
+            productPromotion = productPromotionDao.getById(id);
         }
         return productPromotion;
     }

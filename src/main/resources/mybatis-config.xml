@@ -8,16 +8,16 @@
     <typeAliases>
         <typeAlias alias="Category" type="com.solvd.sql.model.Category"/>
         <typeAlias alias="Customer" type="com.solvd.sql.model.Customer"/>
-<!--        <typeAlias alias="OrderItem" type="com.solvd.sql.model.OrderItem"/>-->
-<!--        <typeAlias alias="Orders" type="com.solvd.sql.model.Orders"/>-->
-<!--        <typeAlias alias="Owner" type="com.solvd.sql.model.Owner"/>-->
+        <typeAlias alias="OrderItem" type="com.solvd.sql.model.OrderItem"/>
+        <typeAlias alias="Orders" type="com.solvd.sql.model.Orders"/>
+        <typeAlias alias="Owner" type="com.solvd.sql.model.Owner"/>
         <typeAlias alias="Person" type="com.solvd.sql.model.Person"/>
-<!--        <typeAlias alias="Product" type="com.solvd.sql.model.Product"/>-->
-<!--        <typeAlias alias="ProductPromotion" type="com.solvd.sql.model.ProductPromotion"/>-->
-<!--        <typeAlias alias="Promotion" type="com.solvd.sql.model.Promotion"/>-->
-<!--        <typeAlias alias="Shop" type="com.solvd.sql.model.Shop"/>-->
-<!--        <typeAlias alias="Staff" type="com.solvd.sql.model.Staff"/>-->
-<!--        <typeAlias alias="Supplier" type="com.solvd.sql.model.Supplier"/>-->
+        <typeAlias alias="Product" type="com.solvd.sql.model.Product"/>
+        <typeAlias alias="ProductPromotion" type="com.solvd.sql.model.ProductPromotion"/>
+        <typeAlias alias="Promotion" type="com.solvd.sql.model.Promotion"/>
+        <typeAlias alias="Shop" type="com.solvd.sql.model.Shop"/>
+        <typeAlias alias="Staff" type="com.solvd.sql.model.Staff"/>
+        <typeAlias alias="Supplier" type="com.solvd.sql.model.Supplier"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -33,15 +33,15 @@
     <mappers>
         <mapper resource="mapper/category-mapper.xml"/>
         <mapper resource="mapper/customer-mapper.xml"/>
-<!--        <mapper resource="mapper/orderItem-mapper.xml"/>-->
-<!--        <mapper resource="mapper/orders-mapper.xml"/>-->
-<!--        <mapper resource="mapper/owner-mapper.xml"/>-->
+        <mapper resource="mapper/orderItem-mapper.xml"/>
+        <mapper resource="mapper/orders-mapper.xml"/>
+        <mapper resource="mapper/owner-mapper.xml"/>
         <mapper resource="mapper/person-mapper.xml"/>
-<!--        <mapper resource="mapper/product-mapper.xml"/>-->
-<!--        <mapper resource="mapper/productPromotion-mapper.xml"/>-->
-<!--        <mapper resource="mapper/promotion-mapper.xml"/>-->
-<!--        <mapper resource="mapper/shop-mapper.xml"/>-->
-<!--        <mapper resource="mapper/staff-mapper.xml"/>-->
-<!--        <mapper resource="mapper/supplier-mapper.xml"/>-->
+        <mapper resource="mapper/product-mapper.xml"/>
+        <mapper resource="mapper/productPromotion-mapper.xml"/>
+        <mapper resource="mapper/promotion-mapper.xml"/>
+        <mapper resource="mapper/shop-mapper.xml"/>
+        <mapper resource="mapper/staff-mapper.xml"/>
+        <mapper resource="mapper/supplier-mapper.xml"/>
     </mappers>
 </configuration>

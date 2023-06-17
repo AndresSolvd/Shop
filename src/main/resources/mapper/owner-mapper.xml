@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IOwnerDao">
+    <resultMap id="OwnerResultMap" type="Owner" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="personId" column="person_id"/>
+    </resultMap>
+    <insert id="insert" parameterType="Owner" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO owners (person_id) VALUES (#{personId});
+    </insert>
+    <update id="update" parameterType="Owner">
+        UPDATE owners SET
+        id = #{id}, person_id = #{personId}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM owners WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="OwnerResultMap">
+        SELECT * FROM owners;
+    </select>
+    <select id="getById" parameterType="int" resultMap="OwnerResultMap">
+        SELECT * FROM owners WHERE id = #{id};
+    </select>
+</mapper>

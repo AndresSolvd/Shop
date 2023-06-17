@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IOrderItemDao">
+    <resultMap id="OrderItemResultMap" type="OrderItem" autoMapping="false">
+        <result property="quantity" column="quantity"/>
+        <result property="productId" column="product_id"/>
+        <result property="orderId" column="order_id"/>
+    </resultMap>
+    <insert id="insert" parameterType="OrderItem">
+        INSERT INTO orderItem (quantity, product_id, order_id) VALUES (#{quantity}, #{productId}, #{orderId});
+    </insert>
+    <update id="update" parameterType="OrderItem">
+        UPDATE orderItem SET
+        quantity = #{quantity}, product_id = #{productId}, order_id = #{orderId}
+        WHERE order_id = #{orderId};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM orderItem WHERE order_id = #{orderId};
+    </delete>
+    <select id="getAll" resultMap="OrderItemResultMap">
+        SELECT * FROM orderItem;
+    </select>
+    <select id="getById" parameterType="int" resultMap="OrderItemResultMap">
+        SELECT * FROM orderItem WHERE order_id = #{orderId};
+    </select>
+</mapper>

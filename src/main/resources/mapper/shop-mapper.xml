@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IShopDao">
+    <resultMap id="ShopResultMap" type="Shop" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="ownerId" column="owner_id"/>
+    </resultMap>
+    <insert id="insert" parameterType="Shop" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop (shop_name, address, phone, owner_id) VALUES (#{shopName}, #{address}, #{phone}, #{ownerId});
+    </insert>
+    <update id="update" parameterType="Shop">
+        UPDATE shop SET
+        id = #{id}, shop_name = #{shopName}, address = #{address}, phone = #{phone}, owner_id = #{ownerId}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM shop WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="ShopResultMap">
+        SELECT * FROM shop;
+    </select>
+    <select id="getById" parameterType="int" resultMap="ShopResultMap">
+        SELECT * FROM shop WHERE id = #{id};
+    </select>
+</mapper>

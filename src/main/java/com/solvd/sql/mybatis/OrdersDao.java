@@ -1,135 +1,60 @@
 package com.solvd.sql.mybatis;
 
-import com.solvd.sql.interfaces.IBaseDAO;
+import com.solvd.sql.interfaces.IOrdersDao;
 import com.solvd.sql.model.Orders;
-import com.solvd.util.ConnectionPool;
+import com.solvd.util.MyBatisSqlFactory;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersDao implements IBaseDAO<Orders> {
+public class OrdersDao implements IOrdersDao {
 
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
     @Override
     public void insert(Orders orders) {
-        Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO orders (order_date, total, customer_id) VALUES (?, ?, ?)";
-
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrderDate());
-            ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (con != null) {
-                try {
-                    connectionPool.releaseConnection(con);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrdersDao ordersDao = sqlSession.getMapper(IOrdersDao.class);
+            ordersDao.insert(orders);
+            sqlSession.commit();
         }
     }
 
     @Override
     public void update(Orders orders) {
-        Connection con = connectionPool.getConnection();
-        String query = "UPDATE orders SET order_date = ?, total = ?, customer_id = ? WHERE id = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrderDate());
-            ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
-            ps.setInt(4, orders.getId());
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        } finally {
-            try {
-                connectionPool.releaseConnection(con);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrdersDao ordersDao = sqlSession.getMapper(IOrdersDao.class);
+            ordersDao.update(orders);
+            sqlSession.commit();
         }
     }
 
     @Override
     public void delete(int id) {
-        Connection con = connectionPool.getConnection();
-        String query = "DELETE FROM orders WHERE id = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
-            ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                connectionPool.releaseConnection(con);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrdersDao ordersDao = sqlSession.getMapper(IOrdersDao.class);
+            ordersDao.delete(id);
+            sqlSession.commit();
         }
     }
 
     @Override
     public List<Orders> getAll() {
-        Connection con = connectionPool.getConnection();
-        List<Orders> orderss = new ArrayList<>();
-        String query = "SELECT * FROM orders";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    Orders orders = new Orders();
-                    orders.setId(rs.getInt("id"));
-                    orders.setOrderDate(rs.getDate("order_date"));
-                    orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
-                    orderss.add(orders);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                connectionPool.releaseConnection(con);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        List<Orders> orderss;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrdersDao ordersDao = sqlSession.getMapper(IOrdersDao.class);
+            orderss = ordersDao.getAll();
         }
         return orderss;
     }
 
     @Override
     public Orders getById(int id) {
-        Connection con = connectionPool.getConnection();
-        Orders orders = new Orders();
-        String query = "SELECT * FROM orders WHERE id = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
-
-            ps.execute();
-            try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    orders.setId(rs.getInt("id"));
-                    orders.setOrderDate(rs.getDate("order_date"));
-                    orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException();
-            } finally {
-                connectionPool.releaseConnection(con);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException();
+        Orders orders;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrdersDao ordersDao = sqlSession.getMapper(IOrdersDao.class);
+            orders = ordersDao.getById(id);
         }
         return orders;
     }
