@@ -59,25 +59,25 @@ public class MyBatisMain {
         new PersonDao().delete(2);
         System.out.println(new PersonDao().getAll());
 
-//        // CUSTOMER
-//        System.out.println("\nCustomers");
-//        //test
-//        System.out.println(new CustomerDao().getAll());
-//        // Insert
-//        Customer customer = new Customer();
-//        customer.setTaxNumber("4532168");
-//        customer.setPersonId(1);
-//        CustomerDao customerDao = new CustomerDao();
-//        customerDao.insert(customer);
-//        // Print by id
-//        System.out.println(new CustomerDao().getById(1));
-//        // Update
-//        customer.setTaxNumber("55555555");
-//        new CustomerDao().update(customer);
-//        System.out.println(new CustomerDao().getById(1));
-//        //Delete
-//        new CustomerDao().delete(1);
-//        System.out.println(new CustomerDao().getAll());
+        // CUSTOMER
+        System.out.println("\nCustomers");
+        //test
+        System.out.println(new CustomerDao().getAll());
+        // Insert
+        Customer customer = new Customer();
+        customer.setTaxNumber("4532168");
+        customer.setPersonId(1);
+        CustomerDao customerDao = new CustomerDao();
+        customerDao.insert(customer);
+        // Print by id
+        System.out.println(new CustomerDao().getById(1));
+        // Update
+        customer.setTaxNumber("55555555");
+        new CustomerDao().update(customer);
+        System.out.println(new CustomerDao().getById(1));
+        //Delete
+        new CustomerDao().delete(1);
+        System.out.println(new CustomerDao().getAll());
 
 
 

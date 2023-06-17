@@ -7,7 +7,7 @@
     <properties resource="db.pass"/>
     <typeAliases>
         <typeAlias alias="Category" type="com.solvd.sql.model.Category"/>
-<!--        <typeAlias alias="Customer" type="com.solvd.sql.model.Customer"/>-->
+        <typeAlias alias="Customer" type="com.solvd.sql.model.Customer"/>
 <!--        <typeAlias alias="OrderItem" type="com.solvd.sql.model.OrderItem"/>-->
 <!--        <typeAlias alias="Orders" type="com.solvd.sql.model.Orders"/>-->
 <!--        <typeAlias alias="Owner" type="com.solvd.sql.model.Owner"/>-->
@@ -32,7 +32,7 @@
     </environments>
     <mappers>
         <mapper resource="mapper/category-mapper.xml"/>
-<!--        <mapper resource="mapper/customer-mapper.xml"/>-->
+        <mapper resource="mapper/customer-mapper.xml"/>
 <!--        <mapper resource="mapper/orderItem-mapper.xml"/>-->
 <!--        <mapper resource="mapper/orders-mapper.xml"/>-->
 <!--        <mapper resource="mapper/owner-mapper.xml"/>-->

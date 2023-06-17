@@ -8,7 +8,7 @@
         <result property="id" column="id"/>
         <result property="categoryName" column="category_name"/>
     </resultMap>
-    <insert id="insert" keyProperty="Category">
+    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO category (category_name) VALUES (#{categoryName});
     </insert>
     <update id="update" parameterType="Category">
