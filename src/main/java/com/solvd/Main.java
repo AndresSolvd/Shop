@@ -252,6 +252,10 @@ public class Main {
         orders.setTotal(60);
         orders.setCustomerId(1);
         ordersService.insert(orders);
+        orders.setOrderDate(Date.valueOf(("2022-4-8")));
+        orders.setTotal(78);
+        orders.setCustomerId(1);
+        ordersService.insert(orders);
         // Update
         orders.setOrderDate(Date.valueOf(("2022-5-5")));
         orders.setTotal(120);
@@ -259,7 +263,7 @@ public class Main {
         orders.setId(1);
         ordersService.update(orders);
         // Delete
-        ordersService.delete(2);
+        ordersService.delete(3);
         // Read
         System.out.println(ordersService.getById(1));
         // All

@@ -1,7 +1,7 @@
 package com.solvd.sql.services;
 
 import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.PersonDao;
+import com.solvd.sql.mybatis.PersonDao;
 import com.solvd.sql.model.Person;
 
 import java.util.List;

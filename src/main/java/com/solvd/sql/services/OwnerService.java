@@ -1,7 +1,7 @@
 package com.solvd.sql.services;
 
 import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.OwnerDao;
+import com.solvd.sql.mybatis.OwnerDao;
 import com.solvd.sql.model.Owner;
 
 import java.util.List;

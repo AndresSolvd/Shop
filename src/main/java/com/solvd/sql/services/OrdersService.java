@@ -1,7 +1,7 @@
 package com.solvd.sql.services;
 
 import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.OrdersDao;
+import com.solvd.sql.mybatis.OrdersDao;
 import com.solvd.sql.model.Orders;
 
 import java.util.List;

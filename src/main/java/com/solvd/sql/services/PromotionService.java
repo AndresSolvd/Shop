@@ -1,7 +1,7 @@
 package com.solvd.sql.services;
 
 import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.PromotionDao;
+import com.solvd.sql.mybatis.PromotionDao;
 import com.solvd.sql.model.Promotion;
 
 import java.util.List;

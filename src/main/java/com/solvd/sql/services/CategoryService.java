@@ -1,7 +1,7 @@
 package com.solvd.sql.services;
 
 import com.solvd.sql.interfaces.ICategoryDao;
-import com.solvd.sql.jdbc.CategoryDao;
+import com.solvd.sql.mybatis.CategoryDao;
 import com.solvd.sql.model.Category;
 
 import java.util.List;
