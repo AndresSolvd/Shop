@@ -1,0 +1,8 @@
+{
+  "id" : 2,
+  "productName" : "Pants",
+  "stock" : 13,
+  "price" : 80.0,
+  "categoryId" : 1,
+  "supplierId" : 1
+}
