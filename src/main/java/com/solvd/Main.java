@@ -9,6 +9,8 @@ import com.solvd.sql.mybatis.ProductDao;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.JAXBException;
 import java.sql.Date;
@@ -16,8 +18,10 @@ import java.sql.Date;
 public class Main {
     public static void main(String[] args) throws JAXBException {
 
+        final Logger LOGGER = LogManager.getLogger(Main.class);
+
         // CATEGORY
-        System.out.println("\n--- CATEGORY ---\n");
+        LOGGER.info("\n--- CATEGORY ---\n");
         // Create
         CategoryService categoryService = new CategoryService();
         Category category = new Category();
@@ -34,13 +38,13 @@ public class Main {
         // Delete
         categoryService.delete(3); // Delete Food
         // Read
-        System.out.println(categoryService.getById(1));
-        System.out.println(categoryService.getByName("Electronics")); // If repeated name select the last.
+        LOGGER.info(categoryService.getById(1));
+        LOGGER.info(categoryService.getByName("Electronics")); // If repeated name select the last.
         // All
-        System.out.println(categoryService.getAll());
+        LOGGER.info(categoryService.getAll());
 
         // PERSON
-        System.out.println("\n--- PERSON ---\n");
+        LOGGER.info("\n--- PERSON ---\n");
         // Create
         PersonService personService = new PersonService();
         Person person = new Person();
@@ -76,13 +80,13 @@ public class Main {
         // Delete
         personService.delete(5);
         // Read
-        System.out.println(personService.getById(4));
+        LOGGER.info(personService.getById(4));
         // All
-        System.out.println(personService.getAll());
-        System.out.println(personService.getByName("Bart"));
+        LOGGER.info(personService.getAll());
+        LOGGER.info(personService.getByName("Bart"));
 
         // CUSTOMER
-        System.out.println("\n--- CUSTOMER ---\n");
+        LOGGER.info("\n--- CUSTOMER ---\n");
         // Create
         CustomerService customerService = new CustomerService();
         Customer customer = new Customer();
@@ -103,13 +107,13 @@ public class Main {
         // Delete
         customerService.delete(3);
         // Read
-        System.out.println(customerService.getById(1));
+        LOGGER.info(customerService.getById(1));
         // All
-        System.out.println(customerService.getAll());
-        System.out.println(customerService.getByName("Genghis"));
+        LOGGER.info(customerService.getAll());
+        LOGGER.info(customerService.getByName("Genghis"));
 
         // OWNER
-        System.out.println("\n--- OWNER ---\n");
+        LOGGER.info("\n--- OWNER ---\n");
         // Create
         OwnerService ownerService = new OwnerService();
         Owner owner = new Owner();
@@ -124,13 +128,13 @@ public class Main {
         // Delete
         ownerService.delete(2);
         // Read
-        System.out.println(ownerService.getById(1));
+        LOGGER.info(ownerService.getById(1));
         // All
-        System.out.println(ownerService.getAll());
-        System.out.println(ownerService.getByName("Bart"));
+        LOGGER.info(ownerService.getAll());
+        LOGGER.info(ownerService.getByName("Bart"));
 
         // SHOP
-        System.out.println("\n--- SHOP ---\n");
+        LOGGER.info("\n--- SHOP ---\n");
         // Create
         ShopService shopService = new ShopService();
         Shop shop = new Shop();
@@ -153,13 +157,13 @@ public class Main {
         // Delete
         shopService.delete(2);
         // Read
-        System.out.println(shopService.getById(1));
+        LOGGER.info(shopService.getById(1));
         // All
-        System.out.println(shopService.getAll());
-        System.out.println(shopService.getByName("La Tasca"));
+        LOGGER.info(shopService.getAll());
+        LOGGER.info(shopService.getByName("La Tasca"));
 
         // STAFF
-        System.out.println("\n--- STAFF ---\n");
+        LOGGER.info("\n--- STAFF ---\n");
         // Create
         StaffService staffService = new StaffService();
         Staff staff = new Staff();
@@ -180,13 +184,13 @@ public class Main {
         // Delete
         staffService.delete(2);
         // Read
-        System.out.println(staffService.getById(1));
+        LOGGER.info(staffService.getById(1));
         // All
-        System.out.println(staffService.getAll());
-        System.out.println(staffService.getByName("Tom"));
+        LOGGER.info(staffService.getAll());
+        LOGGER.info(staffService.getByName("Tom"));
 
         // SUPPLIER
-        System.out.println("\n--- SUPPLIER ---\n");
+        LOGGER.info("\n--- SUPPLIER ---\n");
         // Create
         SupplierService supplierService = new SupplierService();
         Supplier supplier = new Supplier();
@@ -207,13 +211,13 @@ public class Main {
         // Delete
         supplierService.delete(2);
         // Read
-        System.out.println(supplierService.getById(1));
+        LOGGER.info(supplierService.getById(1));
         // All
-        System.out.println(supplierService.getAll());
-        System.out.println(supplierService.getByName("LaCoste"));
+        LOGGER.info(supplierService.getAll());
+        LOGGER.info(supplierService.getByName("LaCoste"));
 
         // PRODUCT
-        System.out.println("\n--- PRODUCT ---\n");
+        LOGGER.info("\n--- PRODUCT ---\n");
         // Create
         ProductService productService = new ProductService();
         Product product = new Product();
@@ -246,13 +250,13 @@ public class Main {
         // Delete
         productService.delete(3);
         // Read
-        System.out.println(productService.getById(1));
+        LOGGER.info(productService.getById(1));
         // All
-        System.out.println(productService.getAll());
-        System.out.println(productService.getByName("Shirt"));
+        LOGGER.info(productService.getAll());
+        LOGGER.info(productService.getByName("Shirt"));
 
         // ORDERS
-        System.out.println("\n--- ORDERS ---\n");
+        LOGGER.info("\n--- ORDERS ---\n");
         // Create
         OrdersService ordersService = new OrdersService();
         Orders orders = new Orders();
@@ -277,13 +281,13 @@ public class Main {
         // Delete
         ordersService.delete(3);
         // Read
-        System.out.println(ordersService.getById(1));
+        LOGGER.info(ordersService.getById(1));
         // All
-        System.out.println(ordersService.getAll());
-        System.out.println(ordersService.getByCustomerName("Genghis"));
+        LOGGER.info(ordersService.getAll());
+        LOGGER.info(ordersService.getByCustomerName("Genghis"));
 
         // ORDER ITEM
-        System.out.println("\n--- ORDER ITEM ---\n");
+        LOGGER.info("\n--- ORDER ITEM ---\n");
         // Create
         OrderItemService orderItemService = new OrderItemService();
         OrderItem orderItem = new OrderItem();
@@ -303,13 +307,13 @@ public class Main {
         // Delete
         orderItemService.delete(2);
         // Read
-        System.out.println(orderItemService.getById(1));
+        LOGGER.info(orderItemService.getById(1));
         // All
-        System.out.println(orderItemService.getAll());
-        System.out.println(orderItemService.getByProductName("Shirt")); // only first incidence
+        LOGGER.info(orderItemService.getAll());
+        LOGGER.info(orderItemService.getByProductName("Shirt")); // only first incidence
 
         // PROMOTION
-        System.out.println("\n--- PROMOTION ---\n");
+        LOGGER.info("\n--- PROMOTION ---\n");
         // Create
         PromotionService promotionService = new PromotionService();
         Promotion promotion = new Promotion();
@@ -337,13 +341,13 @@ public class Main {
         // Delete
         promotionService.delete(3);
         // Read
-        System.out.println(promotionService.getById(1));
+        LOGGER.info(promotionService.getById(1));
         // All
-        System.out.println(promotionService.getAll());
-        System.out.println(promotionService.getByName("Special Discount"));
+        LOGGER.info(promotionService.getAll());
+        LOGGER.info(promotionService.getByName("Special Discount"));
 
         // PRODUCT PROMOTION
-        System.out.println("\n--- PRODUCT PROMOTION ---\n");
+        LOGGER.info("\n--- PRODUCT PROMOTION ---\n");
         // Create
         ProductPromotionService productPromotionService = new ProductPromotionService();
         ProductPromotion productPromotion = new ProductPromotion();
@@ -360,35 +364,35 @@ public class Main {
         // Delete
         productPromotionService.delete(2);
         // Read
-        System.out.println(productPromotionService.getById(1));
+        LOGGER.info(productPromotionService.getById(1));
         // All
-        System.out.println(productPromotionService.getAll());
-        System.out.println(productPromotionService.getByProductName("Shirt"));
+        LOGGER.info(productPromotionService.getAll());
+        LOGGER.info(productPromotionService.getByProductName("Shirt"));
 
         // XML Validate and Parse
-        System.out.println("\n--- XML Validation and Parse ---\n");
+        LOGGER.info("\n--- XML Validation and Parse ---\n");
         XmlValidator.validateXMLAgainstXSD(Paths.SHOPXML.getPath(), Paths.SHOPXSD.getPath());
-        System.out.println(XmlParser.parseShopDataFromFile(Paths.SHOPXML.getPath()));
+        LOGGER.info(XmlParser.parseShopDataFromFile(Paths.SHOPXML.getPath()));
 
         // Marsh and UnMarsh Person
-        System.out.println("\n--- File create from Person Object is stored in resources/xml --- ");
+        LOGGER.info("\n--- File create from Person Object is stored in resources/xml --- ");
         JAXBUtils.marshall(person);
-        System.out.println("\n--- Unmarshall Person.xml file --- ");
-        System.out.println(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
+        LOGGER.info("\n--- Unmarshall Person.xml file --- ");
+        LOGGER.info(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
 
         // JSON
-        System.out.println("\n ---JSON--- ");
+        LOGGER.info("\n ---JSON--- ");
         JSONUtils.writeJSON(shop);
         JSONUtils.writeJSON(person);
         JSONUtils.writeJSON(customer);
         JSONUtils.writeJSON(product);
         JSONUtils.writeJSON(promotion);
         JSONUtils.writeJSON(orders);
-        System.out.println(JSONUtils.readJSON("shop"));
-        System.out.println(JSONUtils.readJSON("person"));
-        System.out.println(JSONUtils.readJSON("customer"));
-        System.out.println(JSONUtils.readJSON("product"));
-        System.out.println(JSONUtils.readJSON("promotion"));
-        System.out.println(JSONUtils.readJSON("orders"));
+        LOGGER.info(JSONUtils.readJSON("shop"));
+        LOGGER.info(JSONUtils.readJSON("person"));
+        LOGGER.info(JSONUtils.readJSON("customer"));
+        LOGGER.info(JSONUtils.readJSON("product"));
+        LOGGER.info(JSONUtils.readJSON("promotion"));
+        LOGGER.info(JSONUtils.readJSON("orders"));
     }
 }
