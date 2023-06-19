@@ -1,6 +1,5 @@
 package com.solvd.sql.mybatis;
 
-import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.interfaces.IProductDao;
 import com.solvd.sql.model.Product;
 import com.solvd.util.MyBatisSqlFactory;
