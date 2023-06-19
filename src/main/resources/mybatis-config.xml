@@ -33,12 +33,12 @@
     <mappers>
         <mapper resource="mapper/category-mapper.xml"/>
         <mapper resource="mapper/customer-mapper.xml"/>
-        <mapper resource="mapper/orderItem-mapper.xml"/>
-        <mapper resource="mapper/orders-mapper.xml"/>
+        <mapper resource="mapper/order-item-mapper.xml"/>
+        <mapper resource="mapper/order-mapper.xml"/>
         <mapper resource="mapper/owner-mapper.xml"/>
         <mapper resource="mapper/person-mapper.xml"/>
         <mapper resource="mapper/product-mapper.xml"/>
-        <mapper resource="mapper/productPromotion-mapper.xml"/>
+        <mapper resource="mapper/product-promotion-mapper.xml"/>
         <mapper resource="mapper/promotion-mapper.xml"/>
         <mapper resource="mapper/shop-mapper.xml"/>
         <mapper resource="mapper/staff-mapper.xml"/>
