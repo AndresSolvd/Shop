@@ -1,7 +1,6 @@
 package com.solvd;
 
 import com.solvd.enums.Paths;
-import com.solvd.sql.interfaces.IPersonDao;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
