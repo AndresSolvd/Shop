@@ -21,16 +21,16 @@ public class Orders {
     @XmlElement(name = "orderDate")
     @XmlJavaTypeAdapter(DateAdapter.class)
     @JsonProperty("orderDate")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date orderDate;
 
     @XmlElement(name = "total")
     @JsonProperty("total")
     private double total;
 
-    @XmlElement(name = "customerId")
-    @JsonProperty("customerId")
-    private int customerId;
+    @XmlElement(name = "customer", type = Customer.class)
+    @JsonProperty("customer")
+    private Customer customer;
 
     public int getId() {
         return id;
@@ -56,21 +56,21 @@ public class Orders {
         this.total = total;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
     public String toString() {
         return "Orders{" +
                 "id=" + id +
-                ", order_date=" + orderDate +
+                ", orderDate=" + orderDate +
                 ", total=" + total +
-                ", customerId=" + customerId +
+                ", customer=" + customer +
                 '}';
     }
 }

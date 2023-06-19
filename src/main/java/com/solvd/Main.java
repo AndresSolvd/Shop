@@ -248,24 +248,25 @@ public class Main {
         Orders orders = new Orders();
         orders.setOrderDate(Date.valueOf(("2022-5-5")));
         orders.setTotal(80);
-        orders.setCustomerId(1);
+        orders.setCustomer(customerService.getById(1));
         ordersService.insert(orders);
         orders.setOrderDate(Date.valueOf(("2022-4-5")));
         orders.setTotal(60);
-        orders.setCustomerId(1);
+        orders.setCustomer(customerService.getById(1));
         ordersService.insert(orders);
         orders.setOrderDate(Date.valueOf(("2022-4-8")));
         orders.setTotal(78);
-        orders.setCustomerId(1);
+        orders.setCustomer(customerService.getById(1));
         ordersService.insert(orders);
         // Update
         orders.setOrderDate(Date.valueOf(("2022-5-5")));
         orders.setTotal(120);
-        orders.setCustomerId(1);
+        orders.setCustomer(customerService.getById(1));
         orders.setId(1);
         ordersService.update(orders);
         // Delete
         ordersService.delete(3);
+        System.out.println("\n--- 2 ---\n");
         // Read
         System.out.println(ordersService.getById(1));
         // All

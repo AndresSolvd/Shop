@@ -23,7 +23,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setDate(1, orders.getOrderDate());
             ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
+            ps.setInt(3, orders.getCustomer().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -46,7 +46,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setDate(1, orders.getOrderDate());
             ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
+            ps.setInt(3, orders.getCustomer().getId());
             ps.setInt(4, orders.getId());
             ps.execute();
         } catch (SQLException e) {
@@ -91,7 +91,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
                     orders.setId(rs.getInt("id"));
                     orders.setOrderDate(rs.getDate("order_date"));
                     orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
+                    orders.setCustomer(new CustomerDao().getById(rs.getInt("customer_id")));
                     orderss.add(orders);
                 }
             }
@@ -121,7 +121,7 @@ public class OrdersDao implements IBaseDAO<Orders> {
                     orders.setId(rs.getInt("id"));
                     orders.setOrderDate(rs.getDate("order_date"));
                     orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
+                    orders.setCustomer(new CustomerDao().getById(rs.getInt("customer_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
