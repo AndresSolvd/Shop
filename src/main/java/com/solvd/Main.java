@@ -3,7 +3,9 @@ package com.solvd;
 import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
+import com.solvd.sql.jdbc.ProductDao;
 import com.solvd.sql.model.*;
+import com.solvd.sql.mybatis.OrdersDao;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
@@ -275,20 +277,21 @@ public class Main {
         OrderItemService orderItemService = new OrderItemService();
         OrderItem orderItem = new OrderItem();
         orderItem.setQuantity(1);
-        orderItem.setOrderId(1);
-        orderItem.setProductId(1);
+        orderItem.setOrder(new OrdersDao().getById(1));
+        orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.insert(orderItem);
         orderItem.setQuantity(1);
-        orderItem.setOrderId(2);
-        orderItem.setProductId(2);
+        orderItem.setOrder(new OrdersDao().getById(2));
+        orderItem.setProduct(new ProductDao().getById(2));
         orderItemService.insert(orderItem);
         // Update
         orderItem.setQuantity(2);
-        orderItem.setOrderId(1);
-        orderItem.setProductId(1);
+        orderItem.setOrder(new OrdersDao().getById(1));
+        orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.update(orderItem);
         // Delete
         orderItemService.delete(2);
+        System.out.println("\n--- 2 ---\n");
         // Read
         System.out.println(orderItemService.getById(1));
         // All

@@ -6,24 +6,26 @@
 <mapper namespace="com.solvd.sql.interfaces.IOrderItemDao">
     <resultMap id="OrderItemResultMap" type="OrderItem" autoMapping="false">
         <result property="quantity" column="quantity"/>
-        <result property="productId" column="product_id"/>
-        <result property="orderId" column="order_id"/>
+        <association property="product" column="product_id" javaType="Product"
+                     select="com.solvd.sql.interfaces.IProductDao.getById"/>
+        <association property="order" column="order_id" javaType="Orders"
+                     select="com.solvd.sql.interfaces.IOrdersDao.getById"/>
     </resultMap>
     <insert id="insert" parameterType="OrderItem">
-        INSERT INTO order_item (quantity, product_id, order_id) VALUES (#{quantity}, #{productId}, #{orderId});
+        INSERT INTO order_item (quantity, product_id, order_id) VALUES (#{quantity}, #{product.id}, #{order.id});
     </insert>
     <update id="update" parameterType="OrderItem">
         UPDATE order_item SET
-        quantity = #{quantity}, product_id = #{productId}, order_id = #{orderId}
-        WHERE order_id = #{orderId};
+        quantity = #{quantity}, product_id = #{product.id}, order_id = #{order.id}
+        WHERE order_id = #{order.id};
     </update>
     <delete id="delete" parameterType="int">
-        DELETE FROM order_item WHERE order_id = #{orderId};
+        DELETE FROM order_item WHERE order_id = #{order.id};
     </delete>
     <select id="getAll" resultMap="OrderItemResultMap">
         SELECT * FROM order_item;
     </select>
     <select id="getById" parameterType="int" resultMap="OrderItemResultMap">
-        SELECT * FROM order_item WHERE order_id = #{orderId};
+        SELECT * FROM order_item WHERE order_id = #{order.id};
     </select>
 </mapper>

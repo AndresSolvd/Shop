@@ -1,7 +1,12 @@
 package com.solvd.sql.model;
 
-import javax.xml.bind.annotation.*;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "orderItem")
@@ -12,13 +17,13 @@ public class OrderItem {
     @JsonProperty("quantity")
     private int quantity;
 
-    @XmlElement(name = "productId")
-    @JsonProperty("productId")
-    private int productId;
+    @XmlElement(name = "product", type = Product.class)
+    @JsonProperty("product")
+    private Product product;
 
-    @XmlElement(name = "orderId")
-    @JsonProperty("orderId")
-    private int orderId;
+    @XmlElement(name = "order", type = Orders.class)
+    @JsonProperty("order")
+    private Orders order;
 
     public int getQuantity() {
         return quantity;
@@ -28,28 +33,28 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Orders getOrder() {
+        return order;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrder(Orders order) {
+        this.order = order;
     }
 
     @Override
     public String toString() {
         return "OrderItem{" +
                 "quantity=" + quantity +
-                ", productId=" + productId +
-                ", orderId=" + orderId +
+                ", product=" + product +
+                ", order=" + order +
                 '}';
     }
 }
