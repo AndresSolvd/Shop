@@ -1,6 +1,5 @@
 package com.solvd.sql.mybatis;
 
-import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.interfaces.IStaffDao;
 import com.solvd.sql.model.Staff;
 import com.solvd.util.MyBatisSqlFactory;
@@ -9,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class StaffDao implements IBaseDAO<Staff> {
+public class StaffDao implements IStaffDao {
 
     private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
@@ -56,6 +55,16 @@ public class StaffDao implements IBaseDAO<Staff> {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IStaffDao staffDao = sqlSession.getMapper(IStaffDao.class);
             staff = staffDao.getById(id);
+        }
+        return staff;
+    }
+
+    @Override
+    public Staff getByName(String name) {
+        Staff staff;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IStaffDao staffDao = sqlSession.getMapper(IStaffDao.class);
+            staff = staffDao.getByName(name);
         }
         return staff;
     }

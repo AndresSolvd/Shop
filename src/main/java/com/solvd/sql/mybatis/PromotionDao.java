@@ -1,6 +1,5 @@
 package com.solvd.sql.mybatis;
 
-import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.interfaces.IPromotionDao;
 import com.solvd.sql.model.Promotion;
 import com.solvd.util.MyBatisSqlFactory;
@@ -9,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class PromotionDao implements IBaseDAO<Promotion> {
+public class PromotionDao implements IPromotionDao {
 
     private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
@@ -56,6 +55,16 @@ public class PromotionDao implements IBaseDAO<Promotion> {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IPromotionDao promotionDao = sqlSession.getMapper(IPromotionDao.class);
             promotion = promotionDao.getById(id);
+        }
+        return promotion;
+    }
+
+    @Override
+    public Promotion getByName(String name) {
+        Promotion promotion;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IPromotionDao promotionDao = sqlSession.getMapper(IPromotionDao.class);
+            promotion = promotionDao.getByName(name);
         }
         return promotion;
     }

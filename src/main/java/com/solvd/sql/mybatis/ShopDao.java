@@ -1,6 +1,5 @@
 package com.solvd.sql.mybatis;
 
-import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.interfaces.IShopDao;
 import com.solvd.sql.model.Shop;
 import com.solvd.util.MyBatisSqlFactory;
@@ -9,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class ShopDao implements IBaseDAO<Shop> {
+public class ShopDao implements IShopDao {
 
     private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
@@ -56,6 +55,16 @@ public class ShopDao implements IBaseDAO<Shop> {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IShopDao shopDao = sqlSession.getMapper(IShopDao.class);
             shop = shopDao.getById(id);
+        }
+        return shop;
+    }
+
+    @Override
+    public Shop getByName(String name) {
+        Shop shop;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IShopDao shopDao = sqlSession.getMapper(IShopDao.class);
+            shop = shopDao.getByName(name);
         }
         return shop;
     }

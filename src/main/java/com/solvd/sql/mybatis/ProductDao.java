@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class ProductDao implements IBaseDAO<Product> {
+public class ProductDao implements IProductDao {
 
     private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
@@ -56,6 +56,16 @@ public class ProductDao implements IBaseDAO<Product> {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IProductDao productDao = sqlSession.getMapper(IProductDao.class);
             product = productDao.getById(id);
+        }
+        return product;
+    }
+
+    @Override
+    public Product getByName(String name) {
+        Product product;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IProductDao productDao = sqlSession.getMapper(IProductDao.class);
+            product = productDao.getByName(name);
         }
         return product;
     }

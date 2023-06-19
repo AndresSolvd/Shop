@@ -4,7 +4,8 @@ import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
-import com.solvd.sql.mybatis.*;
+import com.solvd.sql.mybatis.OrdersDao;
+import com.solvd.sql.mybatis.ProductDao;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
@@ -155,6 +156,7 @@ public class Main {
         System.out.println(shopService.getById(1));
         // All
         System.out.println(shopService.getAll());
+        System.out.println(shopService.getByName("La Tasca"));
 
         // STAFF
         System.out.println("\n--- STAFF ---\n");
@@ -181,6 +183,7 @@ public class Main {
         System.out.println(staffService.getById(1));
         // All
         System.out.println(staffService.getAll());
+        System.out.println(staffService.getByName("Tom"));
 
         // SUPPLIER
         System.out.println("\n--- SUPPLIER ---\n");
@@ -207,6 +210,7 @@ public class Main {
         System.out.println(supplierService.getById(1));
         // All
         System.out.println(supplierService.getAll());
+        System.out.println(supplierService.getByName("LaCoste"));
 
         // PRODUCT
         System.out.println("\n--- PRODUCT ---\n");
@@ -245,6 +249,7 @@ public class Main {
         System.out.println(productService.getById(1));
         // All
         System.out.println(productService.getAll());
+        System.out.println(productService.getByName("Shirt"));
 
         // ORDERS
         System.out.println("\n--- ORDERS ---\n");
@@ -335,6 +340,7 @@ public class Main {
         System.out.println(promotionService.getById(1));
         // All
         System.out.println(promotionService.getAll());
+        System.out.println(promotionService.getByName("Special Discount"));
 
         // PRODUCT PROMOTION
         System.out.println("\n--- PRODUCT PROMOTION ---\n");
@@ -357,6 +363,7 @@ public class Main {
         System.out.println(productPromotionService.getById(1));
         // All
         System.out.println(productPromotionService.getAll());
+        System.out.println(productPromotionService.getByProductName("Shirt"));
 
         // XML Validate and Parse
         System.out.println("\n--- XML Validation and Parse ---\n");

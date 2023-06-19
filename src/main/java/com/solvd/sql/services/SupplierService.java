@@ -1,12 +1,12 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.mybatis.SupplierDao;
+import com.solvd.sql.interfaces.ISupplierDao;
 import com.solvd.sql.model.Supplier;
+import com.solvd.sql.mybatis.SupplierDao;
 
 import java.util.List;
 
-public class SupplierService implements IBaseDAO<Supplier> {
+public class SupplierService implements ISupplierDao {
 
     SupplierDao supplierDao = new SupplierDao();
 
@@ -33,5 +33,10 @@ public class SupplierService implements IBaseDAO<Supplier> {
     @Override
     public Supplier getById(int id) {
         return supplierDao.getById(id);
+    }
+
+    @Override
+    public Supplier getByName(String name) {
+        return supplierDao.getByName(name);
     }
 }

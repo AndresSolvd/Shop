@@ -1,6 +1,5 @@
 package com.solvd.sql.mybatis;
 
-import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.interfaces.ISupplierDao;
 import com.solvd.sql.model.Supplier;
 import com.solvd.util.MyBatisSqlFactory;
@@ -9,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class SupplierDao implements IBaseDAO<Supplier> {
+public class SupplierDao implements ISupplierDao {
 
     private final SqlSessionFactory sqlSessionFactory = MyBatisSqlFactory.getSqlSessionFactory();
 
@@ -56,6 +55,16 @@ public class SupplierDao implements IBaseDAO<Supplier> {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             ISupplierDao supplierDao = sqlSession.getMapper(ISupplierDao.class);
             supplier = supplierDao.getById(id);
+        }
+        return supplier;
+    }
+
+    @Override
+    public Supplier getByName(String name) {
+        Supplier supplier;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            ISupplierDao supplierDao = sqlSession.getMapper(ISupplierDao.class);
+            supplier = supplierDao.getByName(name);
         }
         return supplier;
     }

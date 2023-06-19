@@ -30,4 +30,7 @@
     <select id="getById" parameterType="int" resultMap="PromotionResultMap">
         SELECT * FROM promotion WHERE id = #{id};
     </select>
+    <select id="getByName" parameterType="String" resultMap="PromotionResultMap">
+        SELECT * FROM promotion WHERE promotion_name = #{name};
+    </select>
 </mapper>

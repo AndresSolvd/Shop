@@ -27,4 +27,7 @@
     <select id="getById" parameterType="int" resultMap="SupplierResultMap">
         SELECT * FROM supplier WHERE id = #{id};
     </select>
+    <select id="getByName" parameterType="String" resultMap="SupplierResultMap">
+        SELECT * FROM supplier WHERE supplier_name = #{name};
+    </select>
 </mapper>

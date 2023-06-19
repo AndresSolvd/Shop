@@ -29,4 +29,9 @@
     <select id="getById" parameterType="int" resultMap="StaffResultMap">
         SELECT * FROM staff WHERE id = #{id};
     </select>
+    <select id="getByName" parameterType="String" resultMap="StaffResultMap">
+        SELECT * FROM staff
+        JOIN person ON staff.person_id = person.id
+        WHERE person_name = #{name};
+    </select>
 </mapper>
