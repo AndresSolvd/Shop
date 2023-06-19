@@ -60,7 +60,12 @@ public class OrderItemDao implements IOrderItemDao {
     }
 
     @Override
-    public OrderItem getByItemName(String name) {
-        return null;
+    public OrderItem getByProductName(String name) {
+        OrderItem orderItem;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrderItemDao orderItemDao = sqlSession.getMapper(IOrderItemDao.class);
+            orderItem = orderItemDao.getByProductName(name);
+        }
+        return orderItem;
     }
 }

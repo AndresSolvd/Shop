@@ -26,4 +26,9 @@
     <select id="getById" parameterType="int" resultMap="OwnerResultMap">
         SELECT * FROM owner WHERE id = #{id};
     </select>
+    <select id="getByName" parameterType="String" resultMap="OwnerResultMap">
+        SELECT * FROM owner
+        JOIN person ON owner.person_id = person.id
+        WHERE person_name = #{name};
+    </select>
 </mapper>

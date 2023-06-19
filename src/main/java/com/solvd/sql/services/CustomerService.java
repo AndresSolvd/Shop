@@ -1,12 +1,12 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.mybatis.CustomerDao;
+import com.solvd.sql.interfaces.ICustomerDao;
 import com.solvd.sql.model.Customer;
+import com.solvd.sql.mybatis.CustomerDao;
 
 import java.util.List;
 
-public class CustomerService implements IBaseDAO<Customer> {
+public class CustomerService implements ICustomerDao {
 
     CustomerDao customerDao = new CustomerDao();
 
@@ -33,5 +33,10 @@ public class CustomerService implements IBaseDAO<Customer> {
     @Override
     public Customer getById(int id) {
         return customerDao.getById(id);
+    }
+
+    @Override
+    public Customer getByName(String name) {
+        return customerDao.getByName(name);
     }
 }

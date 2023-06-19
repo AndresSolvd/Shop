@@ -61,6 +61,11 @@ public class OrdersDao implements IOrdersDao {
 
     @Override
     public Orders getByCustomerName(String name) {
-        return null;
+        Orders orders;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IOrdersDao ordersDao = sqlSession.getMapper(IOrdersDao.class);
+            orders = ordersDao.getByCustomerName(name);
+        }
+        return orders;
     }
 }

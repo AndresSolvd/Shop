@@ -4,8 +4,7 @@ import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
-import com.solvd.sql.mybatis.OrdersDao;
-import com.solvd.sql.mybatis.ProductDao;
+import com.solvd.sql.mybatis.*;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
@@ -79,6 +78,7 @@ public class Main {
         System.out.println(personService.getById(4));
         // All
         System.out.println(personService.getAll());
+        System.out.println(personService.getByName("Bart"));
 
         // CUSTOMER
         System.out.println("\n--- CUSTOMER ---\n");
@@ -91,17 +91,21 @@ public class Main {
         customer.setTaxNumber("274527252");
         customer.setPerson(personService.getById(3));
         customerService.insert(customer);
+        customer.setTaxNumber("274527252");
+        customer.setPerson(personService.getById(1));
+        customerService.insert(customer);
         // Update
         customer.setTaxNumber("1254986532"); // Needs to specify the ID
         customer.setPerson(personService.getById(4));
         customer.setId(1);
         customerService.update(customer);
         // Delete
-        customerService.delete(2);
+        customerService.delete(3);
         // Read
         System.out.println(customerService.getById(1));
         // All
         System.out.println(customerService.getAll());
+        System.out.println(customerService.getByName("Genghis"));
 
         // OWNER
         System.out.println("\n--- OWNER ---\n");
@@ -122,6 +126,7 @@ public class Main {
         System.out.println(ownerService.getById(1));
         // All
         System.out.println(ownerService.getAll());
+        System.out.println(ownerService.getByName("Bart"));
 
         // SHOP
         System.out.println("\n--- SHOP ---\n");
@@ -252,7 +257,7 @@ public class Main {
         ordersService.insert(orders);
         orders.setOrderDate(Date.valueOf(("2022-4-5")));
         orders.setTotal(60);
-        orders.setCustomer(customerService.getById(1));
+        orders.setCustomer(customerService.getById(2));
         ordersService.insert(orders);
         orders.setOrderDate(Date.valueOf(("2022-4-8")));
         orders.setTotal(78);
@@ -266,11 +271,11 @@ public class Main {
         ordersService.update(orders);
         // Delete
         ordersService.delete(3);
-        System.out.println("\n--- 2 ---\n");
         // Read
         System.out.println(ordersService.getById(1));
         // All
         System.out.println(ordersService.getAll());
+        System.out.println(ordersService.getByCustomerName("Genghis"));
 
         // ORDER ITEM
         System.out.println("\n--- ORDER ITEM ---\n");
@@ -292,11 +297,11 @@ public class Main {
         orderItemService.update(orderItem);
         // Delete
         orderItemService.delete(2);
-        System.out.println("\n--- 2 ---\n");
         // Read
         System.out.println(orderItemService.getById(1));
         // All
         System.out.println(orderItemService.getAll());
+        System.out.println(orderItemService.getByProductName("Shirt")); // only first incidence
 
         // PROMOTION
         System.out.println("\n--- PROMOTION ---\n");
