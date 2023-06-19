@@ -58,4 +58,9 @@ public class OrderItemDao implements IOrderItemDao {
         }
         return orderItem;
     }
+
+    @Override
+    public OrderItem getByItemName(String name) {
+        return null;
+    }
 }

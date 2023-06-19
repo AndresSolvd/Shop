@@ -58,4 +58,9 @@ public class OwnerDao implements IOwnerDao {
         }
         return owner;
     }
+
+    @Override
+    public Owner getByName(String name) {
+        return null;
+    }
 }

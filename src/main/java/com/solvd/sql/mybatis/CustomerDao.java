@@ -58,4 +58,9 @@ public class CustomerDao implements ICustomerDao {
         }
         return customer;
     }
+
+    @Override
+    public Customer getByName(String name) {
+        return null;
+    }
 }

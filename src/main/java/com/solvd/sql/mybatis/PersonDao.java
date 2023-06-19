@@ -58,4 +58,14 @@ public class PersonDao implements IPersonDao {
         }
         return person;
     }
+
+    @Override
+    public Person getByName(String name) {
+        Person person;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IPersonDao personDao = sqlSession.getMapper(IPersonDao.class);
+            person = personDao.getByName(name);
+        }
+        return person;
+    }
 }

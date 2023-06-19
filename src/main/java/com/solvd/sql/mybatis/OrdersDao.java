@@ -58,4 +58,9 @@ public class OrdersDao implements IOrdersDao {
         }
         return orders;
     }
+
+    @Override
+    public Orders getByCustomerName(String name) {
+        return null;
+    }
 }
