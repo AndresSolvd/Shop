@@ -7,14 +7,15 @@
     <resultMap id="CustomerResultMap" type="Customer" autoMapping="false">
         <result property="id" column="id"/>
         <result property="taxNumber" column="tax_number"/>
-        <result property="personId" column="person_id"/>
+        <association property="person" column="person_id" javaType="Person"
+                     select="com.solvd.sql.interfaces.IPersonDao.getById"/>
     </resultMap>
     <insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO customer (tax_number, person_id) VALUES (#{taxNumber}, #{personId});
+        INSERT INTO customer (tax_number, person_id) VALUES (#{taxNumber}, #{person.id});
     </insert>
     <update id="update" parameterType="Customer">
         UPDATE customer SET
-        id = #{id}, tax_number = #{taxNumber}, person_id = #{personId}
+        id = #{id}, tax_number = #{taxNumber}, person_id = #{person.id}
         WHERE id = #{id};
     </update>
     <delete id="delete" parameterType="int">

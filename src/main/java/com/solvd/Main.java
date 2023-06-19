@@ -1,6 +1,7 @@
 package com.solvd;
 
 import com.solvd.enums.Paths;
+import com.solvd.sql.interfaces.IPersonDao;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
@@ -84,14 +85,14 @@ public class Main {
         CustomerService customerService = new CustomerService();
         Customer customer = new Customer();
         customer.setTaxNumber("00000000");
-        customer.setPersonId(4);
+        customer.setPerson(personService.getById(4));
         customerService.insert(customer);
         customer.setTaxNumber("274527252");
-        customer.setPersonId(3);
+        customer.setPerson(personService.getById(3));
         customerService.insert(customer);
         // Update
         customer.setTaxNumber("1254986532"); // Needs to specify the ID
-        customer.setPersonId(4);
+        customer.setPerson(personService.getById(4));
         customer.setId(1);
         customerService.update(customer);
         // Delete

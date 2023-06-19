@@ -78,10 +78,10 @@ public class MyBatisMain {
         // Insert
         Customer customer = new Customer();
         customer.setTaxNumber("4532168");
-        customer.setPersonId(1);
+        customer.setPerson(new PersonDao().getById(1));
         new CustomerDao().insert(customer);
         customer.setTaxNumber("65465155");
-        customer.setPersonId(2);
+        customer.setPerson(new PersonDao().getById(2));
         new CustomerDao().insert(customer);
         // Print by id
         System.out.println(new CustomerDao().getById(1));
