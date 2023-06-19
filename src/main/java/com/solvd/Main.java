@@ -108,12 +108,12 @@ public class Main {
         // Create
         OwnerService ownerService = new OwnerService();
         Owner owner = new Owner();
-        owner.setPersonId(1);
+        owner.setPerson(personService.getById(1));
         ownerService.insert(owner);
-        owner.setPersonId(2);
+        owner.setPerson(personService.getById(2));
         ownerService.insert(owner);
         // Update
-        owner.setPersonId(3); // Needs to specify the ID
+        owner.setPerson(personService.getById(1));// Needs to specify the ID
         owner.setId(1);
         ownerService.update(owner);
         // Delete
@@ -131,12 +131,12 @@ public class Main {
         shop.setShopName("Le Sportif Foe");
         shop.setAddress("In a land far far away");
         shop.setPhone("1120984567");
-        shop.setOwnerId(1);
+        shop.setOwner(ownerService.getById(1));
         shopService.insert(shop);
         shop.setShopName("Federico Barba Roja");
         shop.setAddress("In between dreams");
         shop.setPhone("4593217865");
-        shop.setOwnerId(1);
+        shop.setOwner(ownerService.getById(1));
         shopService.insert(shop);
         // Update
         shop.setShopName("La Tasca");
@@ -157,17 +157,17 @@ public class Main {
         StaffService staffService = new StaffService();
         Staff staff = new Staff();
         staff.setPosition("AllinOne");
-        staff.setPersonId(2);
-        staff.setShopId(1);
+        staff.setPerson(personService.getById(2));
+        staff.setShop(shopService.getById(1));
         staffService.insert(staff);
         staff.setPosition("Worker");
-        staff.setPersonId(1);
-        staff.setShopId(1);
+        staff.setPerson(personService.getById(1));
+        staff.setShop(shopService.getById(1));
         staffService.insert(staff);
         // Update
         staff.setPosition("Manager");
-        staff.setPersonId(2);
-        staff.setShopId(1);
+        staff.setPerson(personService.getById(2));
+        staff.setShop(shopService.getById(1));
         staff.setId(1);
         staffService.update(staff);
         // Delete
@@ -211,27 +211,27 @@ public class Main {
         product.setProductName("Shirt");
         product.setStock(23);
         product.setPrice(60);
-        product.setCategoryId(1);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(1));
+        product.setSupplier(supplierService.getById(1));
         productService.insert(product);
         product.setProductName("Pants");
         product.setStock(13);
         product.setPrice(20);
-        product.setCategoryId(1);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(1));
+        product.setSupplier(supplierService.getById(1));
         productService.insert(product);
         product.setProductName("iPad");
         product.setStock(5);
         product.setPrice(2000);
-        product.setCategoryId(2);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(2));
+        product.setSupplier(supplierService.getById(1));
         productService.insert(product);
         // Update
         product.setProductName("Pants");
         product.setStock(13);
         product.setPrice(80);
-        product.setCategoryId(1);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(1));
+        product.setSupplier(supplierService.getById(1));
         product.setId(2);
         productService.update(product);
         // Delete
@@ -336,15 +336,15 @@ public class Main {
         // Create
         ProductPromotionService productPromotionService = new ProductPromotionService();
         ProductPromotion productPromotion = new ProductPromotion();
-        productPromotion.setPromotionId(2);
-        productPromotion.setProductId(1);
+        productPromotion.setPromotion(promotionService.getById(2));
+        productPromotion.setProduct(productService.getById(1));
         productPromotionService.insert(productPromotion);
-        productPromotion.setPromotionId(1);
-        productPromotion.setProductId(2);
+        productPromotion.setPromotion(promotionService.getById(1));
+        productPromotion.setProduct(productService.getById(2));
         productPromotionService.insert(productPromotion);
         // Update
-        productPromotion.setPromotionId(1);
-        productPromotion.setProductId(1); // update by product id
+        productPromotion.setPromotion(promotionService.getById(1));
+        productPromotion.setProduct(productService.getById(1));     // update by product id
         productPromotionService.update(productPromotion);
         // Delete
         productPromotionService.delete(2);

@@ -2,6 +2,8 @@ package com.solvd.sql.jdbc;
 
 import com.solvd.sql.interfaces.IBaseDAO;
 import com.solvd.sql.model.ProductPromotion;
+import com.solvd.sql.mybatis.ProductDao;
+import com.solvd.sql.mybatis.PromotionDao;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -21,8 +23,8 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
         String query = "INSERT INTO product_promotion (promotion_id, product_id) VALUES (?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, productPromotion.getPromotionId());
-            ps.setInt(2, productPromotion.getProductId());
+            ps.setInt(1, productPromotion.getPromotion().getId());
+            ps.setInt(2, productPromotion.getProduct().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,8 +45,8 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
         String query = "UPDATE product_promotion SET promotion_id = ? WHERE product_id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, productPromotion.getPromotionId());
-            ps.setInt(2, productPromotion.getProductId());
+            ps.setInt(1, productPromotion.getPromotion().getId());
+            ps.setInt(2, productPromotion.getProduct().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -85,8 +87,8 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
                     ProductPromotion productPromotion = new ProductPromotion();
-                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
-                    productPromotion.setProductId(rs.getInt("product_id"));
+                    productPromotion.setPromotion(new PromotionDao().getById(rs.getInt("promotion_id")));
+                    productPromotion.setProduct(new ProductDao().getById(rs.getInt("product_id")));
                     productPromotions.add(productPromotion);
                 }
             }
@@ -113,8 +115,8 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    productPromotion.setPromotionId(rs.getInt("promotion_id"));
-                    productPromotion.setProductId(rs.getInt("product_id"));
+                    productPromotion.setPromotion(new PromotionDao().getById(rs.getInt("promotion_id")));
+                    productPromotion.setProduct(new ProductDao().getById(rs.getInt("product_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

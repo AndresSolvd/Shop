@@ -1,7 +1,9 @@
 package com.solvd.sql.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
-import com.fasterxml.jackson.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "owner")
@@ -12,9 +14,9 @@ public class Owner {
     @JsonProperty("id")
     private int id;
 
-    @XmlElement(name = "personId")
-    @JsonProperty("personId")
-    private int personId;
+    @XmlElement(name = "person", type = Person.class)
+    @JsonProperty("person")
+    private Person person;
 
     public int getId() {
         return id;
@@ -24,19 +26,19 @@ public class Owner {
         this.id = id;
     }
 
-    public int getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override
     public String toString() {
         return "Owner{" +
                 "id=" + id +
-                ", personId=" + personId +
+                ", person=" + person +
                 '}';
     }
 }

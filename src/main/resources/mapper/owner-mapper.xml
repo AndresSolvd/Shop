@@ -6,14 +6,15 @@
 <mapper namespace="com.solvd.sql.interfaces.IOwnerDao">
     <resultMap id="OwnerResultMap" type="Owner" autoMapping="false">
         <result property="id" column="id"/>
-        <result property="personId" column="person_id"/>
+        <association property="person" column="person_id" javaType="Person"
+                     select="com.solvd.sql.interfaces.IPersonDao.getById"/>
     </resultMap>
     <insert id="insert" parameterType="Owner" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO owner (person_id) VALUES (#{personId});
+        INSERT INTO owner (person_id) VALUES (#{person.id});
     </insert>
     <update id="update" parameterType="Owner">
         UPDATE owner SET
-        id = #{id}, person_id = #{personId}
+        id = #{id}, person_id = #{person.id}
         WHERE id = #{id};
     </update>
     <delete id="delete" parameterType="int">

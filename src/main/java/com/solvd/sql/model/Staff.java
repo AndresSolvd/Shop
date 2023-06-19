@@ -1,7 +1,9 @@
 package com.solvd.sql.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
-import com.fasterxml.jackson.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "staff")
@@ -16,13 +18,13 @@ public class Staff {
     @JsonProperty("position")
     private String position;
 
-    @XmlElement(name = "personId")
-    @JsonProperty("personId")
-    private int personId;
+    @XmlElement(name = "person", type = Person.class)
+    @JsonProperty("person")
+    private Person person;
 
-    @XmlElement(name = "shopId")
-    @JsonProperty("shopId")
-    private int shopId;
+    @XmlElement(name = "shop", type = Shop.class)
+    @JsonProperty("shop")
+    private Shop shop;
 
     public int getId() {
         return id;
@@ -40,20 +42,20 @@ public class Staff {
         this.position = position;
     }
 
-    public int getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public int getShopId() {
-        return shopId;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     @Override
@@ -61,8 +63,8 @@ public class Staff {
         return "Staff{" +
                 "id=" + id +
                 ", position='" + position + '\'' +
-                ", personId=" + personId +
-                ", shopId=" + shopId +
+                ", person=" + person +
+                ", shop=" + shop +
                 '}';
     }
 }
