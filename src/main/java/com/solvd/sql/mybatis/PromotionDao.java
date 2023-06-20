@@ -60,11 +60,11 @@ public class PromotionDao implements IPromotionDao {
     }
 
     @Override
-    public Promotion getByName(String name) {
+    public Promotion getPromotionByName(String name) {
         Promotion promotion;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IPromotionDao promotionDao = sqlSession.getMapper(IPromotionDao.class);
-            promotion = promotionDao.getByName(name);
+            promotion = promotionDao.getPromotionByName(name);
         }
         return promotion;
     }

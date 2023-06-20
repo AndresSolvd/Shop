@@ -36,7 +36,7 @@ public class ProductService implements IProductDao {
     }
 
     @Override
-    public Product getByName(String name) {
-        return productDao.getByName(name);
+    public Product getProductByName(String name) {
+        return productDao.getProductByName(name);
     }
 }

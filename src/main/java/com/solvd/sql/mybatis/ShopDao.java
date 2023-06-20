@@ -60,11 +60,11 @@ public class ShopDao implements IShopDao {
     }
 
     @Override
-    public Shop getByName(String name) {
+    public Shop getShopByName(String name) {
         Shop shop;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IShopDao shopDao = sqlSession.getMapper(IShopDao.class);
-            shop = shopDao.getByName(name);
+            shop = shopDao.getShopByName(name);
         }
         return shop;
     }

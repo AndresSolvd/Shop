@@ -29,7 +29,7 @@
     <select id="getById" parameterType="int" resultMap="PersonResultMap">
         SELECT * FROM person WHERE id = #{id};
     </select>
-    <select id="getByName" parameterType="String" resultMap="PersonResultMap">
+    <select id="getPersonByName" parameterType="String" resultMap="PersonResultMap">
         SELECT * FROM person WHERE person_name = #{personName};
     </select>
 </mapper>

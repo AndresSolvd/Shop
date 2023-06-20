@@ -60,11 +60,11 @@ public class StaffDao implements IStaffDao {
     }
 
     @Override
-    public Staff getByName(String name) {
+    public Staff getStaffByName(String name) {
         Staff staff;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IStaffDao staffDao = sqlSession.getMapper(IStaffDao.class);
-            staff = staffDao.getByName(name);
+            staff = staffDao.getStaffByName(name);
         }
         return staff;
     }

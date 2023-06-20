@@ -60,11 +60,11 @@ public class CustomerDao implements ICustomerDao {
     }
 
     @Override
-    public Customer getByName(String name) {
+    public Customer getCustomerByName(String name) {
         Customer customer;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             ICustomerDao customerDao = sqlSession.getMapper(ICustomerDao.class);
-            customer = customerDao.getByName(name);
+            customer = customerDao.getCustomerByName(name);
         }
         return customer;
     }

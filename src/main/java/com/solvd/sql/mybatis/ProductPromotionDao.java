@@ -61,11 +61,11 @@ public class ProductPromotionDao implements IProductPromotionDao {
     }
 
     @Override
-    public ProductPromotion getByProductName(String productName) {
+    public ProductPromotion getPromotionByProductName(String productName) {
         ProductPromotion productPromotion;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IProductPromotionDao productPromotionDao = sqlSession.getMapper(IProductPromotionDao.class);
-            productPromotion = productPromotionDao.getByProductName(productName);
+            productPromotion = productPromotionDao.getPromotionByProductName(productName);
         }
         return productPromotion;
     }

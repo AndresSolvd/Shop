@@ -39,7 +39,7 @@ public class Main {
         categoryService.delete(3); // Delete Food
         // Read
         LOGGER.info(categoryService.getById(1));
-        LOGGER.info(categoryService.getByName("Electronics")); // If repeated name select the last.
+        LOGGER.info(categoryService.getCategoryByName("Electronics")); // If repeated name select the last.
         // All
         LOGGER.info(categoryService.getAll());
 
@@ -83,7 +83,7 @@ public class Main {
         LOGGER.info(personService.getById(4));
         // All
         LOGGER.info(personService.getAll());
-        LOGGER.info(personService.getByName("Bart"));
+        LOGGER.info(personService.getPersonByName("Bart"));
 
         // CUSTOMER
         LOGGER.info("\n--- CUSTOMER ---\n");
@@ -110,7 +110,7 @@ public class Main {
         LOGGER.info(customerService.getById(1));
         // All
         LOGGER.info(customerService.getAll());
-        LOGGER.info(customerService.getByName("Genghis"));
+        LOGGER.info(customerService.getCustomerByName("Genghis"));
 
         // OWNER
         LOGGER.info("\n--- OWNER ---\n");
@@ -131,7 +131,7 @@ public class Main {
         LOGGER.info(ownerService.getById(1));
         // All
         LOGGER.info(ownerService.getAll());
-        LOGGER.info(ownerService.getByName("Bart"));
+        LOGGER.info(ownerService.getOwnerByName("Bart"));
 
         // SHOP
         LOGGER.info("\n--- SHOP ---\n");
@@ -160,7 +160,7 @@ public class Main {
         LOGGER.info(shopService.getById(1));
         // All
         LOGGER.info(shopService.getAll());
-        LOGGER.info(shopService.getByName("La Tasca"));
+        LOGGER.info(shopService.getShopByName("La Tasca"));
 
         // STAFF
         LOGGER.info("\n--- STAFF ---\n");
@@ -187,7 +187,7 @@ public class Main {
         LOGGER.info(staffService.getById(1));
         // All
         LOGGER.info(staffService.getAll());
-        LOGGER.info(staffService.getByName("Tom"));
+        LOGGER.info(staffService.getStaffByName("Tom"));
 
         // SUPPLIER
         LOGGER.info("\n--- SUPPLIER ---\n");
@@ -214,7 +214,7 @@ public class Main {
         LOGGER.info(supplierService.getById(1));
         // All
         LOGGER.info(supplierService.getAll());
-        LOGGER.info(supplierService.getByName("LaCoste"));
+        LOGGER.info(supplierService.getSupplierByName("LaCoste"));
 
         // PRODUCT
         LOGGER.info("\n--- PRODUCT ---\n");
@@ -253,7 +253,7 @@ public class Main {
         LOGGER.info(productService.getById(1));
         // All
         LOGGER.info(productService.getAll());
-        LOGGER.info(productService.getByName("Shirt"));
+        LOGGER.info(productService.getProductByName("Shirt"));
 
         // ORDERS
         LOGGER.info("\n--- ORDERS ---\n");
@@ -284,7 +284,7 @@ public class Main {
         LOGGER.info(ordersService.getById(1));
         // All
         LOGGER.info(ordersService.getAll());
-        LOGGER.info(ordersService.getByCustomerName("Genghis"));
+        LOGGER.info(ordersService.getOrderByCustomerName("Genghis"));
 
         // ORDER ITEM
         LOGGER.info("\n--- ORDER ITEM ---\n");
@@ -310,7 +310,7 @@ public class Main {
         LOGGER.info(orderItemService.getById(1));
         // All
         LOGGER.info(orderItemService.getAll());
-        LOGGER.info(orderItemService.getByProductName("Shirt")); // only first incidence
+        LOGGER.info(orderItemService.getOrderByProductName("Shirt")); // only first incidence
 
         // PROMOTION
         LOGGER.info("\n--- PROMOTION ---\n");
@@ -344,7 +344,7 @@ public class Main {
         LOGGER.info(promotionService.getById(1));
         // All
         LOGGER.info(promotionService.getAll());
-        LOGGER.info(promotionService.getByName("Special Discount"));
+        LOGGER.info(promotionService.getPromotionByName("Special Discount"));
 
         // PRODUCT PROMOTION
         LOGGER.info("\n--- PRODUCT PROMOTION ---\n");
@@ -367,7 +367,7 @@ public class Main {
         LOGGER.info(productPromotionService.getById(1));
         // All
         LOGGER.info(productPromotionService.getAll());
-        LOGGER.info(productPromotionService.getByProductName("Shirt"));
+        LOGGER.info(productPromotionService.getPromotionByProductName("Shirt"));
 
         // XML Validate and Parse
         LOGGER.info("\n--- XML Validation and Parse ---\n");

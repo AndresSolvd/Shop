@@ -36,7 +36,7 @@ public class PersonService implements IPersonDao {
     }
 
     @Override
-    public Person getByName(String name) {
-        return personDao.getByName(name);
+    public Person getPersonByName(String name) {
+        return personDao.getPersonByName(name);
     }
 }

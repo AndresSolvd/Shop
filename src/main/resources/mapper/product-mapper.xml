@@ -33,7 +33,7 @@
     <select id="getById" parameterType="int" resultMap="ProductResultMap">
         SELECT * FROM product WHERE id = #{id};
     </select>
-    <select id="getByName" parameterType="string" resultMap="ProductResultMap">
+    <select id="getProductByName" parameterType="string" resultMap="ProductResultMap">
         SELECT * FROM product WHERE product_name = #{product_name};
     </select>
 

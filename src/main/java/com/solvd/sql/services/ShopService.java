@@ -36,7 +36,7 @@ public class ShopService implements IShopDao {
     }
 
     @Override
-    public Shop getByName(String name) {
-        return shopDao.getByName(name);
+    public Shop getShopByName(String name) {
+        return shopDao.getShopByName(name);
     }
 }

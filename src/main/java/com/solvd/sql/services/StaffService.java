@@ -36,7 +36,7 @@ public class StaffService implements IStaffDao {
     }
 
     @Override
-    public Staff getByName(String name) {
-        return staffDao.getByName(name);
+    public Staff getStaffByName(String name) {
+        return staffDao.getStaffByName(name);
     }
 }

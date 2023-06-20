@@ -60,11 +60,11 @@ public class SupplierDao implements ISupplierDao {
     }
 
     @Override
-    public Supplier getByName(String name) {
+    public Supplier getSupplierByName(String name) {
         Supplier supplier;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             ISupplierDao supplierDao = sqlSession.getMapper(ISupplierDao.class);
-            supplier = supplierDao.getByName(name);
+            supplier = supplierDao.getSupplierByName(name);
         }
         return supplier;
     }

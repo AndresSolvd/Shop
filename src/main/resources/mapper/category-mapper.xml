@@ -25,7 +25,7 @@
     <select id="getById" parameterType="int" resultMap="CategoryResultMap">
         SELECT * FROM category WHERE id = #{id};
     </select>
-    <select id="getByName" parameterType="String" resultMap="CategoryResultMap">
+    <select id="getCategoryByName" parameterType="String" resultMap="CategoryResultMap">
         SELECT * FROM category WHERE category_name = #{categoryName};
     </select>
 </mapper>

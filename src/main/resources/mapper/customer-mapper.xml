@@ -27,7 +27,7 @@
     <select id="getById" parameterType="int" resultMap="CustomerResultMap">
         SELECT * FROM customer WHERE id = #{id};
     </select>
-    <select id="getByName" parameterType="String" resultMap="CustomerResultMap">
+    <select id="getCustomerByName" parameterType="String" resultMap="CustomerResultMap">
         SELECT * FROM customer JOIN person ON customer.person_id = person.id WHERE person_name = #{name};
     </select>
 </mapper>

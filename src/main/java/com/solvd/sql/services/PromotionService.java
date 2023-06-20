@@ -36,7 +36,7 @@ public class PromotionService implements IPromotionDao {
     }
 
     @Override
-    public Promotion getByName(String name) {
-        return promotionDao.getByName(name);
+    public Promotion getPromotionByName(String name) {
+        return promotionDao.getPromotionByName(name);
     }
 }

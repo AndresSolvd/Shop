@@ -36,7 +36,7 @@ public class OrderItemService implements IOrderItemDao {
     }
 
     @Override
-    public OrderItem getByProductName(String name) {
-        return orderItemDao.getByProductName(name);
+    public OrderItem getOrderByProductName(String name) {
+        return orderItemDao.getOrderByProductName(name);
     }
 }

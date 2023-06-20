@@ -27,9 +27,10 @@
     <select id="getById" parameterType="int" resultMap="ProductPromotionResultMap">
         SELECT * FROM product_promotion WHERE product_id = #{product.id};
     </select>
-    <select id="getByProductName" parameterType="String" resultMap="ProductPromotionResultMap">
+    <select id="getPromotionByProductName" parameterType="String" resultMap="ProductPromotionResultMap">
         SELECT * FROM product_promotion
         JOIN product ON product_promotion.product_id=product.id
+        JOIN promotion ON product_promotion.promotion_id=promotion.id
         WHERE product_name = #{productName};
     </select>
 </mapper>

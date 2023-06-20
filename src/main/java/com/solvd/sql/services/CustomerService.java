@@ -36,7 +36,7 @@ public class CustomerService implements ICustomerDao {
     }
 
     @Override
-    public Customer getByName(String name) {
-        return customerDao.getByName(name);
+    public Customer getCustomerByName(String name) {
+        return customerDao.getCustomerByName(name);
     }
 }

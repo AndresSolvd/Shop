@@ -28,7 +28,7 @@
     <select id="getById" parameterType="int" resultMap="OrdersResultMap">
         SELECT * FROM orders WHERE id = #{id};
     </select>
-    <select id="getByCustomerName" parameterType="String" resultMap="OrdersResultMap">
+    <select id="getOrderByCustomerName" parameterType="String" resultMap="OrdersResultMap">
         SELECT * FROM orders
         JOIN customer ON orders.customer_id = customer.id
         JOIN person ON customer.person_id = person.id

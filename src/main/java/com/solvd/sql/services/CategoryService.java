@@ -36,7 +36,7 @@ public class CategoryService implements ICategoryDao {
     }
 
     @Override
-    public Category getByName(String categoryName) {
-        return categoryDao.getByName(categoryName);
+    public Category getCategoryByName(String categoryName) {
+        return categoryDao.getCategoryByName(categoryName);
     }
 }

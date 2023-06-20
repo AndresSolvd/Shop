@@ -36,7 +36,7 @@ public class SupplierService implements ISupplierDao {
     }
 
     @Override
-    public Supplier getByName(String name) {
-        return supplierDao.getByName(name);
+    public Supplier getSupplierByName(String name) {
+        return supplierDao.getSupplierByName(name);
     }
 }

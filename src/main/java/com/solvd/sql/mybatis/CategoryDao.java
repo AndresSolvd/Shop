@@ -60,11 +60,11 @@ public class CategoryDao implements ICategoryDao {
     }
 
     @Override
-    public Category getByName(String categoryName) {
+    public Category getCategoryByName(String categoryName) {
         Category category;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             ICategoryDao categoryDao = sqlSession.getMapper(ICategoryDao.class);
-            category = categoryDao.getByName(categoryName);
+            category = categoryDao.getCategoryByName(categoryName);
         }
         return category;
     }

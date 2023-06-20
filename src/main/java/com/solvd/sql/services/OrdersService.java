@@ -36,7 +36,7 @@ public class OrdersService implements IOrdersDao {
     }
 
     @Override
-    public Orders getByCustomerName(String name) {
-        return ordersDao.getByCustomerName(name);
+    public Orders getOrderByCustomerName(String name) {
+        return ordersDao.getOrderByCustomerName(name);
     }
 }

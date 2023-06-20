@@ -60,11 +60,11 @@ public class OwnerDao implements IOwnerDao {
     }
 
     @Override
-    public Owner getByName(String name) {
+    public Owner getOwnerByName(String name) {
         Owner owner;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IOwnerDao ownerDao = sqlSession.getMapper(IOwnerDao.class);
-            owner = ownerDao.getByName(name);
+            owner = ownerDao.getOwnerByName(name);
         }
         return owner;
     }

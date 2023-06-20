@@ -28,7 +28,7 @@
     <select id="getById" parameterType="int" resultMap="OrderItemResultMap">
         SELECT * FROM order_item WHERE order_id = #{order.id};
     </select>
-    <select id="getByProductName" parameterType="String" resultMap="OrderItemResultMap">
+    <select id="getOrderByProductName" parameterType="String" resultMap="OrderItemResultMap">
         SELECT * FROM order_item JOIN product ON order_item.product_id = product.id WHERE product_name = #{name};
     </select>
 </mapper>

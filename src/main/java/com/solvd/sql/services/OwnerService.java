@@ -36,7 +36,7 @@ public class OwnerService implements IOwnerDao {
     }
 
     @Override
-    public Owner getByName(String name) {
-        return ownerDao.getByName(name);
+    public Owner getOwnerByName(String name) {
+        return ownerDao.getOwnerByName(name);
     }
 }

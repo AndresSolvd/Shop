@@ -60,11 +60,11 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public Product getByName(String name) {
+    public Product getProductByName(String name) {
         Product product;
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IProductDao productDao = sqlSession.getMapper(IProductDao.class);
-            product = productDao.getByName(name);
+            product = productDao.getProductByName(name);
         }
         return product;
     }

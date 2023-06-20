@@ -36,7 +36,7 @@ public class ProductPromotionService implements IProductPromotionDao {
     }
 
     @Override
-    public ProductPromotion getByProductName(String productName) {
-        return productPromotionDao.getByProductName(productName);
+    public ProductPromotion getPromotionByProductName(String productName) {
+        return productPromotionDao.getPromotionByProductName(productName);
     }
 }
