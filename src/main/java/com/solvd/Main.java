@@ -4,7 +4,7 @@ import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
-import com.solvd.sql.mybatis.OrdersDao;
+import com.solvd.sql.mybatis.OrderDao;
 import com.solvd.sql.mybatis.ProductDao;
 import com.solvd.sql.services.*;
 import com.solvd.util.XmlParser;
@@ -258,33 +258,33 @@ public class Main {
         // ORDERS
         LOGGER.info("\n--- ORDERS ---\n");
         // Create
-        OrdersService ordersService = new OrdersService();
-        Orders orders = new Orders();
-        orders.setOrderDate(Date.valueOf(("2022-5-5")));
-        orders.setTotal(80);
-        orders.setCustomer(customerService.getById(1));
-        ordersService.insert(orders);
-        orders.setOrderDate(Date.valueOf(("2022-4-5")));
-        orders.setTotal(60);
-        orders.setCustomer(customerService.getById(2));
-        ordersService.insert(orders);
-        orders.setOrderDate(Date.valueOf(("2022-4-8")));
-        orders.setTotal(78);
-        orders.setCustomer(customerService.getById(1));
-        ordersService.insert(orders);
+        OrderService orderService = new OrderService();
+        Order order = new Order();
+        order.setOrderDate(Date.valueOf(("2022-5-5")));
+        order.setTotal(80);
+        order.setCustomer(customerService.getById(1));
+        orderService.insert(order);
+        order.setOrderDate(Date.valueOf(("2022-4-5")));
+        order.setTotal(60);
+        order.setCustomer(customerService.getById(2));
+        orderService.insert(order);
+        order.setOrderDate(Date.valueOf(("2022-4-8")));
+        order.setTotal(78);
+        order.setCustomer(customerService.getById(1));
+        orderService.insert(order);
         // Update
-        orders.setOrderDate(Date.valueOf(("2022-5-5")));
-        orders.setTotal(120);
-        orders.setCustomer(customerService.getById(1));
-        orders.setId(1);
-        ordersService.update(orders);
+        order.setOrderDate(Date.valueOf(("2022-5-5")));
+        order.setTotal(120);
+        order.setCustomer(customerService.getById(1));
+        order.setId(1);
+        orderService.update(order);
         // Delete
-        ordersService.delete(3);
+        orderService.delete(3);
         // Read
-        LOGGER.info(ordersService.getById(1));
+        LOGGER.info(orderService.getById(1));
         // All
-        LOGGER.info(ordersService.getAll());
-        LOGGER.info(ordersService.getOrderByCustomerName("Genghis"));
+        LOGGER.info(orderService.getAll());
+        LOGGER.info(orderService.getOrderByCustomerName("Genghis"));
 
         // ORDER ITEM
         LOGGER.info("\n--- ORDER ITEM ---\n");
@@ -292,16 +292,16 @@ public class Main {
         OrderItemService orderItemService = new OrderItemService();
         OrderItem orderItem = new OrderItem();
         orderItem.setQuantity(1);
-        orderItem.setOrder(new OrdersDao().getById(1));
+        orderItem.setOrder(new OrderDao().getById(1));
         orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.insert(orderItem);
         orderItem.setQuantity(1);
-        orderItem.setOrder(new OrdersDao().getById(2));
+        orderItem.setOrder(new OrderDao().getById(2));
         orderItem.setProduct(new ProductDao().getById(2));
         orderItemService.insert(orderItem);
         // Update
         orderItem.setQuantity(2);
-        orderItem.setOrder(new OrdersDao().getById(1));
+        orderItem.setOrder(new OrderDao().getById(1));
         orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.update(orderItem);
         // Delete
@@ -387,12 +387,12 @@ public class Main {
         JSONUtils.writeJSON(customer);
         JSONUtils.writeJSON(product);
         JSONUtils.writeJSON(promotion);
-        JSONUtils.writeJSON(orders);
+        JSONUtils.writeJSON(order);
         LOGGER.info(JSONUtils.readJSON("shop"));
         LOGGER.info(JSONUtils.readJSON("person"));
         LOGGER.info(JSONUtils.readJSON("customer"));
         LOGGER.info(JSONUtils.readJSON("product"));
         LOGGER.info(JSONUtils.readJSON("promotion"));
-        LOGGER.info(JSONUtils.readJSON("orders"));
+        LOGGER.info(JSONUtils.readJSON("order"));
     }
 }

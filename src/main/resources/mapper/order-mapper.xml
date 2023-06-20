@@ -3,18 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.solvd.sql.interfaces.IOrdersDao">
-    <resultMap id="OrdersResultMap" type="Orders" autoMapping="false">
+<mapper namespace="com.solvd.sql.interfaces.IOrderDao">
+    <resultMap id="OrderResultMap" type="Order" autoMapping="false">
         <result property="id" column="id"/>
         <result property="orderDate" column="order_date"/>
         <result property="total" column="total"/>
         <association property="customer" column="customer_id" javaType="Customer"
                      select="com.solvd.sql.interfaces.ICustomerDao.getById"/>
     </resultMap>
-    <insert id="insert" parameterType="Orders" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO orders (order_date, total, customer_id) VALUES (#{orderDate}, #{total}, #{customer.id});
     </insert>
-    <update id="update" parameterType="Orders">
+    <update id="update" parameterType="Order">
         UPDATE orders SET
         id = #{id}, order_date = #{orderDate}, total = #{total}, customer_id = #{customer.id}
         WHERE id = #{id};
@@ -22,13 +22,13 @@
     <delete id="delete" parameterType="int">
         DELETE FROM orders WHERE id = #{id};
     </delete>
-    <select id="getAll" resultMap="OrdersResultMap">
+    <select id="getAll" resultMap="OrderResultMap">
         SELECT * FROM orders;
     </select>
-    <select id="getById" parameterType="int" resultMap="OrdersResultMap">
+    <select id="getById" parameterType="int" resultMap="OrderResultMap">
         SELECT * FROM orders WHERE id = #{id};
     </select>
-    <select id="getOrderByCustomerName" parameterType="String" resultMap="OrdersResultMap">
+    <select id="getOrderByCustomerName" parameterType="String" resultMap="OrderResultMap">
         SELECT * FROM orders
         JOIN customer ON orders.customer_id = customer.id
         JOIN person ON customer.person_id = person.id

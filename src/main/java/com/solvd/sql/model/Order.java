@@ -12,7 +12,7 @@ import java.sql.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "orders")
 @JsonRootName("orders")
-public class Orders {
+public class Order {
 
     @XmlAttribute(name = "id")
     @JsonProperty("id")
@@ -66,7 +66,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{" +
+        return "Order{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", total=" + total +

@@ -89,7 +89,7 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
                     OrderItem orderItem = new OrderItem();
                     orderItem.setQuantity(rs.getInt("quantity"));
                     orderItem.setProduct(new ProductDao().getById(rs.getInt("product_id")));
-                    orderItem.setOrder(new OrdersDao().getById(rs.getInt("order_id")));
+                    orderItem.setOrder(new OrderDao().getById(rs.getInt("order_id")));
                     orderItems.add(orderItem);
                 }
             }
@@ -117,7 +117,7 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
                 while (rs.next()) {
                     orderItem.setQuantity(rs.getInt("quantity"));
                     orderItem.setProduct(new ProductDao().getById(rs.getInt("product_id")));
-                    orderItem.setOrder(new OrdersDao().getById(rs.getInt("order_id")));
+                    orderItem.setOrder(new OrderDao().getById(rs.getInt("order_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

@@ -9,7 +9,7 @@
         <typeAlias alias="Category" type="com.solvd.sql.model.Category"/>
         <typeAlias alias="Customer" type="com.solvd.sql.model.Customer"/>
         <typeAlias alias="OrderItem" type="com.solvd.sql.model.OrderItem"/>
-        <typeAlias alias="Orders" type="com.solvd.sql.model.Orders"/>
+        <typeAlias alias="Order" type="com.solvd.sql.model.Order"/>
         <typeAlias alias="Owner" type="com.solvd.sql.model.Owner"/>
         <typeAlias alias="Person" type="com.solvd.sql.model.Person"/>
         <typeAlias alias="Product" type="com.solvd.sql.model.Product"/>

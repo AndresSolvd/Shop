@@ -21,9 +21,9 @@ public class OrderItem {
     @JsonProperty("product")
     private Product product;
 
-    @XmlElement(name = "order", type = Orders.class)
+    @XmlElement(name = "order", type = Order.class)
     @JsonProperty("order")
-    private Orders order;
+    private Order order;
 
     public int getQuantity() {
         return quantity;
@@ -41,11 +41,11 @@ public class OrderItem {
         this.product = product;
     }
 
-    public Orders getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Orders order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 

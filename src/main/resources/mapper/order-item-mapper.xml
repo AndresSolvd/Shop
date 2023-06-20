@@ -8,8 +8,8 @@
         <result property="quantity" column="quantity"/>
         <association property="product" column="product_id" javaType="Product"
                      select="com.solvd.sql.interfaces.IProductDao.getById"/>
-        <association property="order" column="order_id" javaType="Orders"
-                     select="com.solvd.sql.interfaces.IOrdersDao.getById"/>
+        <association property="order" column="order_id" javaType="Order"
+                     select="com.solvd.sql.interfaces.IOrderDao.getById"/>
     </resultMap>
     <insert id="insert" parameterType="OrderItem">
         INSERT INTO order_item (quantity, product_id, order_id) VALUES (#{quantity}, #{product.id}, #{order.id});
