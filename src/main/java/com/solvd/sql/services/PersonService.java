@@ -18,7 +18,7 @@ public class PersonService implements IPersonDao {
         PersonService personService = new PersonService();
 
         // Check if person exist
-        List<Person> persons = new ArrayList<>();
+        List<Person> persons;
         persons = personService.getAll();
         if (!persons.contains(person)) {
             personDao.insert(person);
