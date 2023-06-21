@@ -4,7 +4,6 @@ import com.solvd.sql.interfaces.IPersonDao;
 import com.solvd.sql.model.Person;
 import com.solvd.sql.mybatis.PersonDao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
