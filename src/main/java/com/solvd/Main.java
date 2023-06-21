@@ -21,7 +21,7 @@ public class Main {
 
         final Logger LOGGER = LogManager.getLogger(Main.class);
 
-        // Reset
+        // Reset All Tables
         SqlReset.reset();
 
         // CATEGORY
@@ -95,7 +95,7 @@ public class Main {
         CustomerService customerService = new CustomerService();
         Customer customer = new Customer();
         customer.setTaxNumber("00000000");
-        customer.setPerson(personService.getById(4));
+        customer.setPerson(personService.getById(9));
         customerService.insert(customer);
         customer.setTaxNumber("274527252");
         customer.setPerson(personService.getById(3));
