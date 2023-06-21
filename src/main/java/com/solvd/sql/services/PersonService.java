@@ -24,8 +24,6 @@ public class PersonService implements IPersonDao {
         } else {
             createPerson();
         }
-
-
     }
 
     @Override
