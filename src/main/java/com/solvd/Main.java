@@ -7,6 +7,7 @@ import com.solvd.sql.model.*;
 import com.solvd.sql.mybatis.OrderDao;
 import com.solvd.sql.mybatis.ProductDao;
 import com.solvd.sql.services.*;
+import com.solvd.util.SqlReset;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,9 @@ public class Main {
     public static void main(String[] args) throws JAXBException {
 
         final Logger LOGGER = LogManager.getLogger(Main.class);
+
+        // Reset
+        SqlReset.reset();
 
         // CATEGORY
         LOGGER.info("\n--- CATEGORY ---\n");
