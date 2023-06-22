@@ -103,10 +103,9 @@ public class Creator {
         Scanner scanner = new Scanner(System.in);
 
         // input data
-        int personId;
-
+        System.out.println("Enter Person id: ");
         //validate user input
-        while(true) {
+        while (true) {
             if (scanner.hasNextInt()) {
                 owner.setPerson(personService.getById(scanner.nextInt()));
                 scanner.close();
@@ -116,8 +115,6 @@ public class Creator {
                 scanner.next(); // Clear the invalid input from the scanner buffer
             }
         }
-        System.out.println("Enter Person id: ");
-
 
         // Insert into Database
         ownerService.insert(owner);
