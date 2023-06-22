@@ -95,7 +95,7 @@ public class Main {
         CustomerService customerService = new CustomerService();
         Customer customer = new Customer();
         customer.setTaxNumber("00000000");
-        customer.setPerson(personService.getById(4));
+        customer.setPerson(personService.getById(2));
         customerService.insert(customer);
         customer.setTaxNumber("274527252");
         customer.setPerson(personService.getById(3));
@@ -145,7 +145,7 @@ public class Main {
         shop.setShopName("Le Sportif Foe");
         shop.setAddress("In a land far far away");
         shop.setPhone("1120984567");
-        shop.setOwner(ownerService.getById(4));
+        shop.setOwner(ownerService.getById(1));
         shopService.insert(shop);
         shop.setShopName("Federico Barba Roja");
         shop.setAddress("In between dreams");
