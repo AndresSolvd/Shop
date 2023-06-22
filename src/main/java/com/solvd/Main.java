@@ -7,7 +7,7 @@ import com.solvd.sql.model.*;
 import com.solvd.sql.mybatis.OrderDao;
 import com.solvd.sql.mybatis.ProductDao;
 import com.solvd.sql.services.*;
-import com.solvd.util.SqlReset;
+import com.solvd.util.SqlResetUtil;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +22,7 @@ public class Main {
         final Logger LOGGER = LogManager.getLogger(Main.class);
 
         // Reset All Tables
-        SqlReset.reset();
+        SqlResetUtil.reset();
 
         // CATEGORY
         LOGGER.info("\n--- CATEGORY ---\n");
@@ -145,7 +145,7 @@ public class Main {
         shop.setShopName("Le Sportif Foe");
         shop.setAddress("In a land far far away");
         shop.setPhone("1120984567");
-        shop.setOwner(ownerService.getById(1));
+        shop.setOwner(ownerService.getById(9));
         shopService.insert(shop);
         shop.setShopName("Federico Barba Roja");
         shop.setAddress("In between dreams");

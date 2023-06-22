@@ -1,4 +1,4 @@
-package com.solvd.sql;
+package com.solvd.util;
 
 import com.solvd.sql.model.Owner;
 import com.solvd.sql.model.Person;
@@ -46,7 +46,7 @@ public class Creator {
             String answer = scanner.nextLine();
             switch (answer) {
                 case "1":
-                    return new Creator().createOwner();
+                    return Creator.createOwner();
                 case "2":
                     System.out.println("List of all owners in Database\n" + new OwnerService().getAll()
                             + "\n *** end *** \nInput new id: ");
@@ -95,7 +95,7 @@ public class Creator {
         return person;
     }
 
-    public Owner createOwner() {
+    public static Owner createOwner() {
 
         Owner owner = new Owner();
         OwnerService ownerService = new OwnerService();
@@ -103,9 +103,21 @@ public class Creator {
         Scanner scanner = new Scanner(System.in);
 
         // input data
+        int personId;
+
+        //validate user input
+        while(true) {
+            if (scanner.hasNextInt()) {
+                owner.setPerson(personService.getById(scanner.nextInt()));
+                scanner.close();
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter an integer value (person_id).");
+                scanner.next(); // Clear the invalid input from the scanner buffer
+            }
+        }
         System.out.println("Enter Person id: ");
-        owner.setPerson(personService.getById(scanner.nextInt()));
-        scanner.close();
+
 
         // Insert into Database
         ownerService.insert(owner);

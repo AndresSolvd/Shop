@@ -1,9 +1,9 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.Creator;
 import com.solvd.sql.interfaces.IPersonDao;
 import com.solvd.sql.model.Person;
 import com.solvd.sql.mybatis.PersonDao;
+import com.solvd.util.Creator;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SqlReset {
+public class SqlResetUtil {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public static void reset() {

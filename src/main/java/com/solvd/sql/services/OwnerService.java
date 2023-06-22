@@ -1,9 +1,9 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.Creator;
 import com.solvd.sql.interfaces.IOwnerDao;
 import com.solvd.sql.model.Owner;
 import com.solvd.sql.mybatis.OwnerDao;
+import com.solvd.util.Creator;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class OwnerService implements IOwnerDao {
         if (!owners.contains(owner)) {
             ownerDao.insert(owner);
         } else {
-            Creator.createPerson();
+            Creator.createOwner();
         }
     }
 
