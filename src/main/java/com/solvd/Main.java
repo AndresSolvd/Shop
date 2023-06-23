@@ -145,7 +145,7 @@ public class Main {
         shop.setShopName("Le Sportif Foe");
         shop.setAddress("In a land far far away");
         shop.setPhone("1120984567");
-        shop.setOwner(ownerService.getById(9));
+        shop.setOwner(ownerService.getById(1));
         shopService.insert(shop);
         shop.setShopName("Federico Barba Roja");
         shop.setAddress("In between dreams");
@@ -398,5 +398,32 @@ public class Main {
         LOGGER.info(JSONUtils.readJSON("product"));
         LOGGER.info(JSONUtils.readJSON("promotion"));
         LOGGER.info(JSONUtils.readJSON("order"));
+
+        // Test last implementations
+        person = new Person();
+        owner = new Owner();
+        System.out.println("\n*********** Test for new person **************************\n");
+        person.setPersonName("Esto");
+        person.setLastName("Esuna");
+        person.setPhone("0938421750435");
+        person.setAddress("En algun lugar de un gran pais");
+        owner.setPerson(person);
+        ownerService.insert(owner);
+        System.out.println(ownerService.getAll());
+        System.out.println("\n" + personService.getAll());
+
+        person = new Person();
+        owner = new Owner();
+        ownerService = new OwnerService();
+        personService = new PersonService();
+        System.out.println("\n*********** Test for existing person **************************\n");
+        person.setPersonName("Esto");
+        person.setLastName("Esuna");
+        person.setPhone("0938421750435");
+        person.setAddress("En algun lugar de un gran pais");
+        owner.setPerson(person);
+        ownerService.insert(owner);
+        System.out.println(ownerService.getAll());
+        System.out.println("\n" + personService.getAll());
     }
 }

@@ -3,7 +3,6 @@ package com.solvd.sql.services;
 import com.solvd.sql.interfaces.IPersonDao;
 import com.solvd.sql.model.Person;
 import com.solvd.sql.mybatis.PersonDao;
-import com.solvd.util.Creator;
 
 import java.util.List;
 
@@ -13,17 +12,7 @@ public class PersonService implements IPersonDao {
 
     @Override
     public void insert(Person person) {
-
-        PersonService personService = new PersonService();
-
-        // Check if person exist
-        List<Person> persons;
-        persons = personService.getAll();
-        if (!persons.contains(person)) {
-            personDao.insert(person);
-        } else {
-            Creator.createPerson();
-        }
+        personDao.insert(person);
     }
 
     @Override
@@ -43,9 +32,6 @@ public class PersonService implements IPersonDao {
 
     @Override
     public Person getById(int id) {
-        if (personDao.getById(id) == null) {
-            return Creator.optionsToCreateAPerson();
-        }
         return personDao.getById(id);
     }
 
