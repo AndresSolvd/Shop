@@ -30,16 +30,19 @@ public class OwnerService implements IOwnerDao {
                 exists = true;
             }
         }
+
         // Check if owner with that person already exists
-        for (Owner o : owners) {
-            if (o.getPerson().getPersonName().equals(owner.getPerson().getPersonName()) &&
-                    o.getPerson().getLastName().equals(owner.getPerson().getLastName()) &&
-                    o.getPerson().getPhone().equals(owner.getPerson().getPhone()) &&
-                    o.getPerson().getAddress().equals(owner.getPerson().getAddress())) {
-                System.out.println(o.getPerson().getPersonName() + " " + o.getPerson().getLastName()
-                        + " is already exist as an owner.(ownerId: " + o.getId() +
-                        " personId: " + o.getPerson().getId() + ")");
-                return;
+        if (exists) {
+            for (Owner o : owners) {
+                if (o.getPerson().getPersonName().equals(owner.getPerson().getPersonName()) &&
+                        o.getPerson().getLastName().equals(owner.getPerson().getLastName()) &&
+                        o.getPerson().getPhone().equals(owner.getPerson().getPhone()) &&
+                        o.getPerson().getAddress().equals(owner.getPerson().getAddress())) {
+                    System.out.println(o.getPerson().getPersonName() + " " + o.getPerson().getLastName()
+                            + " already exist as owner.(ownerId: " + o.getId() +
+                            " personId: " + o.getPerson().getId() + ")");
+                    return;
+                }
             }
         }
 
