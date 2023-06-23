@@ -420,8 +420,8 @@ public class Main {
         LOGGER.info(personService.getAll());
 
         person = new Person();
-        owner = new Owner();
-        ownerService = new OwnerService();
+        customer = new Customer();
+        customerService = new CustomerService();
         personService = new PersonService();
         System.out.println();
         LOGGER.info("*********** Test for existing customer - person ***********");
