@@ -399,31 +399,104 @@ public class Main {
         LOGGER.info(JSONUtils.readJSON("promotion"));
         LOGGER.info(JSONUtils.readJSON("order"));
 
+        System.out.println();
         // Test last implementations
+        LOGGER.info("************************** Test existence **************************");
+        System.out.println();
+
+        //CUSTOMER
+        LOGGER.info("CUSTOMER");
         person = new Person();
-        owner = new Owner();
-        System.out.println("\n*********** Test for new person **************************\n");
-        person.setPersonName("Esto");
-        person.setLastName("Esuna");
-        person.setPhone("0938421750435");
-        person.setAddress("En algun lugar de un gran pais");
-        owner.setPerson(person);
-        ownerService.insert(owner);
-        System.out.println(ownerService.getAll());
-        System.out.println("\n" + personService.getAll());
+        customer = new Customer();
+        LOGGER.info("*********** Test for new owner - person ***********");
+        person.setPersonName("Marty");
+        person.setLastName("McFly");
+        person.setPhone("0938421753335");
+        person.setAddress("Back to the Future");
+        customer.setPerson(person);
+        customer.setTaxNumber("256262623636");
+        customerService.insert(customer);
+        LOGGER.info(customerService.getAll());
+        LOGGER.info(personService.getAll());
 
         person = new Person();
         owner = new Owner();
         ownerService = new OwnerService();
         personService = new PersonService();
-        System.out.println("\n*********** Test for existing person **************************\n");
+        System.out.println();
+        LOGGER.info("*********** Test for existing customer - person ***********");
+        person.setPersonName("Marty");
+        person.setLastName("McFly");
+        person.setPhone("0938421753335");
+        person.setAddress("Back to the Future");
+        customer.setPerson(person);
+        customer.setTaxNumber("256262623636");
+        customerService.insert(customer);
+        LOGGER.info(customerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        // OWNER
+        System.out.println();
+        LOGGER.info("OWNER");
+        person = new Person();
+        owner = new Owner();
+        LOGGER.info("*********** Test for new owner - person ***********");
         person.setPersonName("Esto");
         person.setLastName("Esuna");
         person.setPhone("0938421750435");
         person.setAddress("En algun lugar de un gran pais");
         owner.setPerson(person);
         ownerService.insert(owner);
-        System.out.println(ownerService.getAll());
-        System.out.println("\n" + personService.getAll());
+        LOGGER.info(ownerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        person = new Person();
+        owner = new Owner();
+        ownerService = new OwnerService();
+        personService = new PersonService();
+        System.out.println();
+        LOGGER.info("*********** Test for existing owner - person ***********");
+        person.setPersonName("Esto");
+        person.setLastName("Esuna");
+        person.setPhone("0938421750435");
+        person.setAddress("En algun lugar de un gran pais");
+        owner.setPerson(person);
+        ownerService.insert(owner);
+        LOGGER.info(ownerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        // STAFF
+        System.out.println();
+        LOGGER.info("STAFF");
+        person = new Person();
+        staff = new Staff();
+        LOGGER.info("*********** Test for new staff - person ***********");
+        person.setPersonName("The");
+        person.setLastName("Doc");
+        person.setPhone("0938653750435");
+        person.setAddress("The best ever");
+        staff.setPerson(person);
+        staff.setPosition("Worker");
+        staff.setShop(shopService.getById(1));
+        staffService.insert(staff);
+        LOGGER.info(staffService.getAll());
+        LOGGER.info(personService.getAll());
+
+        person = new Person();
+        staff = new Staff();
+        staffService = new StaffService();
+        personService = new PersonService();
+        System.out.println();
+        LOGGER.info("*********** Test for existing staff - person ***********");
+        person.setPersonName("The");
+        person.setLastName("Doc");
+        person.setPhone("0938653750435");
+        person.setAddress("The best ever");
+        staff.setPerson(person);
+        staff.setPosition("Worker");
+        staff.setShop(shopService.getById(1));
+        staffService.insert(staff);
+        LOGGER.info(staffService.getAll());
+        LOGGER.info(personService.getAll());
     }
 }
