@@ -10,7 +10,7 @@ public class ConnectionPool {
     private static ConnectionPool instance = null;
     private static final int INITIAL_POOL_SIZE = 5;
     private static final Vector<Connection> freeConnections = new Vector<>();
-    private static final Vector<Connection> usedConeections = new Vector<>();
+    private static final Vector<Connection> usedConnections = new Vector<>();
 
     private ConnectionPool(){
 
@@ -32,12 +32,12 @@ public class ConnectionPool {
 
     public synchronized Connection getConnection() {
         Connection connection = freeConnections.remove(freeConnections.size() -1);
-        usedConeections.add(connection);
+        usedConnections.add(connection);
         return connection;
     }
 
     public synchronized void releaseConnection(Connection connection) throws SQLException {
-        if(usedConeections.remove(connection)) {
+        if(usedConnections.remove(connection)) {
             freeConnections.add(connection);
         } else {
             throw new SQLException("The connection has already returned or it's not for this pool.");
