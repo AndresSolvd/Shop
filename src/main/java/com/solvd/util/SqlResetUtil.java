@@ -13,9 +13,12 @@ public class SqlResetUtil {
     );
 
     public static void reset() {
+        Connection con = null;
+        Statement statement = null;
+
         try {
-            Connection con = connectionPool.getConnection();
-            Statement statement = con.createStatement();
+            con = connectionPool.getConnection();
+            statement = con.createStatement();
 
             // DELETE statements
             for (String tableName : tableNames) {
@@ -27,12 +30,26 @@ public class SqlResetUtil {
                 statement.executeUpdate("ALTER TABLE " + tableName + " AUTO_INCREMENT = 1;");
             }
 
-            statement.close();
-            con.close();
-
             System.out.println("All tables were reset successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Closing the statement and connection in the finally block
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 }

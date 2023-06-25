@@ -12,32 +12,34 @@ public class ConnectionPool {
     private static final Vector<Connection> freeConnections = new Vector<>();
     private static final Vector<Connection> usedConnections = new Vector<>();
 
-    private ConnectionPool(){
+    private ConnectionPool() {
 
     }
 
+    /* Singleton Pattern (It checks if the instance already exists and use synchronized keyword
+     to guaranty that only one instance for this class exists*/
     public static synchronized ConnectionPool getInstance() {
         if (instance == null) {
             instance = new ConnectionPool();
-        create();
+            create();
         }
         return instance;
     }
 
     public static void create() {
-        for (int i = 0; i < INITIAL_POOL_SIZE; i ++) {
+        for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
             freeConnections.add(createConnection());
         }
     }
 
     public synchronized Connection getConnection() {
-        Connection connection = freeConnections.remove(freeConnections.size() -1);
+        Connection connection = freeConnections.remove(freeConnections.size() - 1);
         usedConnections.add(connection);
         return connection;
     }
 
     public synchronized void releaseConnection(Connection connection) throws SQLException {
-        if(usedConnections.remove(connection)) {
+        if (usedConnections.remove(connection)) {
             freeConnections.add(connection);
         } else {
             throw new SQLException("The connection has already returned or it's not for this pool.");
@@ -46,7 +48,7 @@ public class ConnectionPool {
 
     // parameters extracted from the DBConfig files
     private static Connection createConnection() {
-        try{
+        try {
             return DriverManager.getConnection(DBConfig.URL, DBConfig.USERNAME, DBConfig.PASSWORD);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
