@@ -34,7 +34,7 @@ public class SqlResetUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Closing the statement and connection in the finally block
+            // Closing the statement and connection in the final block
             try {
                 if (statement != null) {
                     statement.close();
