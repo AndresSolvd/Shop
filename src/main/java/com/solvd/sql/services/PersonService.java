@@ -1,12 +1,12 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.PersonDao;
+import com.solvd.sql.interfaces.IPersonDao;
 import com.solvd.sql.model.Person;
+import com.solvd.sql.mybatis.PersonDao;
 
 import java.util.List;
 
-public class PersonService implements IBaseDAO<Person> {
+public class PersonService implements IPersonDao {
 
     PersonDao personDao = new PersonDao();
 
@@ -33,5 +33,10 @@ public class PersonService implements IBaseDAO<Person> {
     @Override
     public Person getById(int id) {
         return personDao.getById(id);
+    }
+
+    @Override
+    public Person getPersonByName(String name) {
+        return personDao.getPersonByName(name);
     }
 }

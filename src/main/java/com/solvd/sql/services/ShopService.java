@@ -1,12 +1,12 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.ShopDao;
+import com.solvd.sql.interfaces.IShopDao;
 import com.solvd.sql.model.Shop;
+import com.solvd.sql.mybatis.ShopDao;
 
 import java.util.List;
 
-public class ShopService implements IBaseDAO<Shop> {
+public class ShopService implements IShopDao {
 
     ShopDao shopDao = new ShopDao();
 
@@ -33,5 +33,10 @@ public class ShopService implements IBaseDAO<Shop> {
     @Override
     public Shop getById(int id) {
         return shopDao.getById(id);
+    }
+
+    @Override
+    public Shop getShopByName(String name) {
+        return shopDao.getShopByName(name);
     }
 }

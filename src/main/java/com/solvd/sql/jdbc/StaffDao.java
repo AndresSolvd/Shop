@@ -22,8 +22,8 @@ public class StaffDao implements IBaseDAO<Staff> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, staff.getPosition());
-            ps.setInt(2, staff.getPersonId());
-            ps.setInt(3, staff.getShopId());
+            ps.setInt(2, staff.getPerson().getId());
+            ps.setInt(3, staff.getShop().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -45,8 +45,8 @@ public class StaffDao implements IBaseDAO<Staff> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, staff.getPosition());
-            ps.setInt(2, staff.getPersonId());
-            ps.setInt(3, staff.getShopId());
+            ps.setInt(2, staff.getPerson().getId());
+            ps.setInt(3, staff.getShop().getId());
             ps.setInt(4, staff.getId());
             ps.execute();
         } catch (SQLException e) {
@@ -90,8 +90,8 @@ public class StaffDao implements IBaseDAO<Staff> {
                     Staff staff = new Staff();
                     staff.setId(rs.getInt("id"));
                     staff.setPosition(rs.getString("position"));
-                    staff.setPersonId(rs.getInt("person_id"));
-                    staff.setShopId(rs.getInt("shop_id"));
+                    staff.setPerson(new PersonDao().getById(rs.getInt("person_id")));
+                    staff.setShop(new ShopDao().getById(rs.getInt("shop_id")));
                     staffs.add(staff);
                 }
             }
@@ -120,8 +120,8 @@ public class StaffDao implements IBaseDAO<Staff> {
                 while (rs.next()) {
                     staff.setId(rs.getInt("id"));
                     staff.setPosition(rs.getString("position"));
-                    staff.setPersonId(rs.getInt("person_id"));
-                    staff.setShopId(rs.getInt("shop_id"));
+                    staff.setPerson(new PersonDao().getById(rs.getInt("person_id")));
+                    staff.setShop(new ShopDao().getById(rs.getInt("shop_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

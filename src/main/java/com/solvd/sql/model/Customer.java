@@ -18,9 +18,9 @@ public class Customer {
     @JsonProperty("taxNumber")
     private String taxNumber;
 
-    @XmlElement(name = "personId")
-    @JsonProperty("personId")
-    private int personId;
+    @XmlElement(name = "person", type = Person.class)
+    @JsonProperty("person")
+    private Person person;
 
     public int getId() {
         return id;
@@ -38,20 +38,21 @@ public class Customer {
         this.taxNumber = taxNumber;
     }
 
-    public int getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
+
 
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
                 ", taxNumber='" + taxNumber + '\'' +
-                ", personId=" + personId +
+                ", person=" + person +
                 '}';
     }
 }

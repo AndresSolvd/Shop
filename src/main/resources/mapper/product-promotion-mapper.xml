@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IProductPromotionDao">
+    <resultMap id="ProductPromotionResultMap" type="ProductPromotion" autoMapping="false">
+        <association property="promotion" column="promotion_id" javaType="Promotion"
+                     select="com.solvd.sql.interfaces.IPromotionDao.getById"/>
+        <association property="product" column="product_id" javaType="Product"
+                     select="com.solvd.sql.interfaces.IProductDao.getById"/>
+    </resultMap>
+    <insert id="insert" parameterType="ProductPromotion">
+        INSERT INTO product_promotion (promotion_id, product_id) VALUES (#{promotion.id}, #{product.id});
+    </insert>
+    <update id="update" parameterType="ProductPromotion">
+        UPDATE product_promotion SET
+        promotion_id = #{promotion.id}, product_id = #{product.id}
+        WHERE product_id = #{product.id}
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM product_promotion WHERE product_id = #{product.id};
+    </delete>
+    <select id="getAll" resultMap="ProductPromotionResultMap">
+        SELECT * FROM product_promotion;
+    </select>
+    <select id="getById" parameterType="int" resultMap="ProductPromotionResultMap">
+        SELECT * FROM product_promotion WHERE product_id = #{product.id};
+    </select>
+    <select id="getPromotionByProductName" parameterType="String" resultMap="ProductPromotionResultMap">
+        SELECT * FROM product_promotion
+        JOIN product ON product_promotion.product_id=product.id
+        JOIN promotion ON product_promotion.promotion_id=promotion.id
+        WHERE product_name = #{productName};
+    </select>
+</mapper>

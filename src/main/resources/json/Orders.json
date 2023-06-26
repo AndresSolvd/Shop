@@ -1,0 +1,16 @@
+{
+  "id" : 1,
+  "orderDate" : "2022-05-05",
+  "total" : 120.0,
+  "customer" : {
+    "id" : 1,
+    "taxNumber" : "1254986532",
+    "person" : {
+      "id" : 4,
+      "personName" : "Genghis",
+      "lastName" : "Brown",
+      "phone" : "8569751246",
+      "address" : "9832 cest' la vie Monrroe, 239843"
+    }
+  }
+}

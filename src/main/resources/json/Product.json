@@ -1,0 +1,16 @@
+{
+  "id" : 2,
+  "productName" : "Pants",
+  "stock" : 13,
+  "price" : 80.0,
+  "category" : {
+    "id" : 1,
+    "categoryName" : "Clothes"
+  },
+  "supplier" : {
+    "id" : 1,
+    "supplierName" : "LaCoste",
+    "taxNumber" : "123455678",
+    "phone" : "2340981245"
+  }
+}

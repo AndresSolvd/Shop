@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.IProductDao">
+    <resultMap id="ProductResultMap" type="Product" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="productName" column="product_name"/>
+        <result property="stock" column="stock"/>
+        <result property="price" column="price"/>
+        <association property="category" column="category_id" javaType="Category"
+                     select="com.solvd.sql.interfaces.ICategoryDao.getById"/>
+        <association property="supplier" column="supplier_id" javaType="Supplier"
+                     select="com.solvd.sql.interfaces.ISupplierDao.getById"/>
+    </resultMap>
+    <insert id="insert" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO product (product_name, stock, price, category_id, supplier_id) VALUES (#{productName}, #{stock},
+        #{price}, #{category.id}, #{supplier.id});
+    </insert>
+    <update id="update" parameterType="Product">
+        UPDATE product SET
+        id = #{id}, product_name = #{productName}, stock = #{stock}, price = #{price}, category_id = #{category.id},
+        supplier_id = #{supplier.id}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM product WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="ProductResultMap">
+        SELECT * FROM product;
+    </select>
+    <select id="getById" parameterType="int" resultMap="ProductResultMap">
+        SELECT * FROM product WHERE id = #{id};
+    </select>
+    <select id="getProductByName" parameterType="string" resultMap="ProductResultMap">
+        SELECT * FROM product WHERE product_name = #{product_name};
+    </select>
+
+
+</mapper>

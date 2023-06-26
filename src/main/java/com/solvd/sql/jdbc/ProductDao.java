@@ -24,8 +24,8 @@ public class ProductDao implements IBaseDAO<Product> {
             ps.setString(1, product.getProductName());
             ps.setInt(2, product.getStock());
             ps.setDouble(3, product.getPrice());
-            ps.setInt(4, product.getCategoryId());
-            ps.setInt(5, product.getSupplierId());
+            ps.setInt(4, product.getCategory().getId());
+            ps.setInt(5, product.getSupplier().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -49,8 +49,8 @@ public class ProductDao implements IBaseDAO<Product> {
             ps.setString(1, product.getProductName());
             ps.setInt(2, product.getStock());
             ps.setDouble(3, product.getPrice());
-            ps.setInt(4, product.getCategoryId());
-            ps.setInt(5, product.getSupplierId());
+            ps.setInt(4, product.getCategory().getId());
+            ps.setInt(5, product.getSupplier().getId());
             ps.setInt(6, product.getId());
             ps.execute();
         } catch (SQLException e) {
@@ -96,8 +96,8 @@ public class ProductDao implements IBaseDAO<Product> {
                     product.setProductName(rs.getString("product_name"));
                     product.setStock(rs.getInt("stock"));
                     product.setPrice(rs.getDouble("price"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setSupplierId(rs.getInt("supplier_id"));
+                    product.setCategory(new CategoryDao().getById(rs.getInt("category_id")));
+                    product.setSupplier(new SupplierDao().getById(rs.getInt("supplier_id")));
                     products.add(product);
                 }
             }
@@ -128,8 +128,8 @@ public class ProductDao implements IBaseDAO<Product> {
                     product.setProductName(rs.getString("product_name"));
                     product.setStock(rs.getInt("stock"));
                     product.setPrice(rs.getDouble("price"));
-                    product.setCategoryId(rs.getInt("category_id"));
-                    product.setSupplierId(rs.getInt("supplier_id"));
+                    product.setCategory(new CategoryDao().getById(rs.getInt("category_id")));
+                    product.setSupplier(new SupplierDao().getById(rs.getInt("supplier_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

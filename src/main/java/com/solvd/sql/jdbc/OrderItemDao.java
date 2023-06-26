@@ -22,8 +22,8 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, orderItem.getQuantity());
-            ps.setInt(2, orderItem.getProductId());
-            ps.setInt(3, orderItem.getOrderId());
+            ps.setInt(2, orderItem.getProduct().getId());
+            ps.setInt(3, orderItem.getOrder().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -45,8 +45,8 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, orderItem.getQuantity());
-            ps.setInt(2, orderItem.getProductId());
-            ps.setInt(3, orderItem.getOrderId());
+            ps.setInt(2, orderItem.getProduct().getId());
+            ps.setInt(3, orderItem.getOrder().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -88,8 +88,8 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
                 while (rs.next()) {
                     OrderItem orderItem = new OrderItem();
                     orderItem.setQuantity(rs.getInt("quantity"));
-                    orderItem.setProductId(rs.getInt("product_id"));
-                    orderItem.setOrderId(rs.getInt("order_id"));
+                    orderItem.setProduct(new ProductDao().getById(rs.getInt("product_id")));
+                    orderItem.setOrder(new OrderDao().getById(rs.getInt("order_id")));
                     orderItems.add(orderItem);
                 }
             }
@@ -116,8 +116,8 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
                     orderItem.setQuantity(rs.getInt("quantity"));
-                    orderItem.setProductId(rs.getInt("product_id"));
-                    orderItem.setOrderId(rs.getInt("order_id"));
+                    orderItem.setProduct(new ProductDao().getById(rs.getInt("product_id")));
+                    orderItem.setOrder(new OrderDao().getById(rs.getInt("order_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

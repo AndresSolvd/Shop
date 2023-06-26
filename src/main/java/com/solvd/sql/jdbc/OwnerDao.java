@@ -21,7 +21,7 @@ public class OwnerDao implements IBaseDAO<Owner> {
         String query = "INSERT INTO owner (person_id) VALUES (?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, owner.getPersonId());
+            ps.setInt(1, owner.getPerson().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -42,7 +42,7 @@ public class OwnerDao implements IBaseDAO<Owner> {
         String query = "UPDATE owner SET person_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, owner.getPersonId());
+            ps.setInt(1, owner.getPerson().getId());
             ps.setInt(2, owner.getId());
             ps.execute();
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class OwnerDao implements IBaseDAO<Owner> {
                 while (rs.next()) {
                     Owner owner = new Owner();
                     owner.setId(rs.getInt("id"));
-                    owner.setPersonId(rs.getInt("person_id"));
+                    owner.setPerson(new PersonDao().getById(rs.getInt("person_id")));
                     owners.add(owner);
                 }
             }
@@ -113,7 +113,7 @@ public class OwnerDao implements IBaseDAO<Owner> {
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
                     owner.setId(rs.getInt("id"));
-                    owner.setPersonId(rs.getInt("person_id"));
+                    owner.setPerson(new PersonDao().getById(rs.getInt("person_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

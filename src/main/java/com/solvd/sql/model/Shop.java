@@ -26,9 +26,9 @@ public class Shop {
     @JsonProperty("phone")
     private String phone;
 
-    @XmlElement(name = "ownerId")
-    @JsonProperty("ownerId")
-    private int ownerId;
+    @XmlElement(name = "owner", type = Owner.class)
+    @JsonProperty("owner")
+    private Owner owner;
 
     public int getId() {
         return id;
@@ -62,12 +62,12 @@ public class Shop {
         this.phone = phone;
     }
 
-    public int getOwnerId() {
-        return ownerId;
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Shop {
                 ", shopName='" + shopName + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", ownerId=" + ownerId +
+                ", owner=" + owner +
                 '}';
     }
 }

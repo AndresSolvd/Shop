@@ -1,17 +1,21 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.OwnerDao;
+import com.solvd.sql.interfaces.IOwnerDao;
 import com.solvd.sql.model.Owner;
+import com.solvd.sql.mybatis.OwnerDao;
 
 import java.util.List;
 
-public class OwnerService implements IBaseDAO<Owner> {
+public class OwnerService implements IOwnerDao {
 
     OwnerDao ownerDao = new OwnerDao();
 
     @Override
     public void insert(Owner owner) {
+        PersonService personService = new PersonService();
+        if (personService.getById(owner.getPerson().getId()) == null) {
+            personService.insert(owner.getPerson());
+        }
         ownerDao.insert(owner);
     }
 
@@ -33,5 +37,10 @@ public class OwnerService implements IBaseDAO<Owner> {
     @Override
     public Owner getById(int id) {
         return ownerDao.getById(id);
+    }
+
+    @Override
+    public Owner getOwnerByName(String name) {
+        return ownerDao.getOwnerByName(name);
     }
 }

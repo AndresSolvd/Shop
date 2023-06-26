@@ -1,12 +1,12 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.ProductDao;
+import com.solvd.sql.interfaces.IProductDao;
 import com.solvd.sql.model.Product;
+import com.solvd.sql.mybatis.ProductDao;
 
 import java.util.List;
 
-public class ProductService implements IBaseDAO<Product> {
+public class ProductService implements IProductDao {
 
     ProductDao productDao = new ProductDao();
 
@@ -33,5 +33,10 @@ public class ProductService implements IBaseDAO<Product> {
     @Override
     public Product getById(int id) {
         return productDao.getById(id);
+    }
+
+    @Override
+    public Product getProductByName(String name) {
+        return productDao.getProductByName(name);
     }
 }

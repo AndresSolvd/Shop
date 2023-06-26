@@ -1,12 +1,12 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.PromotionDao;
+import com.solvd.sql.interfaces.IPromotionDao;
 import com.solvd.sql.model.Promotion;
+import com.solvd.sql.mybatis.PromotionDao;
 
 import java.util.List;
 
-public class PromotionService implements IBaseDAO<Promotion> {
+public class PromotionService implements IPromotionDao {
 
     PromotionDao promotionDao = new PromotionDao();
 
@@ -33,5 +33,10 @@ public class PromotionService implements IBaseDAO<Promotion> {
     @Override
     public Promotion getById(int id) {
         return promotionDao.getById(id);
+    }
+
+    @Override
+    public Promotion getPromotionByName(String name) {
+        return promotionDao.getPromotionByName(name);
     }
 }

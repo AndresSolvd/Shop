@@ -26,13 +26,13 @@ public class Product {
     @JsonProperty("price")
     private double price;
 
-    @XmlElement(name = "categoryId")
-    @JsonProperty("categoryId")
-    private int categoryId;
+    @XmlElement(name = "category", type = Category.class)
+    @JsonProperty("category")
+    private Category category;
 
-    @XmlElement(name = "supplierId")
-    @JsonProperty("supplierId")
-    private int supplierId;
+    @XmlElement(name = "supplier", type = Supplier.class)
+    @JsonProperty("supplier")
+    private Supplier supplier;
 
     public int getId() {
         return id;
@@ -66,31 +66,24 @@ public class Product {
         this.price = price;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public int getSupplierId() {
-        return supplierId;
+    public Supplier getSupplier() {
+        return supplier;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", productName='" + productName + '\'' +
-                ", stock=" + stock +
-                ", price=" + price +
-                ", categoryId=" + categoryId +
-                ", supplierId=" + supplierId +
-                '}';
+        return "Product{" + "id=" + id + ", productName='" + productName + '\'' + ", stock=" + stock + ", price=" + price + ", category=" + category + ", supplier=" + supplier + '}';
     }
 }

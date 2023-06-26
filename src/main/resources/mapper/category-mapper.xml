@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.ICategoryDao">
+    <resultMap id="CategoryResultMap" type="Category" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO category (category_name) VALUES (#{categoryName});
+    </insert>
+    <update id="update" parameterType="Category">
+        UPDATE category SET
+        id = #{id}, category_name = #{categoryName}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM category WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="CategoryResultMap">
+        SELECT * FROM category;
+    </select>
+    <select id="getById" parameterType="int" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE id = #{id};
+    </select>
+    <select id="getCategoryByName" parameterType="String" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE category_name = #{categoryName};
+    </select>
+</mapper>
