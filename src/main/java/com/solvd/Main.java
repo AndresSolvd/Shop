@@ -399,10 +399,8 @@ public class Main {
         LOGGER.info(JSONUtils.readJSON("promotion"));
         LOGGER.info(JSONUtils.readJSON("order"));
 
-        System.out.println();
         // Test last implementations
         LOGGER.info("************************** Test existence **************************");
-        System.out.println();
 
         //CUSTOMER
         LOGGER.info("CUSTOMER");
@@ -423,7 +421,7 @@ public class Main {
         customer = new Customer();
         customerService = new CustomerService();
         personService = new PersonService();
-        System.out.println();
+
         LOGGER.info("*********** Test for existing customer - person ***********");
         person.setPersonName("Marty");
         person.setLastName("McFly");
@@ -436,7 +434,6 @@ public class Main {
         LOGGER.info(personService.getAll());
 
         // OWNER
-        System.out.println();
         LOGGER.info("OWNER");
         person = new Person();
         owner = new Owner();
@@ -454,7 +451,7 @@ public class Main {
         owner = new Owner();
         ownerService = new OwnerService();
         personService = new PersonService();
-        System.out.println();
+
         LOGGER.info("*********** Test for existing owner - person ***********");
         person.setPersonName("Esto");
         person.setLastName("Esuna");
@@ -466,7 +463,6 @@ public class Main {
         LOGGER.info(personService.getAll());
 
         // STAFF
-        System.out.println();
         LOGGER.info("STAFF");
         person = new Person();
         staff = new Staff();
@@ -486,7 +482,7 @@ public class Main {
         staff = new Staff();
         staffService = new StaffService();
         personService = new PersonService();
-        System.out.println();
+
         LOGGER.info("*********** Test for existing staff - person ***********");
         person.setPersonName("The");
         person.setLastName("Doc");
