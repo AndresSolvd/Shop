@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.sql.interfaces.ICustomerDao">
+    <resultMap id="CustomerResultMap" type="Customer" autoMapping="false">
+        <result property="id" column="id"/>
+        <result property="taxNumber" column="tax_number"/>
+        <association property="person" column="person_id" javaType="Person"
+                     select="com.solvd.sql.interfaces.IPersonDao.getById"/>
+    </resultMap>
+    <insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO customer (tax_number, person_id) VALUES (#{taxNumber}, #{person.id});
+    </insert>
+    <update id="update" parameterType="Customer">
+        UPDATE customer SET
+        id = #{id}, tax_number = #{taxNumber}, person_id = #{person.id}
+        WHERE id = #{id};
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM customer WHERE id = #{id};
+    </delete>
+    <select id="getAll" resultMap="CustomerResultMap">
+        SELECT * FROM customer;
+    </select>
+    <select id="getById" parameterType="int" resultMap="CustomerResultMap">
+        SELECT * FROM customer WHERE id = #{id};
+    </select>
+    <select id="getCustomerByName" parameterType="String" resultMap="CustomerResultMap">
+        SELECT * FROM customer JOIN person ON customer.person_id = person.id WHERE person_name = #{name};
+    </select>
+</mapper>

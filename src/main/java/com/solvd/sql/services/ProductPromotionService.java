@@ -1,37 +1,42 @@
 package com.solvd.sql.services;
 
-import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.jdbc.ProductPromotionDao;
+import com.solvd.sql.interfaces.IProductPromotionDao;
 import com.solvd.sql.model.ProductPromotion;
+import com.solvd.sql.mybatis.ProductPromotionDao;
 
 import java.util.List;
 
-public class ProductPromotionService implements IBaseDAO<ProductPromotion> {
+public class ProductPromotionService implements IProductPromotionDao {
 
-    ProductPromotionDao promotionDao = new ProductPromotionDao();
+    ProductPromotionDao productPromotionDao = new ProductPromotionDao();
 
     @Override
     public void insert(ProductPromotion productPromotion) {
-        promotionDao.insert(productPromotion);
+        productPromotionDao.insert(productPromotion);
     }
 
     @Override
     public void update(ProductPromotion productPromotion) {
-        promotionDao.update(productPromotion);
+        productPromotionDao.update(productPromotion);
     }
 
     @Override
     public void delete(int id) {
-        promotionDao.delete(id);
+        productPromotionDao.delete(id);
     }
 
     @Override
     public List<ProductPromotion> getAll() {
-        return promotionDao.getAll();
+        return productPromotionDao.getAll();
     }
 
     @Override
     public ProductPromotion getById(int id) {
-        return promotionDao.getById(id);
+        return productPromotionDao.getById(id);
+    }
+
+    @Override
+    public ProductPromotion getPromotionByProductName(String productName) {
+        return productPromotionDao.getPromotionByProductName(productName);
     }
 }

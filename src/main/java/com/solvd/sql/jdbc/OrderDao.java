@@ -1,7 +1,7 @@
 package com.solvd.sql.jdbc;
 
 import com.solvd.sql.interfaces.IBaseDAO;
-import com.solvd.sql.model.Orders;
+import com.solvd.sql.model.Order;
 import com.solvd.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -11,19 +11,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersDao implements IBaseDAO<Orders> {
+public class OrderDao implements IBaseDAO<Order> {
 
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
-    public void insert(Orders orders) {
+    public void insert(Order order) {
         Connection con = connectionPool.getConnection();
-        String query = "INSERT INTO orders (order_date, total, customer_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO order (order_date, total, customer_id) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrderDate());
-            ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
+            ps.setDate(1, order.getOrderDate());
+            ps.setDouble(2, order.getTotal());
+            ps.setInt(3, order.getCustomer().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -39,15 +39,15 @@ public class OrdersDao implements IBaseDAO<Orders> {
     }
 
     @Override
-    public void update(Orders orders) {
+    public void update(Order order) {
         Connection con = connectionPool.getConnection();
-        String query = "UPDATE orders SET order_date = ?, total = ?, customer_id = ? WHERE id = ?";
+        String query = "UPDATE order SET order_date = ?, total = ?, customer_id = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, orders.getOrderDate());
-            ps.setDouble(2, orders.getTotal());
-            ps.setInt(3, orders.getCustomerId());
-            ps.setInt(4, orders.getId());
+            ps.setDate(1, order.getOrderDate());
+            ps.setDouble(2, order.getTotal());
+            ps.setInt(3, order.getCustomer().getId());
+            ps.setInt(4, order.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -79,20 +79,20 @@ public class OrdersDao implements IBaseDAO<Orders> {
     }
 
     @Override
-    public List<Orders> getAll() {
+    public List<Order> getAll() {
         Connection con = connectionPool.getConnection();
-        List<Orders> orderss = new ArrayList<>();
+        List<Order> ordersses = new ArrayList<>();
         String query = "SELECT * FROM orders";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Orders orders = new Orders();
-                    orders.setId(rs.getInt("id"));
-                    orders.setOrderDate(rs.getDate("order_date"));
-                    orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
-                    orderss.add(orders);
+                    Order order = new Order();
+                    order.setId(rs.getInt("id"));
+                    order.setOrderDate(rs.getDate("order_date"));
+                    order.setTotal(rs.getDouble("total"));
+                    order.setCustomer(new CustomerDao().getById(rs.getInt("customer_id")));
+                    ordersses.add(order);
                 }
             }
         } catch (SQLException e) {
@@ -104,24 +104,24 @@ public class OrdersDao implements IBaseDAO<Orders> {
                 throw new RuntimeException(e);
             }
         }
-        return orderss;
+        return ordersses;
     }
 
     @Override
-    public Orders getById(int id) {
+    public Order getById(int id) {
         Connection con = connectionPool.getConnection();
-        Orders orders = new Orders();
-        String query = "SELECT * FROM orders WHERE id = ?";
+        Order order = new Order();
+        String query = "SELECT * FROM order WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    orders.setId(rs.getInt("id"));
-                    orders.setOrderDate(rs.getDate("order_date"));
-                    orders.setTotal(rs.getDouble("total"));
-                    orders.setCustomerId(rs.getInt("customer_id"));
+                    order.setId(rs.getInt("id"));
+                    order.setOrderDate(rs.getDate("order_date"));
+                    order.setTotal(rs.getDouble("total"));
+                    order.setCustomer(new CustomerDao().getById(rs.getInt("customer_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();
@@ -131,6 +131,6 @@ public class OrdersDao implements IBaseDAO<Orders> {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return orders;
+        return order;
     }
 }

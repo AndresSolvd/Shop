@@ -24,7 +24,7 @@ public class ShopDao implements IBaseDAO<Shop> {
             ps.setString(1, shop.getShopName());
             ps.setString(2, shop.getAddress());
             ps.setString(3, shop.getPhone());
-            ps.setInt(4, shop.getOwnerId());
+            ps.setInt(4, shop.getOwner().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -48,7 +48,7 @@ public class ShopDao implements IBaseDAO<Shop> {
             ps.setString(1, shop.getShopName());
             ps.setString(2, shop.getAddress());
             ps.setString(3, shop.getPhone());
-            ps.setInt(4, shop.getOwnerId());
+            ps.setInt(4, shop.getOwner().getId());
             ps.setInt(5, shop.getId());
             ps.execute();
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class ShopDao implements IBaseDAO<Shop> {
                     shop.setShopName(rs.getString("shop_name"));
                     shop.setAddress(rs.getString("address"));
                     shop.setPhone(rs.getString("phone"));
-                    shop.setOwnerId(rs.getInt("owner_id"));
+                    shop.setOwner(new OwnerDao().getById(rs.getInt("owner_id")));
                     shops.add(shop);
                 }
             }
@@ -124,7 +124,7 @@ public class ShopDao implements IBaseDAO<Shop> {
                     shop.setShopName(rs.getString("shop_name"));
                     shop.setAddress(rs.getString("address"));
                     shop.setPhone(rs.getString("phone"));
-                    shop.setOwnerId(rs.getInt("owner_id"));
+                    shop.setOwner(new OwnerDao().getById(rs.getInt("owner_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

@@ -1,7 +1,7 @@
 package com.solvd.sql.services;
 
 import com.solvd.sql.interfaces.ICategoryDao;
-import com.solvd.sql.jdbc.CategoryDao;
+import com.solvd.sql.mybatis.CategoryDao;
 import com.solvd.sql.model.Category;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class CategoryService implements ICategoryDao {
     }
 
     @Override
-    public Category getByName(String categoryName) {
-        return categoryDao.getByName(categoryName);
+    public Category getCategoryByName(String categoryName) {
+        return categoryDao.getCategoryByName(categoryName);
     }
 }

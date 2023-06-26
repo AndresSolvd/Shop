@@ -1,42 +1,47 @@
 package com.solvd.sql.model;
 
-import javax.xml.bind.annotation.*;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "productPromotion")
 @JsonRootName(value = "productPromotion")
 public class ProductPromotion {
 
-    @XmlElement(name = "promotionId")
-    @JsonProperty("promotionId")
-    private int promotionId;
+    @XmlElement(name = "promotion", type = Promotion.class)
+    @JsonProperty("promotion")
+    private Promotion promotion;
 
-    @XmlElement(name = "productId")
-    @JsonProperty("productId")
-    private int productId;
+    @XmlElement(name = "product", type = Product.class)
+    @JsonProperty("product")
+    private Product product;
 
-    public int getPromotionId() {
-        return promotionId;
+    public Promotion getPromotion() {
+        return promotion;
     }
 
-    public void setPromotionId(int promotionId) {
-        this.promotionId = promotionId;
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override
     public String toString() {
         return "ProductPromotion{" +
-                "promotionId=" + promotionId +
-                ", productId=" + productId +
+                "promotion=" + promotion +
+                ", product=" + product +
                 '}';
     }
 }

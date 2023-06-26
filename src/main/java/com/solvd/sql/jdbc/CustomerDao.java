@@ -22,7 +22,7 @@ public class CustomerDao implements IBaseDAO<Customer> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, customer.getTaxNumber());
-            ps.setInt(2, customer.getPersonId());
+            ps.setInt(2, customer.getPerson().getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -44,7 +44,7 @@ public class CustomerDao implements IBaseDAO<Customer> {
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, customer.getTaxNumber());
-            ps.setInt(2, customer.getPersonId());
+            ps.setInt(2, customer.getPerson().getId());
             ps.setInt(3, customer.getId());
             ps.execute();
         } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class CustomerDao implements IBaseDAO<Customer> {
                     Customer customer = new Customer();
                     customer.setId(rs.getInt("id"));
                     customer.setTaxNumber(rs.getString("tax_number"));
-                    customer.setPersonId(rs.getInt("person_id"));
+                    customer.setPerson(new PersonDao().getById(rs.getInt("person_id")));
                     customers.add(customer);
                 }
             }
@@ -116,7 +116,7 @@ public class CustomerDao implements IBaseDAO<Customer> {
                 while (rs.next()) {
                     customer.setId(rs.getInt("id"));
                     customer.setTaxNumber(rs.getString("tax_number"));
-                    customer.setPersonId(rs.getInt("person_id"));
+                    customer.setPerson(new PersonDao().getById(rs.getInt("person_id")));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

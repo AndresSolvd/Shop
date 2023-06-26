@@ -130,7 +130,7 @@ public class CategoryDao implements ICategoryDao {
     }
 
     @Override
-    public Category getByName(String categoryName) {
+    public Category getCategoryByName(String categoryName) {
         Connection con = connectionPool.getConnection();
         Category category = new Category();
         String query = "SELECT * FROM category WHERE category_name = ?";

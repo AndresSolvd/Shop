@@ -1,0 +1,16 @@
+{
+  "id" : 1,
+  "shopName" : "La Tasca",
+  "address" : "In a land far far away",
+  "phone" : "1120984567",
+  "owner" : {
+    "id" : 1,
+    "person" : {
+      "id" : 1,
+      "personName" : "Bart",
+      "lastName" : "Simpson",
+      "phone" : "1234561235",
+      "address" : "342 noway Springfield"
+    }
+  }
+}

@@ -4,9 +4,14 @@ import com.solvd.enums.Paths;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
+import com.solvd.sql.mybatis.OrderDao;
+import com.solvd.sql.mybatis.ProductDao;
 import com.solvd.sql.services.*;
+import com.solvd.util.SqlResetUtil;
 import com.solvd.util.XmlParser;
 import com.solvd.util.XmlValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.JAXBException;
 import java.sql.Date;
@@ -14,8 +19,13 @@ import java.sql.Date;
 public class Main {
     public static void main(String[] args) throws JAXBException {
 
+        final Logger LOGGER = LogManager.getLogger(Main.class);
+
+        // Reset All Tables
+        SqlResetUtil.reset();
+
         // CATEGORY
-        System.out.println("\n--- CATEGORY ---\n");
+        LOGGER.info("\n--- CATEGORY ---\n");
         // Create
         CategoryService categoryService = new CategoryService();
         Category category = new Category();
@@ -32,13 +42,13 @@ public class Main {
         // Delete
         categoryService.delete(3); // Delete Food
         // Read
-        System.out.println(categoryService.getById(1));
-        System.out.println(categoryService.getByName("Electronics")); // If repeated name select the last.
+        LOGGER.info(categoryService.getById(1));
+        LOGGER.info(categoryService.getCategoryByName("Electronics")); // If repeated name select the last.
         // All
-        System.out.println(categoryService.getAll());
+        LOGGER.info(categoryService.getAll());
 
         // PERSON
-        System.out.println("\n--- PERSON ---\n");
+        LOGGER.info("\n--- PERSON ---\n");
         // Create
         PersonService personService = new PersonService();
         Person person = new Person();
@@ -74,67 +84,73 @@ public class Main {
         // Delete
         personService.delete(5);
         // Read
-        System.out.println(personService.getById(4));
+        LOGGER.info(personService.getById(4));
         // All
-        System.out.println(personService.getAll());
+        LOGGER.info(personService.getAll());
+        LOGGER.info(personService.getPersonByName("Bart"));
 
         // CUSTOMER
-        System.out.println("\n--- CUSTOMER ---\n");
+        LOGGER.info("\n--- CUSTOMER ---\n");
         // Create
         CustomerService customerService = new CustomerService();
         Customer customer = new Customer();
         customer.setTaxNumber("00000000");
-        customer.setPersonId(4);
+        customer.setPerson(personService.getById(2));
         customerService.insert(customer);
         customer.setTaxNumber("274527252");
-        customer.setPersonId(3);
+        customer.setPerson(personService.getById(3));
+        customerService.insert(customer);
+        customer.setTaxNumber("274527252");
+        customer.setPerson(personService.getById(1));
         customerService.insert(customer);
         // Update
         customer.setTaxNumber("1254986532"); // Needs to specify the ID
-        customer.setPersonId(4);
+        customer.setPerson(personService.getById(4));
         customer.setId(1);
         customerService.update(customer);
         // Delete
-        customerService.delete(2);
+        customerService.delete(3);
         // Read
-        System.out.println(customerService.getById(1));
+        LOGGER.info(customerService.getById(1));
         // All
-        System.out.println(customerService.getAll());
+        LOGGER.info(customerService.getAll());
+        LOGGER.info(customerService.getCustomerByName("Genghis"));
 
         // OWNER
-        System.out.println("\n--- OWNER ---\n");
+        LOGGER.info("\n--- OWNER ---\n");
         // Create
         OwnerService ownerService = new OwnerService();
         Owner owner = new Owner();
-        owner.setPersonId(1);
+        owner.setPerson(personService.getById(1));
         ownerService.insert(owner);
-        owner.setPersonId(2);
+        owner.setPerson(personService.getById(2));
         ownerService.insert(owner);
         // Update
-        owner.setPersonId(3); // Needs to specify the ID
+        owner.setPerson(personService.getById(1));// Needs to specify the ID
         owner.setId(1);
         ownerService.update(owner);
         // Delete
         ownerService.delete(2);
         // Read
-        System.out.println(ownerService.getById(1));
+        LOGGER.info(ownerService.getById(1));
         // All
-        System.out.println(ownerService.getAll());
+        LOGGER.info(ownerService.getAll());
+        LOGGER.info(ownerService.getOwnerByName("Bart"));
 
         // SHOP
-        System.out.println("\n--- SHOP ---\n");
+        LOGGER.info("\n--- SHOP ---\n");
         // Create
         ShopService shopService = new ShopService();
         Shop shop = new Shop();
         shop.setShopName("Le Sportif Foe");
         shop.setAddress("In a land far far away");
         shop.setPhone("1120984567");
-        shop.setOwnerId(1);
+        shop.setOwner(ownerService.getById(1));
         shopService.insert(shop);
         shop.setShopName("Federico Barba Roja");
         shop.setAddress("In between dreams");
         shop.setPhone("4593217865");
-        shop.setOwnerId(1);
+        shop.setOwner(ownerService.getById(1));
         shopService.insert(shop);
         // Update
         shop.setShopName("La Tasca");
@@ -145,38 +161,40 @@ public class Main {
         // Delete
         shopService.delete(2);
         // Read
-        System.out.println(shopService.getById(1));
+        LOGGER.info(shopService.getById(1));
         // All
-        System.out.println(shopService.getAll());
+        LOGGER.info(shopService.getAll());
+        LOGGER.info(shopService.getShopByName("La Tasca"));
 
         // STAFF
-        System.out.println("\n--- STAFF ---\n");
+        LOGGER.info("\n--- STAFF ---\n");
         // Create
         StaffService staffService = new StaffService();
         Staff staff = new Staff();
         staff.setPosition("AllinOne");
-        staff.setPersonId(2);
-        staff.setShopId(1);
+        staff.setPerson(personService.getById(2));
+        staff.setShop(shopService.getById(1));
         staffService.insert(staff);
         staff.setPosition("Worker");
-        staff.setPersonId(1);
-        staff.setShopId(1);
+        staff.setPerson(personService.getById(1));
+        staff.setShop(shopService.getById(1));
         staffService.insert(staff);
         // Update
         staff.setPosition("Manager");
-        staff.setPersonId(2);
-        staff.setShopId(1);
+        staff.setPerson(personService.getById(2));
+        staff.setShop(shopService.getById(1));
         staff.setId(1);
         staffService.update(staff);
         // Delete
         staffService.delete(2);
         // Read
-        System.out.println(staffService.getById(1));
+        LOGGER.info(staffService.getById(1));
         // All
-        System.out.println(staffService.getAll());
+        LOGGER.info(staffService.getAll());
+        LOGGER.info(staffService.getStaffByName("Tom"));
 
         // SUPPLIER
-        System.out.println("\n--- SUPPLIER ---\n");
+        LOGGER.info("\n--- SUPPLIER ---\n");
         // Create
         SupplierService supplierService = new SupplierService();
         Supplier supplier = new Supplier();
@@ -197,102 +215,109 @@ public class Main {
         // Delete
         supplierService.delete(2);
         // Read
-        System.out.println(supplierService.getById(1));
+        LOGGER.info(supplierService.getById(1));
         // All
-        System.out.println(supplierService.getAll());
+        LOGGER.info(supplierService.getAll());
+        LOGGER.info(supplierService.getSupplierByName("LaCoste"));
 
         // PRODUCT
-        System.out.println("\n--- PRODUCT ---\n");
+        LOGGER.info("\n--- PRODUCT ---\n");
         // Create
         ProductService productService = new ProductService();
         Product product = new Product();
         product.setProductName("Shirt");
         product.setStock(23);
         product.setPrice(60);
-        product.setCategoryId(1);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(1));
+        product.setSupplier(supplierService.getById(1));
         productService.insert(product);
         product.setProductName("Pants");
         product.setStock(13);
         product.setPrice(20);
-        product.setCategoryId(1);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(1));
+        product.setSupplier(supplierService.getById(1));
         productService.insert(product);
         product.setProductName("iPad");
         product.setStock(5);
         product.setPrice(2000);
-        product.setCategoryId(2);
-        product.setSupplierId(1);
+        product.setCategory(categoryService.getById(2));
+        product.setSupplier(supplierService.getById(1));
         productService.insert(product);
         // Update
         product.setProductName("Pants");
         product.setStock(13);
         product.setPrice(80);
-        product.setCategoryId(1);
-        product.setSupplierId(1);
-        productService.insert(product);
+        product.setCategory(categoryService.getById(1));
+        product.setSupplier(supplierService.getById(1));
         product.setId(2);
         productService.update(product);
         // Delete
         productService.delete(3);
         // Read
-        System.out.println(productService.getById(1));
+        LOGGER.info(productService.getById(1));
         // All
-        System.out.println(productService.getAll());
+        LOGGER.info(productService.getAll());
+        LOGGER.info(productService.getProductByName("Shirt"));
 
         // ORDERS
-        System.out.println("\n--- ORDERS ---\n");
+        LOGGER.info("\n--- ORDERS ---\n");
         // Create
-        OrdersService ordersService = new OrdersService();
-        Orders orders = new Orders();
-        orders.setOrderDate(Date.valueOf(("2022-5-5")));
-        orders.setTotal(80);
-        orders.setCustomerId(1);
-        ordersService.insert(orders);
-        orders.setOrderDate(Date.valueOf(("2022-4-5")));
-        orders.setTotal(60);
-        orders.setCustomerId(1);
-        ordersService.insert(orders);
+        OrderService orderService = new OrderService();
+        Order order = new Order();
+        order.setOrderDate(Date.valueOf(("2022-5-5")));
+        order.setTotal(80);
+        order.setCustomer(customerService.getById(1));
+        orderService.insert(order);
+        order.setOrderDate(Date.valueOf(("2022-4-5")));
+        order.setTotal(60);
+        order.setCustomer(customerService.getById(2));
+        orderService.insert(order);
+        order.setOrderDate(Date.valueOf(("2022-4-8")));
+        order.setTotal(78);
+        order.setCustomer(customerService.getById(1));
+        orderService.insert(order);
         // Update
-        orders.setOrderDate(Date.valueOf(("2022-5-5")));
-        orders.setTotal(120);
-        orders.setCustomerId(1);
-        orders.setId(1);
-        ordersService.update(orders);
+        order.setOrderDate(Date.valueOf(("2022-5-5")));
+        order.setTotal(120);
+        order.setCustomer(customerService.getById(1));
+        order.setId(1);
+        orderService.update(order);
         // Delete
-        ordersService.delete(2);
+        orderService.delete(3);
         // Read
-        System.out.println(ordersService.getById(1));
+        LOGGER.info(orderService.getById(1));
         // All
-        System.out.println(ordersService.getAll());
+        LOGGER.info(orderService.getAll());
+        LOGGER.info(orderService.getOrderByCustomerName("Genghis"));
 
         // ORDER ITEM
-        System.out.println("\n--- ORDER ITEM ---\n");
+        LOGGER.info("\n--- ORDER ITEM ---\n");
         // Create
         OrderItemService orderItemService = new OrderItemService();
         OrderItem orderItem = new OrderItem();
         orderItem.setQuantity(1);
-        orderItem.setOrderId(1);
-        orderItem.setProductId(1);
+        orderItem.setOrder(new OrderDao().getById(1));
+        orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.insert(orderItem);
         orderItem.setQuantity(1);
-        orderItem.setOrderId(1);
-        orderItem.setProductId(2);
+        orderItem.setOrder(new OrderDao().getById(2));
+        orderItem.setProduct(new ProductDao().getById(2));
         orderItemService.insert(orderItem);
         // Update
         orderItem.setQuantity(2);
-        orderItem.setOrderId(1);
-        orderItem.setProductId(1);
+        orderItem.setOrder(new OrderDao().getById(1));
+        orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.update(orderItem);
         // Delete
         orderItemService.delete(2);
         // Read
-        System.out.println(orderItemService.getById(1));
+        LOGGER.info(orderItemService.getById(1));
         // All
-        System.out.println(orderItemService.getAll());
+        LOGGER.info(orderItemService.getAll());
+        LOGGER.info(orderItemService.getOrderByProductName("Shirt")); // only first incidence
 
         // PROMOTION
-        System.out.println("\n--- PROMOTION ---\n");
+        LOGGER.info("\n--- PROMOTION ---\n");
         // Create
         PromotionService promotionService = new PromotionService();
         Promotion promotion = new Promotion();
@@ -320,56 +345,154 @@ public class Main {
         // Delete
         promotionService.delete(3);
         // Read
-        System.out.println(promotionService.getById(1));
+        LOGGER.info(promotionService.getById(1));
         // All
-        System.out.println(promotionService.getAll());
+        LOGGER.info(promotionService.getAll());
+        LOGGER.info(promotionService.getPromotionByName("Special Discount"));
 
         // PRODUCT PROMOTION
-        System.out.println("\n--- PRODUCT PROMOTION ---\n");
+        LOGGER.info("\n--- PRODUCT PROMOTION ---\n");
         // Create
         ProductPromotionService productPromotionService = new ProductPromotionService();
         ProductPromotion productPromotion = new ProductPromotion();
-        productPromotion.setPromotionId(2);
-        productPromotion.setProductId(1);
+        productPromotion.setPromotion(promotionService.getById(2));
+        productPromotion.setProduct(productService.getById(1));
         productPromotionService.insert(productPromotion);
-        productPromotion.setPromotionId(1);
-        productPromotion.setProductId(2);
+        productPromotion.setPromotion(promotionService.getById(1));
+        productPromotion.setProduct(productService.getById(2));
         productPromotionService.insert(productPromotion);
         // Update
-        productPromotion.setPromotionId(1);
-        productPromotion.setProductId(1); // update by product id
+        productPromotion.setPromotion(promotionService.getById(1));
+        productPromotion.setProduct(productService.getById(1));     // update by product id
         productPromotionService.update(productPromotion);
         // Delete
         productPromotionService.delete(2);
         // Read
-        System.out.println(productPromotionService.getById(1));
+        LOGGER.info(productPromotionService.getById(1));
         // All
-        System.out.println(productPromotionService.getAll());
+        LOGGER.info(productPromotionService.getAll());
+        LOGGER.info(productPromotionService.getPromotionByProductName("Shirt"));
 
         // XML Validate and Parse
-        System.out.println("\n--- XML Validation and Parse ---\n");
+        LOGGER.info("\n--- XML Validation and Parse ---\n");
         XmlValidator.validateXMLAgainstXSD(Paths.SHOPXML.getPath(), Paths.SHOPXSD.getPath());
-        System.out.println(XmlParser.parseShopDataFromFile(Paths.SHOPXML.getPath()));
+        LOGGER.info(XmlParser.parseShopDataFromFile(Paths.SHOPXML.getPath()));
 
         // Marsh and UnMarsh Person
-        System.out.println("\n--- File create from Person Object is stored in resources/xml --- ");
+        LOGGER.info("\n--- File create from Person Object is stored in resources/xml --- ");
         JAXBUtils.marshall(person);
-        System.out.println("\n--- Unmarshall Person.xml file --- ");
-        System.out.println(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
+        LOGGER.info("\n--- Unmarshall Person.xml file --- ");
+        LOGGER.info(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
 
         // JSON
-        System.out.println("\n ---JSON--- ");
+        LOGGER.info("\n ---JSON--- ");
         JSONUtils.writeJSON(shop);
         JSONUtils.writeJSON(person);
         JSONUtils.writeJSON(customer);
         JSONUtils.writeJSON(product);
         JSONUtils.writeJSON(promotion);
-        JSONUtils.writeJSON(orders);
-        System.out.println(JSONUtils.readJSON("shop"));
-        System.out.println(JSONUtils.readJSON("person"));
-        System.out.println(JSONUtils.readJSON("customer"));
-        System.out.println(JSONUtils.readJSON("product"));
-        System.out.println(JSONUtils.readJSON("promotion"));
-        System.out.println(JSONUtils.readJSON("orders"));
+        JSONUtils.writeJSON(order);
+        LOGGER.info(JSONUtils.readJSON("shop"));
+        LOGGER.info(JSONUtils.readJSON("person"));
+        LOGGER.info(JSONUtils.readJSON("customer"));
+        LOGGER.info(JSONUtils.readJSON("product"));
+        LOGGER.info(JSONUtils.readJSON("promotion"));
+        LOGGER.info(JSONUtils.readJSON("order"));
+
+        // Test last implementations
+        LOGGER.info("************************** Test existence **************************");
+
+        //CUSTOMER
+        LOGGER.info("CUSTOMER");
+        person = new Person();
+        customer = new Customer();
+        LOGGER.info("*********** Test for new owner - person ***********");
+        person.setPersonName("Marty");
+        person.setLastName("McFly");
+        person.setPhone("0938421753335");
+        person.setAddress("Back to the Future");
+        customer.setPerson(person);
+        customer.setTaxNumber("256262623636");
+        customerService.insert(customer);
+        LOGGER.info(customerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        person = new Person();
+        customer = new Customer();
+        customerService = new CustomerService();
+        personService = new PersonService();
+
+        LOGGER.info("*********** Test for existing customer - person ***********");
+        person.setPersonName("Marty");
+        person.setLastName("McFly");
+        person.setPhone("0938421753335");
+        person.setAddress("Back to the Future");
+        customer.setPerson(person);
+        customer.setTaxNumber("256262623636");
+        customerService.insert(customer);
+        LOGGER.info(customerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        // OWNER
+        LOGGER.info("OWNER");
+        person = new Person();
+        owner = new Owner();
+        LOGGER.info("*********** Test for new owner - person ***********");
+        person.setPersonName("Esto");
+        person.setLastName("Esuna");
+        person.setPhone("0938421750435");
+        person.setAddress("En algun lugar de un gran pais");
+        owner.setPerson(person);
+        ownerService.insert(owner);
+        LOGGER.info(ownerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        person = new Person();
+        owner = new Owner();
+        ownerService = new OwnerService();
+        personService = new PersonService();
+
+        LOGGER.info("*********** Test for existing owner - person ***********");
+        person.setPersonName("Esto");
+        person.setLastName("Esuna");
+        person.setPhone("0938421750435");
+        person.setAddress("En algun lugar de un gran pais");
+        owner.setPerson(person);
+        ownerService.insert(owner);
+        LOGGER.info(ownerService.getAll());
+        LOGGER.info(personService.getAll());
+
+        // STAFF
+        LOGGER.info("STAFF");
+        person = new Person();
+        staff = new Staff();
+        LOGGER.info("*********** Test for new staff - person ***********");
+        person.setPersonName("The");
+        person.setLastName("Doc");
+        person.setPhone("0938653750435");
+        person.setAddress("The best ever");
+        staff.setPerson(person);
+        staff.setPosition("Worker");
+        staff.setShop(shopService.getById(1));
+        staffService.insert(staff);
+        LOGGER.info(staffService.getAll());
+        LOGGER.info(personService.getAll());
+
+        person = new Person();
+        staff = new Staff();
+        staffService = new StaffService();
+        personService = new PersonService();
+
+        LOGGER.info("*********** Test for existing staff - person ***********");
+        person.setPersonName("The");
+        person.setLastName("Doc");
+        person.setPhone("0938653750435");
+        person.setAddress("The best ever");
+        staff.setPerson(person);
+        staff.setPosition("Worker");
+        staff.setShop(shopService.getById(1));
+        staffService.insert(staff);
+        LOGGER.info(staffService.getAll());
+        LOGGER.info(personService.getAll());
     }
 }
