@@ -1,6 +1,7 @@
 package com.solvd;
 
 import com.solvd.enums.Paths;
+import com.solvd.sql.builder.*;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
@@ -494,5 +495,19 @@ public class Main {
         staffService.insert(staff);
         LOGGER.info(staffService.getAll());
         LOGGER.info(personService.getAll());
+
+        LOGGER.info("BUILDER PATTERN TEST");
+        LOGGER.info(CategoryBuilder.builder());
+        LOGGER.info(CustomerBuilder.builder());
+        LOGGER.info(OrderBuilder.builder());
+        LOGGER.info(OrderItemBuilder.builder());
+        LOGGER.info(OwnerBuilder.builder());
+        LOGGER.info(PersonBuilder.builder());
+        LOGGER.info(ProductBuilder.builder());
+        LOGGER.info(ProductPromotionBuilder.builder());
+        LOGGER.info(PromotionBuilder.builder());
+        LOGGER.info(ShopBuilder.builder());
+        LOGGER.info(StaffBuilder.builder());
+        LOGGER.info(SupplierBuilder.builder());
     }
 }
