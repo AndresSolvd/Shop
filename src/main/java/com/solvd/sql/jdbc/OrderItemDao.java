@@ -86,11 +86,11 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    OrderItem orderItem = new OrderItem();
-                    orderItem.setQuantity(rs.getInt("quantity"));
-                    orderItem.setProduct(new ProductDao().getById(rs.getInt("product_id")));
-                    orderItem.setOrder(new OrderDao().getById(rs.getInt("order_id")));
-                    orderItems.add(orderItem);
+                    orderItems.add(new OrderItem.Builder()
+                            .withQuantity(rs.getInt("quantity"))
+                            .withOrder(new OrderDao().getById(rs.getInt("order_id")))
+                            .withProduct(new ProductDao().getById(rs.getInt("product_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -108,17 +108,17 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
     @Override
     public OrderItem getById(int id) {
         Connection con = connectionPool.getConnection();
-        OrderItem orderItem = new OrderItem();
         String query = "SELECT * FROM order_item WHERE order_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    orderItem.setQuantity(rs.getInt("quantity"));
-                    orderItem.setProduct(new ProductDao().getById(rs.getInt("product_id")));
-                    orderItem.setOrder(new OrderDao().getById(rs.getInt("order_id")));
-                }
+                return new OrderItem.Builder()
+                        .withQuantity(rs.getInt("quantity"))
+                        .withOrder(new OrderDao().getById(rs.getInt("order_id")))
+                        .withProduct(new ProductDao().getById(rs.getInt("product_id")))
+                        .build();
+
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -127,6 +127,5 @@ public class OrderItemDao implements IBaseDAO<OrderItem> {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return orderItem;
     }
 }

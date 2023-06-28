@@ -87,12 +87,12 @@ public class SupplierDao implements IBaseDAO<Supplier> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Supplier supplier = new Supplier();
-                    supplier.setId(rs.getInt("id"));
-                    supplier.setSupplierName(rs.getString("supplier_name"));
-                    supplier.setTaxNumber(rs.getString("tax_number"));
-                    supplier.setPhone(rs.getString("phone"));
-                    suppliers.add(supplier);
+                    suppliers.add(new Supplier.Builder()
+                            .withId(rs.getInt("id"))
+                            .withSupplierName(rs.getString("supplier_name"))
+                            .withTaxNumber(rs.getString("tax_number"))
+                            .withPhone(rs.getString("phone"))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -110,19 +110,18 @@ public class SupplierDao implements IBaseDAO<Supplier> {
     @Override
     public Supplier getById(int id) {
         Connection con = connectionPool.getConnection();
-        Supplier supplier = new Supplier();
         String query = "SELECT * FROM supplier WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    supplier.setId(rs.getInt("id"));
-                    supplier.setSupplierName(rs.getString("supplier_name"));
-                    supplier.setTaxNumber(rs.getString("tax_number"));
-                    supplier.setPhone(rs.getString("phone"));
-                }
+                return new Supplier.Builder()
+                        .withId(rs.getInt("id"))
+                        .withSupplierName(rs.getString("supplier_name"))
+                        .withTaxNumber(rs.getString("tax_number"))
+                        .withPhone(rs.getString("phone"))
+                        .build();
+
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -135,6 +134,5 @@ public class SupplierDao implements IBaseDAO<Supplier> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return supplier;
     }
 }

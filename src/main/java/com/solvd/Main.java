@@ -119,20 +119,11 @@ public class Main {
         LOGGER.info("\n--- STAFF ---\n");
         // Create
         StaffService staffService = new StaffService();
-        Staff staff = new Staff();
-        staff.setPosition("AllinOne");
-        staff.setPerson(personService.getById(2));
-        staff.setShop(shopService.getById(1));
-        staffService.insert(staff);
-        staff.setPosition("Worker");
-        staff.setPerson(personService.getById(1));
-        staff.setShop(shopService.getById(1));
-        staffService.insert(staff);
+        staffService.insert(new Staff.Builder().withPosition("AllinOne").withPerson(personService.getById(2)).withShop(shopService.getById(1)).build());
+        staffService.insert(new Staff.Builder().withPosition("Worker").withPerson(personService.getById(1)).withShop(shopService.getById(1)).build());
         // Update
+        Staff staff = new StaffService().getById(1);
         staff.setPosition("Manager");
-        staff.setPerson(personService.getById(2));
-        staff.setShop(shopService.getById(1));
-        staff.setId(1);
         staffService.update(staff);
         // Delete
         staffService.delete(2);
@@ -146,20 +137,11 @@ public class Main {
         LOGGER.info("\n--- SUPPLIER ---\n");
         // Create
         SupplierService supplierService = new SupplierService();
-        Supplier supplier = new Supplier();
-        supplier.setSupplierName("Gucci");
-        supplier.setTaxNumber("123455678");
-        supplier.setPhone("2340981245");
-        supplierService.insert(supplier);
-        supplier.setSupplierName("Tommy");
-        supplier.setTaxNumber("123455678");
-        supplier.setPhone("2340981245");
-        supplierService.insert(supplier);
+        supplierService.insert(new Supplier.Builder().withSupplierName("Gucci").withTaxNumber("123455678").withPhone("2340981245").build());
+        supplierService.insert(new Supplier.Builder().withSupplierName("Tommy").withTaxNumber("123455678").withPhone("2340981245").build());
         // Update
+        Supplier supplier = new SupplierService().getById(1);
         supplier.setSupplierName("LaCoste");
-        supplier.setTaxNumber("123455678");
-        supplier.setPhone("2340981245");
-        supplier.setId(1);
         supplierService.update(supplier);
         // Delete
         supplierService.delete(2);
@@ -173,32 +155,12 @@ public class Main {
         LOGGER.info("\n--- PRODUCT ---\n");
         // Create
         ProductService productService = new ProductService();
-        Product product = new Product();
-        product.setProductName("Shirt");
-        product.setStock(23);
-        product.setPrice(60);
-        product.setCategory(categoryService.getById(1));
-        product.setSupplier(supplierService.getById(1));
-        productService.insert(product);
-        product.setProductName("Pants");
-        product.setStock(13);
-        product.setPrice(20);
-        product.setCategory(categoryService.getById(1));
-        product.setSupplier(supplierService.getById(1));
-        productService.insert(product);
-        product.setProductName("iPad");
-        product.setStock(5);
-        product.setPrice(2000);
-        product.setCategory(categoryService.getById(2));
-        product.setSupplier(supplierService.getById(1));
-        productService.insert(product);
+        productService.insert(new Product.Builder().withProductName("Shirt").withStock(23).withPrice(60).withCategory(categoryService.getById(1)).withSupplier(supplierService.getById(1)).build());
+        productService.insert(new Product.Builder().withProductName("Pants").withStock(13).withPrice(20).withCategory(categoryService.getById(1)).withSupplier(supplierService.getById(1)).build());
+        productService.insert(new Product.Builder().withProductName("iPad").withStock(5).withPrice(2000).withCategory(categoryService.getById(2)).withSupplier(supplierService.getById(1)).build());
         // Update
-        product.setProductName("Pants");
-        product.setStock(13);
+        Product product = new ProductService().getById(2);
         product.setPrice(80);
-        product.setCategory(categoryService.getById(1));
-        product.setSupplier(supplierService.getById(1));
-        product.setId(2);
         productService.update(product);
         // Delete
         productService.delete(3);
@@ -212,24 +174,12 @@ public class Main {
         LOGGER.info("\n--- ORDERS ---\n");
         // Create
         OrderService orderService = new OrderService();
-        Order order = new Order();
-        order.setOrderDate(Date.valueOf(("2022-5-5")));
-        order.setTotal(80);
-        order.setCustomer(customerService.getById(1));
-        orderService.insert(order);
-        order.setOrderDate(Date.valueOf(("2022-4-5")));
-        order.setTotal(60);
-        order.setCustomer(customerService.getById(2));
-        orderService.insert(order);
-        order.setOrderDate(Date.valueOf(("2022-4-8")));
-        order.setTotal(78);
-        order.setCustomer(customerService.getById(1));
-        orderService.insert(order);
+        orderService.insert(new Order.Builder().withOrderDate(Date.valueOf(("2022-5-5"))).withTotal(80).withCustomer(customerService.getById(1)).build());
+        orderService.insert(new Order.Builder().withOrderDate(Date.valueOf(("2022-4-5"))).withTotal(60).withCustomer(customerService.getById(2)).build());
+        orderService.insert(new Order.Builder().withOrderDate(Date.valueOf(("2022-4-8"))).withTotal(78).withCustomer(customerService.getById(1)).build());
         // Update
-        order.setOrderDate(Date.valueOf(("2022-5-5")));
+        Order order = orderService.getById(1);
         order.setTotal(120);
-        order.setCustomer(customerService.getById(1));
-        order.setId(1);
         orderService.update(order);
         // Delete
         orderService.delete(3);
@@ -243,19 +193,11 @@ public class Main {
         LOGGER.info("\n--- ORDER ITEM ---\n");
         // Create
         OrderItemService orderItemService = new OrderItemService();
-        OrderItem orderItem = new OrderItem();
-        orderItem.setQuantity(1);
-        orderItem.setOrder(new OrderDao().getById(1));
-        orderItem.setProduct(new ProductDao().getById(1));
-        orderItemService.insert(orderItem);
-        orderItem.setQuantity(1);
-        orderItem.setOrder(new OrderDao().getById(2));
-        orderItem.setProduct(new ProductDao().getById(2));
-        orderItemService.insert(orderItem);
+        orderItemService.insert(new OrderItem.Builder().withQuantity(1).withOrder(new OrderDao().getById(1)).withProduct(new ProductDao().getById(1)).build());
+        orderItemService.insert(new OrderItem.Builder().withQuantity(1).withOrder(new OrderDao().getById(2)).withProduct(new ProductDao().getById(2)).build());
         // Update
+        OrderItem orderItem = orderItemService.getById(1);
         orderItem.setQuantity(2);
-        orderItem.setOrder(new OrderDao().getById(1));
-        orderItem.setProduct(new ProductDao().getById(1));
         orderItemService.update(orderItem);
         // Delete
         orderItemService.delete(2);

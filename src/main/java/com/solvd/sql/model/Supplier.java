@@ -26,6 +26,19 @@ public class Supplier {
     @JsonProperty("phone")
     private String phone;
 
+    // Private constructor for the builder
+    private Supplier(Builder builder) {
+        this.id = builder.id;
+        this.supplierName = builder.supplierName;
+        this.taxNumber = builder.taxNumber;
+        this.phone = builder.phone;
+    }
+
+    // Private default constructor for MyBatis
+    private Supplier() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -66,5 +79,37 @@ public class Supplier {
                 ", taxNumber='" + taxNumber + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String supplierName;
+        private String taxNumber;
+        private String phone;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withSupplierName(String supplierName) {
+            this.supplierName = supplierName;
+            return this;
+        }
+
+        public Builder withTaxNumber(String taxNumber) {
+            this.taxNumber = taxNumber;
+            return this;
+        }
+
+        public Builder withPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Supplier build() {
+            return new Supplier(this);
+        }
     }
 }

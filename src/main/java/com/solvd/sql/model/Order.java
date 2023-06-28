@@ -32,6 +32,19 @@ public class Order {
     @JsonProperty("customer")
     private Customer customer;
 
+    // Private constructor for the builder
+    private Order(Builder builder) {
+        this.id = builder.id;
+        this.orderDate = builder.orderDate;
+        this.total = builder.total;
+        this.customer = builder.customer;
+    }
+
+    // Private default constructor for MyBatis
+    private Order() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -72,5 +85,37 @@ public class Order {
                 ", total=" + total +
                 ", customer=" + customer +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private Date orderDate;
+        private double total;
+        private Customer customer;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withOrderDate(Date orderDate) {
+            this.orderDate = orderDate;
+            return this;
+        }
+
+        public Builder withTotal(double total) {
+            this.total = total;
+            return this;
+        }
+
+        public Builder withCustomer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public Order build() {
+            return new Order(this);
+        }
     }
 }

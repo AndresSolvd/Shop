@@ -87,12 +87,12 @@ public class StaffDao implements IBaseDAO<Staff> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Staff staff = new Staff();
-                    staff.setId(rs.getInt("id"));
-                    staff.setPosition(rs.getString("position"));
-                    staff.setPerson(new PersonDao().getById(rs.getInt("person_id")));
-                    staff.setShop(new ShopDao().getById(rs.getInt("shop_id")));
-                    staffs.add(staff);
+                    staffs.add(new Staff.Builder()
+                            .withId(rs.getInt("id"))
+                            .withPosition(rs.getString("position"))
+                            .withPerson(new PersonDao().getById(rs.getInt("person_id")))
+                            .withShop(new ShopDao().getById(rs.getInt("shop_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -110,19 +110,19 @@ public class StaffDao implements IBaseDAO<Staff> {
     @Override
     public Staff getById(int id) {
         Connection con = connectionPool.getConnection();
-        Staff staff = new Staff();
         String query = "SELECT * FROM staff WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    staff.setId(rs.getInt("id"));
-                    staff.setPosition(rs.getString("position"));
-                    staff.setPerson(new PersonDao().getById(rs.getInt("person_id")));
-                    staff.setShop(new ShopDao().getById(rs.getInt("shop_id")));
-                }
+                return new Staff.Builder()
+                        .withId(rs.getInt("id"))
+                        .withPosition(rs.getString("position"))
+                        .withPerson(new PersonDao().getById(rs.getInt("person_id")))
+                        .withShop(new ShopDao().getById(rs.getInt("shop_id")))
+                        .build();
+
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -135,6 +135,5 @@ public class StaffDao implements IBaseDAO<Staff> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return staff;
     }
 }
