@@ -1,6 +1,7 @@
 package com.solvd.util;
 
-import com.solvd.sql.jdbc.OwnerDao;
+import com.solvd.sql.model.Owner;
+import com.solvd.sql.model.Person;
 import com.solvd.sql.model.Shop;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,16 +21,24 @@ public class XmlParser {
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
-            // Create  object
-            Shop shop = new Shop();
+            // Create Shop object
+            Shop shop = new Shop.Builder().build();
 
             // Access elements using DOM methods
             Element shopElement = (Element) doc.getElementsByTagName("shop").item(0);
+            Element ownerElement = (Element) doc.getElementsByTagName("owner").item(0);
             shop.setId(Integer.parseInt(shopElement.getElementsByTagName("id").item(0).getTextContent()));
             shop.setShopName(shopElement.getElementsByTagName("shop_name").item(0).getTextContent());
             shop.setAddress(shopElement.getElementsByTagName("address").item(0).getTextContent());
             shop.setPhone(shopElement.getElementsByTagName("phone").item(0).getTextContent());
-            shop.setOwner(new OwnerDao().getById(Integer.parseInt(shopElement.getElementsByTagName("owner_id").item(0).getTextContent())));
+
+            Owner owner = new Owner.Builder()
+                    .withId(Integer.parseInt(ownerElement.getElementsByTagName("id").item(0).getTextContent()))
+                    .withPerson(new Person.Builder()
+                            .withId(Integer.parseInt(ownerElement.getElementsByTagName("person_id").item(0).getTextContent()))
+                            .build())
+                    .build();
+            shop.setOwner(owner);
 
             // Print the parsed values
             System.out.println("Shop ID: " + shop.getId());

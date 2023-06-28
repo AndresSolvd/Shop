@@ -83,14 +83,11 @@ public class Main {
         LOGGER.info("\n--- OWNER ---\n");
         // Create
         OwnerService ownerService = new OwnerService();
-        Owner owner = new Owner();
-        owner.setPerson(personService.getById(1));
-        ownerService.insert(owner);
-        owner.setPerson(personService.getById(2));
-        ownerService.insert(owner);
+        ownerService.insert(new Owner.Builder().withPerson(personService.getById(1)).build());
+        ownerService.insert(new Owner.Builder().withPerson(personService.getById(2)).build());
         // Update
+        Owner owner = ownerService.getById(1);
         owner.setPerson(personService.getById(1));// Needs to specify the ID
-        owner.setId(1);
         ownerService.update(owner);
         // Delete
         ownerService.delete(2);
@@ -104,22 +101,11 @@ public class Main {
         LOGGER.info("\n--- SHOP ---\n");
         // Create
         ShopService shopService = new ShopService();
-        Shop shop = new Shop();
-        shop.setShopName("Le Sportif Foe");
-        shop.setAddress("In a land far far away");
-        shop.setPhone("1120984567");
-        shop.setOwner(ownerService.getById(1));
-        shopService.insert(shop);
-        shop.setShopName("Federico Barba Roja");
-        shop.setAddress("In between dreams");
-        shop.setPhone("4593217865");
-        shop.setOwner(ownerService.getById(1));
-        shopService.insert(shop);
+        shopService.insert(new Shop.Builder().withShopName("Le Sportif Foe").withAddress("In a land far far away").withPhone("1120984567").withOwner(ownerService.getById(1)).build());
+        shopService.insert(new Shop.Builder().withShopName("Federico Barba Roja").withAddress("In between dreams").withPhone("4593217865").withOwner(ownerService.getById(1)).build());
         // Update
+        Shop shop = shopService.getById(1);
         shop.setShopName("La Tasca");
-        shop.setAddress("In a land far far away");
-        shop.setPhone("1120984567");
-        shop.setId(1);
         shopService.update(shop);
         // Delete
         shopService.delete(2);

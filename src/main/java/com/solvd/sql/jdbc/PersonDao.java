@@ -112,23 +112,19 @@ public class PersonDao implements IBaseDAO<Person> {
 
     @Override
     public Person getById(int id) {
-        Person person = new Person.Builder().build();
         Connection con = connectionPool.getConnection();
         String query = "SELECT * FROM person WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
-
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    person = new Person.Builder()
-                            .withId(rs.getInt("id"))
-                            .withPersonName(rs.getString("person_name"))
-                            .withLastName(rs.getString("last_name"))
-                            .withPhone(rs.getString("phone"))
-                            .withAddress(rs.getString("address"))
-                            .build();
-                }
+                return new Person.Builder()
+                        .withId(rs.getInt("id"))
+                        .withPersonName(rs.getString("person_name"))
+                        .withLastName(rs.getString("last_name"))
+                        .withPhone(rs.getString("phone"))
+                        .withAddress(rs.getString("address"))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -141,6 +137,5 @@ public class PersonDao implements IBaseDAO<Person> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return person;
     }
 }

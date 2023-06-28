@@ -18,6 +18,18 @@ public class Owner {
     @JsonProperty("person")
     private Person person;
 
+    // Private constructor for Builder pattern
+    private Owner(Builder builder) {
+        this.id = builder.id;
+        this.person = builder.person;
+    }
+
+    // Private constructor for MyBatis
+    private Owner() {
+    }
+
+    // Getters and Setters
+
     public int getId() {
         return id;
     }
@@ -40,5 +52,25 @@ public class Owner {
                 "id=" + id +
                 ", person=" + person +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private Person person;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withPerson(Person person) {
+            this.person = person;
+            return this;
+        }
+
+        public Owner build() {
+            return new Owner(this);
+        }
     }
 }
