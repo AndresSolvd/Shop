@@ -3,9 +3,9 @@
   "taxNumber" : "1254986532",
   "person" : {
     "id" : 4,
-    "personName" : "Genghis",
+    "personName" : "Charlie",
     "lastName" : "Brown",
-    "phone" : "8569751246",
-    "address" : "9832 cest' la vie Monrroe, 239843"
+    "phone" : "1234561234",
+    "address" : "234 brown street Los Angeles,CA"
   }
 }

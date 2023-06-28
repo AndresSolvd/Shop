@@ -30,6 +30,21 @@ public class Person {
     @JsonProperty("address")
     private String address;
 
+    // Private constructor for Builder pattern
+    private Person(Builder builder) {
+        this.id = builder.id;
+        this.personName = builder.personName;
+        this.lastName = builder.lastName;
+        this.phone = builder.phone;
+        this.address = builder.address;
+    }
+
+    // Private constructor for MyBatis
+    private Person() {
+    }
+
+    // Getters and Setters
+
     public int getId() {
         return id;
     }
@@ -79,5 +94,43 @@ public class Person {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String personName;
+        private String lastName;
+        private String phone;
+        private String address;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withPersonName(String personName) {
+            this.personName = personName;
+            return this;
+        }
+
+        public Builder withLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder withPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Person build() {
+            return new Person(this);
+        }
     }
 }

@@ -89,13 +89,13 @@ public class PersonDao implements IBaseDAO<Person> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Person person = new Person();
-                    person.setId(rs.getInt("id"));
-                    person.setPersonName(rs.getString("person_name"));
-                    person.setLastName(rs.getString("last_name"));
-                    person.setPhone(rs.getString("phone"));
-                    person.setAddress(rs.getString("address"));
-                    persons.add(person);
+                    persons.add(new Person.Builder()
+                            .withId(rs.getInt("id"))
+                            .withPersonName(rs.getString("person_name"))
+                            .withLastName(rs.getString("last_name"))
+                            .withPhone(rs.getString("phone"))
+                            .withAddress(rs.getString("address"))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -112,8 +112,8 @@ public class PersonDao implements IBaseDAO<Person> {
 
     @Override
     public Person getById(int id) {
+        Person person = new Person.Builder().build();
         Connection con = connectionPool.getConnection();
-        Person person = new Person();
         String query = "SELECT * FROM person WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
@@ -121,11 +121,13 @@ public class PersonDao implements IBaseDAO<Person> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    person.setId(rs.getInt("id"));
-                    person.setPersonName(rs.getString("person_name"));
-                    person.setLastName(rs.getString("last_name"));
-                    person.setPhone(rs.getString("phone"));
-                    person.setAddress(rs.getString("address"));
+                    person = new Person.Builder()
+                            .withId(rs.getInt("id"))
+                            .withPersonName(rs.getString("person_name"))
+                            .withLastName(rs.getString("last_name"))
+                            .withPhone(rs.getString("phone"))
+                            .withAddress(rs.getString("address"))
+                            .build();
                 }
             } catch (SQLException e) {
                 throw new RuntimeException();

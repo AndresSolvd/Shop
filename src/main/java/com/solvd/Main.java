@@ -45,35 +45,14 @@ public class Main {
         LOGGER.info("\n--- PERSON ---\n");
         // Create
         PersonService personService = new PersonService();
-        Person person = new Person();
-        person.setPersonName("Bart");
-        person.setLastName("Simpson");
-        person.setPhone("1234561235");
-        person.setAddress("342 noway Springfield");
-        personService.insert(person);
-        person.setPersonName("Tom");
-        person.setLastName("Sawyer");
-        person.setPhone("1234561236");
-        person.setAddress("756 nowhere St. Petersburg Missouri");
-        personService.insert(person);
-        person.setPersonName("Emma");
-        person.setLastName("Watson");
-        person.setPhone("1234561237");
-        person.setAddress("342 somewhere Liverpool, England");
-        personService.insert(person);
-        person.setPersonName("Charlie");
-        person.setLastName("Garcia");
-        person.setPhone("1234561234");
-        person.setAddress("234 brown street Los Angeles,CA");
-        personService.insert(person);
-        person.setPersonName("Genghis");
-        person.setLastName("Khan");
-        person.setPhone("8569751246");
-        person.setAddress("9832 cest' la vie Monrroe, 239843");
-        personService.insert(person);
+        personService.insert(new Person.Builder().withPersonName("Bart").withLastName("Simpson").withPhone("1234561235").withAddress("342 noway Springfield").build());
+        personService.insert(new Person.Builder().withPersonName("Tom").withLastName("Sawyer").withPhone("1234561236").withAddress("756 nowhere St. Petersburg Missouri").build());
+        personService.insert(new Person.Builder().withPersonName("Emma").withLastName("Watson").withPhone("1234561237").withAddress("342 somewhere Liverpool, England").build());
+        personService.insert(new Person.Builder().withPersonName("Charlie").withLastName("Garcia").withPhone("1234561234").withAddress("234 brown street Los Angeles,CA").build());
+        personService.insert(new Person.Builder().withPersonName("Genghis").withLastName("Khan").withPhone("8569751246").withAddress("9832 cest' la vie Monroe, 239843").build());
         // Update
-        person.setLastName("Brown"); // Needs to specify the ID
-        person.setId(4);
+        Person person = new PersonService().getById(4);
+        person.setLastName("Brown");
         personService.update(person);
         // Delete
         personService.delete(5);
@@ -364,14 +343,14 @@ public class Main {
 
         // Marsh and UnMarsh Person
         LOGGER.info("\n--- File create from Person Object is stored in resources/xml --- ");
-        JAXBUtils.marshall(person);
+        JAXBUtils.marshall(personService.getById(1));
         LOGGER.info("\n--- Unmarshall Person.xml file --- ");
         LOGGER.info(JAXBUtils.unMarshall(Paths.XMLFOLDER.getPath() + "Person.xml"));
 
         // JSON
         LOGGER.info("\n ---JSON--- ");
         JSONUtils.writeJSON(shop);
-        JSONUtils.writeJSON(person);
+        JSONUtils.writeJSON(personService.getById(1));
         JSONUtils.writeJSON(customerService.getById(1));
         JSONUtils.writeJSON(product);
         JSONUtils.writeJSON(promotion);
