@@ -86,10 +86,10 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    ProductPromotion productPromotion = new ProductPromotion();
-                    productPromotion.setPromotion(new PromotionDao().getById(rs.getInt("promotion_id")));
-                    productPromotion.setProduct(new ProductDao().getById(rs.getInt("product_id")));
-                    productPromotions.add(productPromotion);
+                    productPromotions.add(new ProductPromotion.Builder()
+                            .withProduct(new ProductDao().getById(rs.getInt("product_id")))
+                            .withPromotion(new PromotionDao().getById(rs.getInt("promotion_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -107,17 +107,16 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
     @Override
     public ProductPromotion getById(int id) {
         Connection con = connectionPool.getConnection();
-        ProductPromotion productPromotion = new ProductPromotion();
         String query = "SELECT * FROM product_promotion WHERE product_id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    productPromotion.setPromotion(new PromotionDao().getById(rs.getInt("promotion_id")));
-                    productPromotion.setProduct(new ProductDao().getById(rs.getInt("product_id")));
-                }
+                return new ProductPromotion.Builder()
+                        .withProduct(new ProductDao().getById(rs.getInt("product_id")))
+                        .withPromotion(new PromotionDao().getById(rs.getInt("promotion_id")))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -130,6 +129,5 @@ public class ProductPromotionDao implements IBaseDAO<ProductPromotion> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return productPromotion;
     }
 }

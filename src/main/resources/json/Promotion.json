@@ -1,6 +1,6 @@
 {
   "id" : 1,
-  "promotionName" : "Special Discount",
+  "promotionName" : "Summer Discount",
   "discount" : 0.2,
   "startDate" : "2022-06-01",
   "endDate" : "2022-09-01"

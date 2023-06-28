@@ -89,13 +89,13 @@ public class PromotionDao implements IBaseDAO<Promotion> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Promotion promotion = new Promotion();
-                    promotion.setId(rs.getInt("id"));
-                    promotion.setPromotionName(rs.getString("promotion_name"));
-                    promotion.setDiscount(rs.getFloat("discount"));
-                    promotion.setStartDate(rs.getDate("start_date"));
-                    promotion.setEndDate(rs.getDate("end_date"));
-                    promotions.add(promotion);
+                    promotions.add(new Promotion.Builder()
+                            .withId(rs.getInt("id"))
+                            .withPromotionName(rs.getString("promotion_name"))
+                            .withDiscount(rs.getFloat("discount"))
+                            .withStartDate(rs.getDate("start_date"))
+                            .withEndDate(rs.getDate("end_date"))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -113,20 +113,20 @@ public class PromotionDao implements IBaseDAO<Promotion> {
     @Override
     public Promotion getById(int id) {
         Connection con = connectionPool.getConnection();
-        Promotion promotion = new Promotion();
         String query = "SELECT * FROM promotion WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    promotion.setId(rs.getInt("id"));
-                    promotion.setPromotionName(rs.getString("promotion_name"));
-                    promotion.setDiscount(rs.getFloat("discount"));
-                    promotion.setStartDate(rs.getDate("start_date"));
-                    promotion.setEndDate(rs.getDate("end_date"));
-                }
+                return new Promotion.Builder()
+                        .withId(rs.getInt("id"))
+                        .withPromotionName(rs.getString("promotion_name"))
+                        .withDiscount(rs.getFloat("discount"))
+                        .withStartDate(rs.getDate("start_date"))
+                        .withEndDate(rs.getDate("end_date"))
+                        .build();
+
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -139,6 +139,5 @@ public class PromotionDao implements IBaseDAO<Promotion> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return promotion;
     }
 }

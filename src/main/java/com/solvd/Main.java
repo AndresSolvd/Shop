@@ -211,27 +211,12 @@ public class Main {
         LOGGER.info("\n--- PROMOTION ---\n");
         // Create
         PromotionService promotionService = new PromotionService();
-        Promotion promotion = new Promotion();
-        promotion.setPromotionName("Summer Discount");
-        promotion.setDiscount(0.6F);
-        promotion.setStartDate(Date.valueOf("2022-06-01"));
-        promotion.setEndDate(Date.valueOf("2022-09-01"));
-        promotionService.insert(promotion);
-        promotion.setPromotionName("Winter Discount");
-        promotion.setDiscount(0.3F);
-        promotion.setStartDate(Date.valueOf("2023-04-01"));
-        promotion.setEndDate(Date.valueOf("2022-12-01"));
-        promotionService.insert(promotion);
-        promotion.setPromotionName("Special Discount");
-        promotion.setDiscount(0.9F);
-        promotion.setStartDate(Date.valueOf("2022-01-01"));
-        promotion.setEndDate(Date.valueOf("2022-12-31"));
-        promotionService.insert(promotion);
+        promotionService.insert(new Promotion.Builder().withPromotionName("Summer Discount").withDiscount(0.6F).withStartDate(Date.valueOf("2022-06-01")).withEndDate(Date.valueOf("2022-09-01")).build());
+        promotionService.insert(new Promotion.Builder().withPromotionName("Winter Discount").withDiscount(0.3F).withStartDate(Date.valueOf("2023-04-01")).withEndDate(Date.valueOf("2022-12-01")).build());
+        promotionService.insert(new Promotion.Builder().withPromotionName("Special Discount").withDiscount(0.9F).withStartDate(Date.valueOf("2022-01-01")).withEndDate(Date.valueOf("2022-12-31")).build());
         // Update
+        Promotion promotion = new PromotionService().getById(1);
         promotion.setDiscount(0.2F);
-        promotion.setStartDate(Date.valueOf("2022-06-01"));
-        promotion.setEndDate(Date.valueOf("2022-09-01"));
-        promotion.setId(1);
         promotionService.update(promotion);
         // Delete
         promotionService.delete(3);
@@ -245,16 +230,11 @@ public class Main {
         LOGGER.info("\n--- PRODUCT PROMOTION ---\n");
         // Create
         ProductPromotionService productPromotionService = new ProductPromotionService();
-        ProductPromotion productPromotion = new ProductPromotion();
-        productPromotion.setPromotion(promotionService.getById(2));
-        productPromotion.setProduct(productService.getById(1));
-        productPromotionService.insert(productPromotion);
-        productPromotion.setPromotion(promotionService.getById(1));
-        productPromotion.setProduct(productService.getById(2));
-        productPromotionService.insert(productPromotion);
+        productPromotionService.insert(new ProductPromotion.Builder().withProduct(productService.getById(2)).withPromotion(promotionService.getById(1)).build());
+        productPromotionService.insert(new ProductPromotion.Builder().withProduct(productService.getById(1)).withPromotion(promotionService.getById(2)).build());
         // Update
+        ProductPromotion productPromotion = new ProductPromotionService().getById(1); // update by product id
         productPromotion.setPromotion(promotionService.getById(1));
-        productPromotion.setProduct(productService.getById(1));     // update by product id
         productPromotionService.update(productPromotion);
         // Delete
         productPromotionService.delete(2);
