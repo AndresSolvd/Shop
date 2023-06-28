@@ -1,7 +1,6 @@
 package com.solvd;
 
 import com.solvd.enums.Paths;
-import com.solvd.sql.builder.*;
 import com.solvd.sql.jackson.JSONUtils;
 import com.solvd.sql.jaxb.JAXBUtils;
 import com.solvd.sql.model.*;
@@ -29,17 +28,11 @@ public class Main {
         LOGGER.info("\n--- CATEGORY ---\n");
         // Create
         CategoryService categoryService = new CategoryService();
-        Category category = new Category();
-        category.setCategoryName("Pants");
-        categoryService.insert(category);
-        category.setCategoryName("Electronics");
-        categoryService.insert(category);
-        category.setCategoryName("Food");
-        categoryService.insert(category);
+        categoryService.insert(new Category.Builder().withCategoryName("Pants").build());
+        categoryService.insert(new Category.Builder().withCategoryName("Electronics").build());
+        categoryService.insert(new Category.Builder().withCategoryName("Food").build());
         // Update
-        category.setCategoryName("Clothes"); // Needs to specify the ID
-        category.setId(1);
-        categoryService.update(category);
+        categoryService.update(new Category.Builder().withId(1).withCategoryName("Clothes").build()); // Needs to specify the ID
         // Delete
         categoryService.delete(3); // Delete Food
         // Read
@@ -94,21 +87,11 @@ public class Main {
         LOGGER.info("\n--- CUSTOMER ---\n");
         // Create
         CustomerService customerService = new CustomerService();
-        Customer customer = new Customer();
-        customer.setTaxNumber("00000000");
-        customer.setPerson(personService.getById(2));
-        customerService.insert(customer);
-        customer.setTaxNumber("274527252");
-        customer.setPerson(personService.getById(3));
-        customerService.insert(customer);
-        customer.setTaxNumber("274527252");
-        customer.setPerson(personService.getById(1));
-        customerService.insert(customer);
+        customerService.insert(new Customer.Builder().withTaxNumber("00000000").withPerson(personService.getById(2)).build());
+        customerService.insert(new Customer.Builder().withTaxNumber("274527252").withPerson(personService.getById(3)).build());
+        customerService.insert(new Customer.Builder().withTaxNumber("274527252").withPerson(personService.getById(1)).build());
         // Update
-        customer.setTaxNumber("1254986532"); // Needs to specify the ID
-        customer.setPerson(personService.getById(4));
-        customer.setId(1);
-        customerService.update(customer);
+        customerService.update(new Customer.Builder().withTaxNumber("1254986532").withPerson(personService.getById(4)).withId(1).build());
         // Delete
         customerService.delete(3);
         // Read
@@ -389,7 +372,7 @@ public class Main {
         LOGGER.info("\n ---JSON--- ");
         JSONUtils.writeJSON(shop);
         JSONUtils.writeJSON(person);
-        JSONUtils.writeJSON(customer);
+        JSONUtils.writeJSON(customerService.getById(1));
         JSONUtils.writeJSON(product);
         JSONUtils.writeJSON(promotion);
         JSONUtils.writeJSON(order);
@@ -399,115 +382,5 @@ public class Main {
         LOGGER.info(JSONUtils.readJSON("product"));
         LOGGER.info(JSONUtils.readJSON("promotion"));
         LOGGER.info(JSONUtils.readJSON("order"));
-
-        // Test last implementations
-        LOGGER.info("************************** Test existence **************************");
-
-        //CUSTOMER
-        LOGGER.info("CUSTOMER");
-        person = new Person();
-        customer = new Customer();
-        LOGGER.info("*********** Test for new owner - person ***********");
-        person.setPersonName("Marty");
-        person.setLastName("McFly");
-        person.setPhone("0938421753335");
-        person.setAddress("Back to the Future");
-        customer.setPerson(person);
-        customer.setTaxNumber("256262623636");
-        customerService.insert(customer);
-        LOGGER.info(customerService.getAll());
-        LOGGER.info(personService.getAll());
-
-        person = new Person();
-        customer = new Customer();
-        customerService = new CustomerService();
-        personService = new PersonService();
-
-        LOGGER.info("*********** Test for existing customer - person ***********");
-        person.setPersonName("Marty");
-        person.setLastName("McFly");
-        person.setPhone("0938421753335");
-        person.setAddress("Back to the Future");
-        customer.setPerson(person);
-        customer.setTaxNumber("256262623636");
-        customerService.insert(customer);
-        LOGGER.info(customerService.getAll());
-        LOGGER.info(personService.getAll());
-
-        // OWNER
-        LOGGER.info("OWNER");
-        person = new Person();
-        owner = new Owner();
-        LOGGER.info("*********** Test for new owner - person ***********");
-        person.setPersonName("Esto");
-        person.setLastName("Esuna");
-        person.setPhone("0938421750435");
-        person.setAddress("En algun lugar de un gran pais");
-        owner.setPerson(person);
-        ownerService.insert(owner);
-        LOGGER.info(ownerService.getAll());
-        LOGGER.info(personService.getAll());
-
-        person = new Person();
-        owner = new Owner();
-        ownerService = new OwnerService();
-        personService = new PersonService();
-
-        LOGGER.info("*********** Test for existing owner - person ***********");
-        person.setPersonName("Esto");
-        person.setLastName("Esuna");
-        person.setPhone("0938421750435");
-        person.setAddress("En algun lugar de un gran pais");
-        owner.setPerson(person);
-        ownerService.insert(owner);
-        LOGGER.info(ownerService.getAll());
-        LOGGER.info(personService.getAll());
-
-        // STAFF
-        LOGGER.info("STAFF");
-        person = new Person();
-        staff = new Staff();
-        LOGGER.info("*********** Test for new staff - person ***********");
-        person.setPersonName("The");
-        person.setLastName("Doc");
-        person.setPhone("0938653750435");
-        person.setAddress("The best ever");
-        staff.setPerson(person);
-        staff.setPosition("Worker");
-        staff.setShop(shopService.getById(1));
-        staffService.insert(staff);
-        LOGGER.info(staffService.getAll());
-        LOGGER.info(personService.getAll());
-
-        person = new Person();
-        staff = new Staff();
-        staffService = new StaffService();
-        personService = new PersonService();
-
-        LOGGER.info("*********** Test for existing staff - person ***********");
-        person.setPersonName("The");
-        person.setLastName("Doc");
-        person.setPhone("0938653750435");
-        person.setAddress("The best ever");
-        staff.setPerson(person);
-        staff.setPosition("Worker");
-        staff.setShop(shopService.getById(1));
-        staffService.insert(staff);
-        LOGGER.info(staffService.getAll());
-        LOGGER.info(personService.getAll());
-
-        LOGGER.info("BUILDER PATTERN TEST");
-        LOGGER.info(CategoryBuilder.builder());
-        LOGGER.info(CustomerBuilder.builder());
-        LOGGER.info(OrderBuilder.builder());
-        LOGGER.info(OrderItemBuilder.builder());
-        LOGGER.info(OwnerBuilder.builder());
-        LOGGER.info(PersonBuilder.builder());
-        LOGGER.info(ProductBuilder.builder());
-        LOGGER.info(ProductPromotionBuilder.builder());
-        LOGGER.info(PromotionBuilder.builder());
-        LOGGER.info(ShopBuilder.builder());
-        LOGGER.info(StaffBuilder.builder());
-        LOGGER.info(SupplierBuilder.builder());
     }
 }
