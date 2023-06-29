@@ -30,6 +30,20 @@ public class Shop {
     @JsonProperty("owner")
     private Owner owner;
 
+    // Private constructor for the builder
+    private Shop(Builder builder) {
+        this.id = builder.id;
+        this.shopName = builder.shopName;
+        this.address = builder.address;
+        this.phone = builder.phone;
+        this.owner = builder.owner;
+    }
+
+    // Private default constructor for MyBatis
+    private Shop() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -79,5 +93,43 @@ public class Shop {
                 ", phone='" + phone + '\'' +
                 ", owner=" + owner +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String shopName;
+        private String address;
+        private String phone;
+        private Owner owner;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withShopName(String shopName) {
+            this.shopName = shopName;
+            return this;
+        }
+
+        public Builder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder withPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder withOwner(Owner owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Shop build() {
+            return new Shop(this);
+        }
     }
 }

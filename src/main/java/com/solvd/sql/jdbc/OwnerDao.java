@@ -83,10 +83,10 @@ public class OwnerDao implements IBaseDAO<Owner> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Owner owner = new Owner();
-                    owner.setId(rs.getInt("id"));
-                    owner.setPerson(new PersonDao().getById(rs.getInt("person_id")));
-                    owners.add(owner);
+                    owners.add(new Owner.Builder()
+                            .withId(rs.getInt("id"))
+                            .withPerson(new PersonDao().getById(rs.getInt("person_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -104,17 +104,16 @@ public class OwnerDao implements IBaseDAO<Owner> {
     @Override
     public Owner getById(int id) {
         Connection con = connectionPool.getConnection();
-        Owner owner = new Owner();
         String query = "SELECT * FROM owner WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    owner.setId(rs.getInt("id"));
-                    owner.setPerson(new PersonDao().getById(rs.getInt("person_id")));
-                }
+                return new Owner.Builder()
+                        .withId(rs.getInt("id"))
+                        .withPerson(new PersonDao().getById(rs.getInt("person_id")))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -127,6 +126,5 @@ public class OwnerDao implements IBaseDAO<Owner> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return owner;
     }
 }

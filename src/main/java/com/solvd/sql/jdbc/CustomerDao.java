@@ -85,11 +85,11 @@ public class CustomerDao implements IBaseDAO<Customer> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Customer customer = new Customer();
-                    customer.setId(rs.getInt("id"));
-                    customer.setTaxNumber(rs.getString("tax_number"));
-                    customer.setPerson(new PersonDao().getById(rs.getInt("person_id")));
-                    customers.add(customer);
+                    customers.add(new Customer.Builder()
+                            .withId(rs.getInt("id"))
+                            .withTaxNumber(rs.getString("tax_number"))
+                            .withPerson(new PersonDao().getById(rs.getInt("person_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -107,17 +107,16 @@ public class CustomerDao implements IBaseDAO<Customer> {
     @Override
     public Customer getById(int id) {
         Connection con = connectionPool.getConnection();
-        Customer customer = new Customer();
         String query = "SELECT * FROM customer WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    customer.setId(rs.getInt("id"));
-                    customer.setTaxNumber(rs.getString("tax_number"));
-                    customer.setPerson(new PersonDao().getById(rs.getInt("person_id")));
-                }
+                return new Customer.Builder()
+                        .withId(rs.getInt("id"))
+                        .withTaxNumber(rs.getString("tax_number"))
+                        .withPerson(new PersonDao().getById(rs.getInt("person_id")))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -130,6 +129,5 @@ public class CustomerDao implements IBaseDAO<Customer> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return customer;
     }
 }

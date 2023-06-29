@@ -81,18 +81,18 @@ public class OrderDao implements IBaseDAO<Order> {
     @Override
     public List<Order> getAll() {
         Connection con = connectionPool.getConnection();
-        List<Order> ordersses = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM orders";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Order order = new Order();
-                    order.setId(rs.getInt("id"));
-                    order.setOrderDate(rs.getDate("order_date"));
-                    order.setTotal(rs.getDouble("total"));
-                    order.setCustomer(new CustomerDao().getById(rs.getInt("customer_id")));
-                    ordersses.add(order);
+                    orders.add(new Order.Builder()
+                            .withId(rs.getInt("id"))
+                            .withOrderDate(rs.getDate("order_date"))
+                            .withTotal(rs.getDouble("total"))
+                            .withCustomer(new CustomerDao().getById(rs.getInt("customer_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -104,25 +104,24 @@ public class OrderDao implements IBaseDAO<Order> {
                 throw new RuntimeException(e);
             }
         }
-        return ordersses;
+        return orders;
     }
 
     @Override
     public Order getById(int id) {
         Connection con = connectionPool.getConnection();
-        Order order = new Order();
         String query = "SELECT * FROM order WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    order.setId(rs.getInt("id"));
-                    order.setOrderDate(rs.getDate("order_date"));
-                    order.setTotal(rs.getDouble("total"));
-                    order.setCustomer(new CustomerDao().getById(rs.getInt("customer_id")));
-                }
+                return new Order.Builder()
+                        .withId(rs.getInt("id"))
+                        .withOrderDate(rs.getDate("order_date"))
+                        .withTotal(rs.getDouble("total"))
+                        .withCustomer(new CustomerDao().getById(rs.getInt("customer_id")))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -131,6 +130,5 @@ public class OrderDao implements IBaseDAO<Order> {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return order;
     }
 }

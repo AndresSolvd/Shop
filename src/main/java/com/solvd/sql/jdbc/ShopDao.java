@@ -89,13 +89,13 @@ public class ShopDao implements IBaseDAO<Shop> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Shop shop = new Shop();
-                    shop.setId(rs.getInt("id"));
-                    shop.setShopName(rs.getString("shop_name"));
-                    shop.setAddress(rs.getString("address"));
-                    shop.setPhone(rs.getString("phone"));
-                    shop.setOwner(new OwnerDao().getById(rs.getInt("owner_id")));
-                    shops.add(shop);
+                    shops.add(new Shop.Builder()
+                            .withId(rs.getInt("id"))
+                            .withShopName(rs.getString("shop_name"))
+                            .withAddress(rs.getString("address"))
+                            .withPhone(rs.getString("phone"))
+                            .withOwner(new OwnerDao().getById(rs.getInt("owner_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -113,19 +113,19 @@ public class ShopDao implements IBaseDAO<Shop> {
     @Override
     public Shop getById(int id) {
         Connection con = connectionPool.getConnection();
-        Shop shop = new Shop();
         String query = "SELECT * FROM shop WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    shop.setShopName(rs.getString("shop_name"));
-                    shop.setAddress(rs.getString("address"));
-                    shop.setPhone(rs.getString("phone"));
-                    shop.setOwner(new OwnerDao().getById(rs.getInt("owner_id")));
-                }
+                return new Shop.Builder()
+                        .withId(rs.getInt("id"))
+                        .withShopName(rs.getString("shop_name"))
+                        .withAddress(rs.getString("address"))
+                        .withPhone(rs.getString("phone"))
+                        .withOwner(new OwnerDao().getById(rs.getInt("owner_id")))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -138,6 +138,5 @@ public class ShopDao implements IBaseDAO<Shop> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return shop;
     }
 }

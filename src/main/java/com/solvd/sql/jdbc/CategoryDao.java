@@ -83,10 +83,10 @@ public class CategoryDao implements ICategoryDao {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Category category = new Category();
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                    categories.add(category);
+                    categories.add(new Category.Builder()
+                            .withId(rs.getInt("id")).
+                            withCategoryName(rs.getString("category_name"))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -104,16 +104,15 @@ public class CategoryDao implements ICategoryDao {
     @Override
     public Category getById(int id) {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
         String query = "SELECT * FROM category WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
+                return new Category.Builder()
+                        .withId(rs.getInt("id"))
+                        .withCategoryName(rs.getString("category_name"))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -126,22 +125,20 @@ public class CategoryDao implements ICategoryDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return category;
     }
 
     @Override
     public Category getCategoryByName(String categoryName) {
         Connection con = connectionPool.getConnection();
-        Category category = new Category();
         String query = "SELECT * FROM category WHERE category_name = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, categoryName);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    category.setId(rs.getInt("id"));
-                    category.setCategoryName(rs.getString("category_name"));
-                }
+                return new Category.Builder()
+                        .withId(rs.getInt("id"))
+                        .withCategoryName(rs.getString("category_name"))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -154,6 +151,5 @@ public class CategoryDao implements ICategoryDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return category;
     }
 }

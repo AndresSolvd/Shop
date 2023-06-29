@@ -18,9 +18,22 @@ public class Customer {
     @JsonProperty("taxNumber")
     private String taxNumber;
 
-    @XmlElement(name = "person", type = Person.class)
+    @XmlElement(name = "person")
     @JsonProperty("person")
     private Person person;
+
+    // Private builder constructor
+    private Customer(Builder builder) {
+        this.id = builder.id;
+        this.taxNumber = builder.taxNumber;
+        this.person = builder.person;
+    }
+
+    // Constructor for MyBatis
+    private Customer() {
+    }
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -46,7 +59,6 @@ public class Customer {
         this.person = person;
     }
 
-
     @Override
     public String toString() {
         return "Customer{" +
@@ -54,5 +66,31 @@ public class Customer {
                 ", taxNumber='" + taxNumber + '\'' +
                 ", person=" + person +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String taxNumber;
+        private Person person;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withTaxNumber(String taxNumber) {
+            this.taxNumber = taxNumber;
+            return this;
+        }
+
+        public Builder withPerson(Person person) {
+            this.person = person;
+            return this;
+        }
+
+        public Customer build() {
+            return new Customer(this);
+        }
     }
 }

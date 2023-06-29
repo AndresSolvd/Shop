@@ -38,6 +38,20 @@ public class Promotion {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 
+    // Private constructor for the builder
+    private Promotion(Builder builder) {
+        this.id = builder.id;
+        this.promotionName = builder.promotionName;
+        this.discount = builder.discount;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+    }
+
+    // Private default constructor for MyBatis
+    private Promotion() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -87,5 +101,43 @@ public class Promotion {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String promotionName;
+        private float discount;
+        private Date startDate;
+        private Date endDate;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withPromotionName(String promotionName) {
+            this.promotionName = promotionName;
+            return this;
+        }
+
+        public Builder withDiscount(float discount) {
+            this.discount = discount;
+            return this;
+        }
+
+        public Builder withStartDate(Date startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public Builder withEndDate(Date endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Promotion build() {
+            return new Promotion(this);
+        }
     }
 }

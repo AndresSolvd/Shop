@@ -26,6 +26,19 @@ public class Staff {
     @JsonProperty("shop")
     private Shop shop;
 
+    // Private constructor for the builder
+    private Staff(Builder builder) {
+        this.id = builder.id;
+        this.position = builder.position;
+        this.person = builder.person;
+        this.shop = builder.shop;
+    }
+
+    // Private default constructor for MyBatis
+    private Staff() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -66,5 +79,37 @@ public class Staff {
                 ", person=" + person +
                 ", shop=" + shop +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String position;
+        private Person person;
+        private Shop shop;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withPosition(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder withPerson(Person person) {
+            this.person = person;
+            return this;
+        }
+
+        public Builder withShop(Shop shop) {
+            this.shop = shop;
+            return this;
+        }
+
+        public Staff build() {
+            return new Staff(this);
+        }
     }
 }

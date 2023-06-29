@@ -91,14 +91,14 @@ public class ProductDao implements IBaseDAO<Product> {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 while (rs.next()) {
-                    Product product = new Product();
-                    product.setId(rs.getInt("id"));
-                    product.setProductName(rs.getString("product_name"));
-                    product.setStock(rs.getInt("stock"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setCategory(new CategoryDao().getById(rs.getInt("category_id")));
-                    product.setSupplier(new SupplierDao().getById(rs.getInt("supplier_id")));
-                    products.add(product);
+                    products.add(new Product.Builder()
+                            .withId(rs.getInt("id"))
+                            .withProductName(rs.getString("product_name"))
+                            .withStock(rs.getInt("stock"))
+                            .withPrice(rs.getDouble("price"))
+                            .withCategory(new CategoryDao().getById(rs.getInt("category_id")))
+                            .withSupplier(new SupplierDao().getById(rs.getInt("supplier_id")))
+                            .build());
                 }
             }
         } catch (SQLException e) {
@@ -116,21 +116,20 @@ public class ProductDao implements IBaseDAO<Product> {
     @Override
     public Product getById(int id) {
         Connection con = connectionPool.getConnection();
-        Product product = new Product();
         String query = "SELECT * FROM product WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
 
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
-                while (rs.next()) {
-                    product.setId(rs.getInt("id"));
-                    product.setProductName(rs.getString("product_name"));
-                    product.setStock(rs.getInt("stock"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setCategory(new CategoryDao().getById(rs.getInt("category_id")));
-                    product.setSupplier(new SupplierDao().getById(rs.getInt("supplier_id")));
-                }
+                return new Product.Builder()
+                        .withId(rs.getInt("id"))
+                        .withProductName(rs.getString("product_name"))
+                        .withStock(rs.getInt("stock"))
+                        .withPrice(rs.getDouble("price"))
+                        .withCategory(new CategoryDao().getById(rs.getInt("category_id")))
+                        .withSupplier(new SupplierDao().getById(rs.getInt("supplier_id")))
+                        .build();
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -143,6 +142,5 @@ public class ProductDao implements IBaseDAO<Product> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return product;
     }
 }

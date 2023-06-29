@@ -21,6 +21,17 @@ public class ProductPromotion {
     @JsonProperty("product")
     private Product product;
 
+    // Private constructor for the builder
+    private ProductPromotion(Builder builder) {
+        this.promotion = builder.promotion;
+        this.product = builder.product;
+    }
+
+    // Private default constructor for MyBatis
+    private ProductPromotion() {
+    }
+
+    // Getters and Setters
     public Promotion getPromotion() {
         return promotion;
     }
@@ -43,5 +54,25 @@ public class ProductPromotion {
                 "promotion=" + promotion +
                 ", product=" + product +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private Promotion promotion;
+        private Product product;
+
+        public Builder withPromotion(Promotion promotion) {
+            this.promotion = promotion;
+            return this;
+        }
+
+        public Builder withProduct(Product product) {
+            this.product = product;
+            return this;
+        }
+
+        public ProductPromotion build() {
+            return new ProductPromotion(this);
+        }
     }
 }

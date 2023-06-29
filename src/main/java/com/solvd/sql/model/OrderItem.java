@@ -25,6 +25,18 @@ public class OrderItem {
     @JsonProperty("order")
     private Order order;
 
+    // Private constructor for the builder
+    private OrderItem(Builder builder) {
+        this.quantity = builder.quantity;
+        this.product = builder.product;
+        this.order = builder.order;
+    }
+
+    // Private default constructor for MyBatis
+    private OrderItem() {
+    }
+
+    // Getters and Setters
     public int getQuantity() {
         return quantity;
     }
@@ -56,5 +68,31 @@ public class OrderItem {
                 ", product=" + product +
                 ", order=" + order +
                 '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int quantity;
+        private Product product;
+        private Order order;
+
+        public Builder withQuantity(int quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder withProduct(Product product) {
+            this.product = product;
+            return this;
+        }
+
+        public Builder withOrder(Order order) {
+            this.order = order;
+            return this;
+        }
+
+        public OrderItem build() {
+            return new OrderItem(this);
+        }
     }
 }

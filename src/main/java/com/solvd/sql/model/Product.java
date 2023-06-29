@@ -34,6 +34,21 @@ public class Product {
     @JsonProperty("supplier")
     private Supplier supplier;
 
+    // Private constructor for the builder
+    private Product(Builder builder) {
+        this.id = builder.id;
+        this.productName = builder.productName;
+        this.stock = builder.stock;
+        this.price = builder.price;
+        this.category = builder.category;
+        this.supplier = builder.supplier;
+    }
+
+    // Private default constructor for MyBatis
+    private Product() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -84,6 +99,57 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", productName='" + productName + '\'' + ", stock=" + stock + ", price=" + price + ", category=" + category + ", supplier=" + supplier + '}';
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", stock=" + stock +
+                ", price=" + price +
+                ", category=" + category +
+                ", supplier=" + supplier +
+                '}';
+    }
+
+    // Inner Builder class
+    public static class Builder {
+        private int id;
+        private String productName;
+        private int stock;
+        private double price;
+        private Category category;
+        private Supplier supplier;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withProductName(String productName) {
+            this.productName = productName;
+            return this;
+        }
+
+        public Builder withStock(int stock) {
+            this.stock = stock;
+            return this;
+        }
+
+        public Builder withPrice(double price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder withCategory(Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder withSupplier(Supplier supplier) {
+            this.supplier = supplier;
+            return this;
+        }
+
+        public Product build() {
+            return new Product(this);
+        }
     }
 }
