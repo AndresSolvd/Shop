@@ -111,8 +111,8 @@ public class CategoryDao implements ICategoryDao {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 return new Category.Builder()
-                        .withId(rs.getInt("id")).
-                        withCategoryName(rs.getString("category_name"))
+                        .withId(rs.getInt("id"))
+                        .withCategoryName(rs.getString("category_name"))
                         .build();
 
             } catch (SQLException e) {
@@ -138,8 +138,8 @@ public class CategoryDao implements ICategoryDao {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 return new Category.Builder()
-                        .withId(rs.getInt("id")).
-                        withCategoryName(rs.getString("category_name"))
+                        .withId(rs.getInt("id"))
+                        .withCategoryName(rs.getString("category_name"))
                         .build();
             } catch (SQLException e) {
                 throw new RuntimeException();

@@ -32,7 +32,10 @@ public class Main {
         categoryService.insert(new Category.Builder().withCategoryName("Electronics").build());
         categoryService.insert(new Category.Builder().withCategoryName("Food").build());
         // Update
-        categoryService.update(new Category.Builder().withId(1).withCategoryName("Clothes").build()); // Needs to specify the ID
+        categoryService.update(new Category.Builder()
+                .withId(1)
+                .withCategoryName("Clothes")
+                .build()); // Needs to specify the ID
         // Delete
         categoryService.delete(3); // Delete Food
         // Read
@@ -45,11 +48,36 @@ public class Main {
         LOGGER.info("\n--- PERSON ---\n");
         // Create
         PersonService personService = new PersonService();
-        personService.insert(new Person.Builder().withPersonName("Bart").withLastName("Simpson").withPhone("1234561235").withAddress("342 noway Springfield").build());
-        personService.insert(new Person.Builder().withPersonName("Tom").withLastName("Sawyer").withPhone("1234561236").withAddress("756 nowhere St. Petersburg Missouri").build());
-        personService.insert(new Person.Builder().withPersonName("Emma").withLastName("Watson").withPhone("1234561237").withAddress("342 somewhere Liverpool, England").build());
-        personService.insert(new Person.Builder().withPersonName("Charlie").withLastName("Garcia").withPhone("1234561234").withAddress("234 brown street Los Angeles,CA").build());
-        personService.insert(new Person.Builder().withPersonName("Genghis").withLastName("Khan").withPhone("8569751246").withAddress("9832 cest' la vie Monroe, 239843").build());
+        personService.insert(new Person.Builder()
+                .withPersonName("Bart")
+                .withLastName("Simpson")
+                .withPhone("1234561235")
+                .withAddress("342 noway Springfield")
+                .build());
+        personService.insert(new Person.Builder()
+                .withPersonName("Tom")
+                .withLastName("Sawyer")
+                .withPhone("1234561236")
+                .withAddress("756 nowhere St. Petersburg Missouri")
+                .build());
+        personService.insert(new Person.Builder()
+                .withPersonName("Emma")
+                .withLastName("Watson")
+                .withPhone("1234561237")
+                .withAddress("342 somewhere Liverpool, England")
+                .build());
+        personService.insert(new Person.Builder()
+                .withPersonName("Charlie")
+                .withLastName("Garcia")
+                .withPhone("1234561234")
+                .withAddress("234 brown street Los Angeles,CA")
+                .build());
+        personService.insert(new Person.Builder()
+                .withPersonName("Genghis")
+                .withLastName("Khan")
+                .withPhone("8569751246")
+                .withAddress("9832 cest' la vie Monroe, 239843")
+                .build());
         // Update
         Person person = new PersonService().getById(4);
         person.setLastName("Brown");
@@ -66,11 +94,22 @@ public class Main {
         LOGGER.info("\n--- CUSTOMER ---\n");
         // Create
         CustomerService customerService = new CustomerService();
-        customerService.insert(new Customer.Builder().withTaxNumber("00000000").withPerson(personService.getById(2)).build());
-        customerService.insert(new Customer.Builder().withTaxNumber("274527252").withPerson(personService.getById(3)).build());
-        customerService.insert(new Customer.Builder().withTaxNumber("274527252").withPerson(personService.getById(1)).build());
+        customerService.insert(new Customer.Builder()
+                .withTaxNumber("00000000")
+                .withPerson(personService.getById(2))
+                .build());
+        customerService.insert(new Customer.Builder()
+                .withTaxNumber("274527252")
+                .withPerson(personService.getById(3))
+                .build());
+        customerService.insert(new Customer.Builder()
+                .withTaxNumber("274527252")
+                .withPerson(personService.getById(1)).build());
         // Update
-        customerService.update(new Customer.Builder().withTaxNumber("1254986532").withPerson(personService.getById(4)).withId(1).build());
+        customerService.update(new Customer.Builder()
+                .withTaxNumber("1254986532")
+                .withPerson(personService.getById(4))
+                .withId(1).build());
         // Delete
         customerService.delete(3);
         // Read
@@ -101,8 +140,16 @@ public class Main {
         LOGGER.info("\n--- SHOP ---\n");
         // Create
         ShopService shopService = new ShopService();
-        shopService.insert(new Shop.Builder().withShopName("Le Sportif Foe").withAddress("In a land far far away").withPhone("1120984567").withOwner(ownerService.getById(1)).build());
-        shopService.insert(new Shop.Builder().withShopName("Federico Barba Roja").withAddress("In between dreams").withPhone("4593217865").withOwner(ownerService.getById(1)).build());
+        shopService.insert(new Shop.Builder()
+                .withShopName("Le Sportif Foe")
+                .withAddress("In a land far far away")
+                .withPhone("1120984567").withOwner(ownerService.getById(1))
+                .build());
+        shopService.insert(new Shop.Builder()
+                .withShopName("Federico Barba Roja")
+                .withAddress("In between dreams")
+                .withPhone("4593217865").withOwner(ownerService.getById(1))
+                .build());
         // Update
         Shop shop = shopService.getById(1);
         shop.setShopName("La Tasca");
@@ -119,8 +166,14 @@ public class Main {
         LOGGER.info("\n--- STAFF ---\n");
         // Create
         StaffService staffService = new StaffService();
-        staffService.insert(new Staff.Builder().withPosition("AllinOne").withPerson(personService.getById(2)).withShop(shopService.getById(1)).build());
-        staffService.insert(new Staff.Builder().withPosition("Worker").withPerson(personService.getById(1)).withShop(shopService.getById(1)).build());
+        staffService.insert(new Staff.Builder()
+                .withPosition("AllinOne").withPerson(personService.getById(2))
+                .withShop(shopService.getById(1))
+                .build());
+        staffService.insert(new Staff.Builder()
+                .withPosition("Worker").withPerson(personService.getById(1))
+                .withShop(shopService.getById(1))
+                .build());
         // Update
         Staff staff = new StaffService().getById(1);
         staff.setPosition("Manager");
@@ -137,8 +190,16 @@ public class Main {
         LOGGER.info("\n--- SUPPLIER ---\n");
         // Create
         SupplierService supplierService = new SupplierService();
-        supplierService.insert(new Supplier.Builder().withSupplierName("Gucci").withTaxNumber("123455678").withPhone("2340981245").build());
-        supplierService.insert(new Supplier.Builder().withSupplierName("Tommy").withTaxNumber("123455678").withPhone("2340981245").build());
+        supplierService.insert(new Supplier.Builder()
+                .withSupplierName("Gucci")
+                .withTaxNumber("123455678")
+                .withPhone("2340981245")
+                .build());
+        supplierService.insert(new Supplier.Builder()
+                .withSupplierName("Tommy")
+                .withTaxNumber("123455678")
+                .withPhone("2340981245")
+                .build());
         // Update
         Supplier supplier = new SupplierService().getById(1);
         supplier.setSupplierName("LaCoste");
@@ -155,9 +216,21 @@ public class Main {
         LOGGER.info("\n--- PRODUCT ---\n");
         // Create
         ProductService productService = new ProductService();
-        productService.insert(new Product.Builder().withProductName("Shirt").withStock(23).withPrice(60).withCategory(categoryService.getById(1)).withSupplier(supplierService.getById(1)).build());
-        productService.insert(new Product.Builder().withProductName("Pants").withStock(13).withPrice(20).withCategory(categoryService.getById(1)).withSupplier(supplierService.getById(1)).build());
-        productService.insert(new Product.Builder().withProductName("iPad").withStock(5).withPrice(2000).withCategory(categoryService.getById(2)).withSupplier(supplierService.getById(1)).build());
+        productService.insert(new Product.Builder()
+                .withProductName("Shirt").withStock(23)
+                .withPrice(60).withCategory(categoryService.getById(1))
+                .withSupplier(supplierService.getById(1))
+                .build());
+        productService.insert(new Product.Builder()
+                .withProductName("Pants").withStock(13)
+                .withPrice(20).withCategory(categoryService.getById(1))
+                .withSupplier(supplierService.getById(1))
+                .build());
+        productService.insert(new Product.Builder()
+                .withProductName("iPad").withStock(5)
+                .withPrice(2000).withCategory(categoryService.getById(2))
+                .withSupplier(supplierService.getById(1))
+                .build());
         // Update
         Product product = new ProductService().getById(2);
         product.setPrice(80);
@@ -174,9 +247,18 @@ public class Main {
         LOGGER.info("\n--- ORDERS ---\n");
         // Create
         OrderService orderService = new OrderService();
-        orderService.insert(new Order.Builder().withOrderDate(Date.valueOf(("2022-5-5"))).withTotal(80).withCustomer(customerService.getById(1)).build());
-        orderService.insert(new Order.Builder().withOrderDate(Date.valueOf(("2022-4-5"))).withTotal(60).withCustomer(customerService.getById(2)).build());
-        orderService.insert(new Order.Builder().withOrderDate(Date.valueOf(("2022-4-8"))).withTotal(78).withCustomer(customerService.getById(1)).build());
+        orderService.insert(new Order.Builder()
+                .withOrderDate(Date.valueOf(("2022-5-5")))
+                .withTotal(80).withCustomer(customerService.getById(1))
+                .build());
+        orderService.insert(new Order.Builder()
+                .withOrderDate(Date.valueOf(("2022-4-5")))
+                .withTotal(60).withCustomer(customerService.getById(2))
+                .build());
+        orderService.insert(new Order.Builder()
+                .withOrderDate(Date.valueOf(("2022-4-8")))
+                .withTotal(78).withCustomer(customerService.getById(1))
+                .build());
         // Update
         Order order = orderService.getById(1);
         order.setTotal(120);
@@ -193,8 +275,14 @@ public class Main {
         LOGGER.info("\n--- ORDER ITEM ---\n");
         // Create
         OrderItemService orderItemService = new OrderItemService();
-        orderItemService.insert(new OrderItem.Builder().withQuantity(1).withOrder(new OrderDao().getById(1)).withProduct(new ProductDao().getById(1)).build());
-        orderItemService.insert(new OrderItem.Builder().withQuantity(1).withOrder(new OrderDao().getById(2)).withProduct(new ProductDao().getById(2)).build());
+        orderItemService.insert(new OrderItem.Builder()
+                .withQuantity(1).withOrder(new OrderDao().getById(1))
+                .withProduct(new ProductDao().getById(1))
+                .build());
+        orderItemService.insert(new OrderItem.Builder()
+                .withQuantity(1).withOrder(new OrderDao().getById(2))
+                .withProduct(new ProductDao().getById(2))
+                .build());
         // Update
         OrderItem orderItem = orderItemService.getById(1);
         orderItem.setQuantity(2);
@@ -211,9 +299,21 @@ public class Main {
         LOGGER.info("\n--- PROMOTION ---\n");
         // Create
         PromotionService promotionService = new PromotionService();
-        promotionService.insert(new Promotion.Builder().withPromotionName("Summer Discount").withDiscount(0.6F).withStartDate(Date.valueOf("2022-06-01")).withEndDate(Date.valueOf("2022-09-01")).build());
-        promotionService.insert(new Promotion.Builder().withPromotionName("Winter Discount").withDiscount(0.3F).withStartDate(Date.valueOf("2023-04-01")).withEndDate(Date.valueOf("2022-12-01")).build());
-        promotionService.insert(new Promotion.Builder().withPromotionName("Special Discount").withDiscount(0.9F).withStartDate(Date.valueOf("2022-01-01")).withEndDate(Date.valueOf("2022-12-31")).build());
+        promotionService.insert(new Promotion.Builder()
+                .withPromotionName("Summer Discount")
+                .withDiscount(0.6F).withStartDate(Date.valueOf("2022-06-01"))
+                .withEndDate(Date.valueOf("2022-09-01"))
+                .build());
+        promotionService.insert(new Promotion.Builder()
+                .withPromotionName("Winter Discount")
+                .withDiscount(0.3F).withStartDate(Date.valueOf("2023-04-01"))
+                .withEndDate(Date.valueOf("2022-12-01"))
+                .build());
+        promotionService.insert(new Promotion.Builder()
+                .withPromotionName("Special Discount")
+                .withDiscount(0.9F).withStartDate(Date.valueOf("2022-01-01"))
+                .withEndDate(Date.valueOf("2022-12-31"))
+                .build());
         // Update
         Promotion promotion = new PromotionService().getById(1);
         promotion.setDiscount(0.2F);
@@ -230,8 +330,14 @@ public class Main {
         LOGGER.info("\n--- PRODUCT PROMOTION ---\n");
         // Create
         ProductPromotionService productPromotionService = new ProductPromotionService();
-        productPromotionService.insert(new ProductPromotion.Builder().withProduct(productService.getById(2)).withPromotion(promotionService.getById(1)).build());
-        productPromotionService.insert(new ProductPromotion.Builder().withProduct(productService.getById(1)).withPromotion(promotionService.getById(2)).build());
+        productPromotionService.insert(new ProductPromotion.Builder()
+                .withProduct(productService.getById(2))
+                .withPromotion(promotionService.getById(1))
+                .build());
+        productPromotionService.insert(new ProductPromotion.Builder()
+                .withProduct(productService.getById(1))
+                .withPromotion(promotionService.getById(2))
+                .build());
         // Update
         ProductPromotion productPromotion = new ProductPromotionService().getById(1); // update by product id
         productPromotion.setPromotion(promotionService.getById(1));
