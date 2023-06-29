@@ -104,17 +104,15 @@ public class CategoryDao implements ICategoryDao {
     @Override
     public Category getById(int id) {
         Connection con = connectionPool.getConnection();
-        Category category;
         String query = "SELECT * FROM category WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, id);
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 return new Category.Builder()
-                        .withId(rs.getInt("id")).
-                        withCategoryName(rs.getString("category_name"))
+                        .withId(rs.getInt("id"))
+                        .withCategoryName(rs.getString("category_name"))
                         .build();
-
             } catch (SQLException e) {
                 throw new RuntimeException();
             } finally {
@@ -138,8 +136,8 @@ public class CategoryDao implements ICategoryDao {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 return new Category.Builder()
-                        .withId(rs.getInt("id")).
-                        withCategoryName(rs.getString("category_name"))
+                        .withId(rs.getInt("id"))
+                        .withCategoryName(rs.getString("category_name"))
                         .build();
             } catch (SQLException e) {
                 throw new RuntimeException();

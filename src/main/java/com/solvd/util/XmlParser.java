@@ -35,7 +35,10 @@ public class XmlParser {
             Owner owner = new Owner.Builder()
                     .withId(Integer.parseInt(ownerElement.getElementsByTagName("id").item(0).getTextContent()))
                     .withPerson(new Person.Builder()
-                            .withId(Integer.parseInt(ownerElement.getElementsByTagName("person_id").item(0).getTextContent()))
+                            .withId(Integer.parseInt(ownerElement
+                                    .getElementsByTagName("person_id")
+                                    .item(0)
+                                    .getTextContent()))
                             .build())
                     .build();
             shop.setOwner(owner);
